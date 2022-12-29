@@ -24,6 +24,11 @@ WebServer server(80);            // Create Web server on port 80 (HTTP port numb
 
 IPAddress serverIP;
 String bacteria;
+int dispW = 1024;                                         //Display Width
+int dispH = 758;                                          //Display Height
+int petriD = (dispH/2)-10;                                //Petri dish diameter
+int xC =  (dispW/2)-(petriD);                             //X position of left side of petri dish
+int yC =  (dispH/2)-(petriD);                             //Y position of top side of petri dish
 
 void setup()
 {
@@ -47,7 +52,7 @@ void setup()
               handleString); // If you send some text to Inkplate, go to handleString function. Note that {} brackets at
                              // the end of address. That means that web address has some arguments (our text!).
     server.begin();          // Start the web server
-    updatePaper();
+    firstScreen();
 }
 
 void loop()
@@ -76,21 +81,30 @@ void handleString()
 void updatePaper()
 {                              // This function updates screen with new data (text)
     display.clearDisplay();    // Clear everything from epaper frame buffer
-    display.setCursor(20, 40); // Print out instruction on how to connect to Inkplate WiFi and how to open a web page
-    display.print("Connect to ");
-    display.print(ssid);
-    display.println(" WiFi with pass: ");
-    display.setCursor(240, 100);
-    display.println(pass);
-    display.setCursor(100, 150);
-    display.print("Open Your web browser and open");
-    display.setCursor(240, 210);
-    display.print("http://");
-    display.print(serverIP);
-    display.println('/');
-    display.println();
-    display.fillRect(10, 240, 780, 4, BLACK);
+    display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
+    display.setCursor(xC+100, yC+250);
     display.println("Selected bacteria:"); // Print out what user typed in web page
+    display.setCursor(xC+100, yC+300);
     display.print(bacteria);
-    display.display(); // Send everything to screen (refresh the screen)
+    display.partialUpdate(); // Send everything to screen (refresh the screen)
+}
+
+
+void firstScreen(){
+  display.clearDisplay();
+  display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
+  display.setCursor(xC+100, yC+250);
+  display.println("Connect to ");
+  display.setCursor(xC+100, yC+300);
+  display.print(ssid);
+  display.println(" WiFi with pass: ");
+  display.setCursor(xC+100, yC+350);
+  display.println(pass);
+  display.setCursor(xC+100, yC+400);
+  display.print("Open web browser and write");
+  display.setCursor(xC+100, yC+450);
+  display.print("http://");
+  display.print(serverIP);
+  display.println('/');
+  display.display();
 }
