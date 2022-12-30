@@ -43,6 +43,9 @@ int yC2 = (dispH/2)+(petriD);                             //Y position of bottom
 void setup()
 {
     Serial.begin(115200);
+
+    pinMode(fwdBtn_PIN, INPUT_PULLUP);
+    pinMode(bckBtn_PIN, INPUT_PULLUP);
     
     display.begin();                    // Init Inkplate library (you should call this function ONLY ONCE)
     display.clearDisplay();             // Clear frame buffer of display
@@ -67,10 +70,13 @@ void setup()
 
 void loop()
 {
+    currentState_fwd = digitalRead(fwdBtn_PIN);
+    currentState_bck = digitalRead(bckBtn_PIN);
+
     server.handleClient(); // You have to constantly read if there is any new client connected to web server
     if(modality == "history"){  
       if(lastState_fwd == LOW && currentState_fwd == HIGH){
-        counter ++;
+        if (counter < 3){counter ++;}
         historyCondition();
       }   
       if(lastState_bck == LOW && currentState_bck == HIGH){
@@ -79,14 +85,17 @@ void loop()
       }
     } else if(modality == "microscope"){  
       if(lastState_fwd == LOW && currentState_fwd == HIGH){
-        counter ++;
-        historyCondition();
+        if (counter < 3){counter ++;}
+        microscopeCondition();
       }   
       if(lastState_bck == LOW && currentState_bck == HIGH){
         if (counter != 0){counter --;}
-        historyCondition();
+        microscopeCondition();
       }
     }
+
+    lastState_fwd = currentState_fwd;
+    lastState_bck = currentState_bck;
 }
 
 void updateHTML()
@@ -174,7 +183,7 @@ void baseLayer(){
     //END of draw base layer
 }
 
-void historyBtn(int j,k,l){
+void historyBtn(int j,int k,int l){
     baseLayer();
 
       display.fillCircle(xC2-100, yC+150, 25*j, 0);
@@ -183,38 +192,49 @@ void historyBtn(int j,k,l){
     display.fillCircle(xC+150, yC+450, 25, 1);
       display.fillCircle(xC+400, yC+600, 25*l, 0);
     display.fillCircle(xC+400, yC+600, 25, 1);
-    display.display();
+    display.partialUpdate();
 }
 
 void historyCondition(){
   if(counter == 0){ //0h
+    Serial.println("History mode: 0h !");
     historyMode();
   } else if(counter == 1){ //8h
+    Serial.println("History mode: 8h !");
     historyBtn(1.3,2,4);
   } else if(counter == 2){ //12h
+    Serial.println("History mode: 12h !");
     historyBtn(1.6,3,6);
   } else if(counter == 3){ //24h
+    Serial.println("History mode: 24h !");
     historyBtn(2,4,8);
   }
 }
 
 void microscopeCondition(){
   if(counter == 0){ //0x
+    Serial.println("Microscope mode: 0x !");
     microscopeMode();
   } else if(counter == 1){ //4x
+    Serial.println("Microscope mode: 4x !");
     baseLayer();
       display.fillCircle(dispW/2, dispH/2, 100, 0);
     display.fillCircle(dispW/2, dispH/2, 25, 1);
     display.display();
   } else if(counter == 2){ //10x
+    Serial.println("Microscope mode: 10x !");
     baseLayer();
-      display.fillCircle(dispW/2, dispH/2, 100, 0);
-    display.fillCircle(dispW/2, dispH/2, 25, 1);
+      display.fillCircle(dispW/2, dispH/2, 200, 0);
+    display.fillCircle(dispW/2, dispH/2, 50, 1);
     display.display();
-  } else if(counter == 3){ //40x
+  } else if(counter == 3){ //40
+    Serial.println("Microscope mode: 40x !");
     baseLayer();
-      display.fillCircle(dispW/2, dispH/2, 100, 0);
-    display.fillCircle(dispW/2, dispH/2, 25, 1);
+    for(int i=0; i<=500; i++){
+      display.fillCircle(random(xC, xC2), random(yC, yC2), 2, 1);
+    }
+      display.fillCircle(dispW/2, dispH/2, 300, 0);
+    display.fillCircle(dispW/2, dispH/2, 75, 1);
     display.display();
   }
 }
