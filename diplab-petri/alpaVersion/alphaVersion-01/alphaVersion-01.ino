@@ -1,9 +1,14 @@
-/* MIT License 2022 Matteo Subet <hi@zumat.ch>
-   
-   First example of creating a web page to select bacteria and store the value inside the ESP32.
-   
-   29th December 2022 by Matteo Subet
+/* MIT License 2023 Matteo Subet <hi@zumat.ch>
+
+   First draft of the whole thesis project.
+   Html code uploaded as an .h file so without images.
+
+   NOTES:
+          - This is just a copy and paste of the chooseBacteria.ino file; to continue divide each file in one step and create a state variable that serve as a condition to continue with the experience.
+
+   07th January 2023 by Matteo Subet
 */
+
 
 // Next 3 lines are a precaution, you can ignore those, and the example would also work without them
 #ifndef ARDUINO_INKPLATE6PLUS
@@ -11,7 +16,7 @@
 #endif
 
 #include "Inkplate.h"   //Include Inkplate library to the sketch
-#include "htmlCode.h"   //Include .h file where we stored out html code of our web page
+#include "chooseBacteriaHTML.h"   //Include .h file where we stored out html code of our web page of choose bacteria
 #include <WebServer.h>  //Include ESP32 library for Web server
 #include <WiFi.h>       //Include ESP32 WiFi library
 #include <WiFiClient.h> //Include ESP32 WiFi library for AP

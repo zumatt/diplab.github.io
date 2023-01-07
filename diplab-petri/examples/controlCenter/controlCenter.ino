@@ -1,7 +1,8 @@
-/*
+/* MIT License 2022 Matteo Subet <hi@zumat.ch>
+   
    First example of creating a web page to select bacteria and store the value inside the ESP32.
    
-   29 December 2022 by Matteo Subet
+   29th December 2022 by Matteo Subet
 */
 
 // Next 3 lines are a precaution, you can ignore those, and the example would also work without them

@@ -1,6 +1,8 @@
 /* MIT License 2022 Matteo Subet <hi@zumat.ch>
   
    A Simple code to use a button with ESP32
+
+   28th December 2022 by Matteo Subet
 */
 
 #define BUTTON_PIN 12 // GIOP13 or GPIO12 or GPIO14 pin connected to button

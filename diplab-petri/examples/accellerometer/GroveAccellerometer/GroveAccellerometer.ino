@@ -1,5 +1,8 @@
 /* MIT License 2022 Matteo Subet <hi@zumat.ch>
+
    A simple example of how to use the I2C Grove Accellerometer with an ESP32
+
+   28th December by Matteo Subet
 */
 
 #include "LIS3DHTR.h"

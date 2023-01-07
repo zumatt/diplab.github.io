@@ -1,4 +1,4 @@
-/*
+/* MIT License 2022 Matteo Subet <hi@zumat.ch>
    First draft of accellerometer placing antibiotics randomly on the E-Ink display.
 
    This is working by connecting to the I2C port the Grove accellerometer.
