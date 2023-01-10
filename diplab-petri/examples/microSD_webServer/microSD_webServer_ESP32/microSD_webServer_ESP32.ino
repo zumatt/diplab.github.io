@@ -1,12 +1,9 @@
-/*
-  Rui Santos
-  Complete project details at https://RandomNerdTutorials.com/esp32-web-server-microsd-card/
-  
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files.
-  
-  The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
+/* MIT License 2022 Matteo Subet <hi@zumat.ch>
+   
+   First example of a Web Server uploading files from a SD Card
+
+   Based on a Rui Santos' code
+   Reference at https://RandomNerdTutorials.com/esp32-web-server-microsd-card/
 */
 
 #include <Arduino.h>
@@ -18,8 +15,8 @@
 #include "SPI.h"
 
 // Replace with your network credentials
-const char* ssid = "DipLab";
-const char* password = "Password123";
+const char* ssid = "DipPLab";
+const char* password = "password";
 
 // Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
@@ -51,20 +48,25 @@ void initSDCard(){
 }
 
 void initWiFi() {
+  WiFi.begin();
   WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
+  WiFi.softAP(ssid, password);
   Serial.print("Connecting to WiFi ..");
-  while (WiFi.status() != WL_CONNECTED) {
+  /*while (WiFi.status() != WL_CONNECTED) {
     Serial.print('.');
     delay(1000);
-  }
-  Serial.println(WiFi.localIP());
+  }*/
+  Serial.println(WiFi.softAPIP());
 }
 
 void setup() {
   Serial.begin(115200);
+  Serial.println("WiFi init:");
   initWiFi();
+  Serial.println("WiFi init END");
+  Serial.println("SD Card init:");
   initSDCard();
+  Serial.println("SD Card init END");
 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SD, "/index.html", "text/html");
