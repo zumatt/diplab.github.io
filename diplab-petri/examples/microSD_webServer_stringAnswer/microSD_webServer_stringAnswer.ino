@@ -26,6 +26,9 @@ SPIClass spi = SPIClass(VSPI);
 const char* ssid = "DipPLab";
 const char* password = "password";
 
+const char* PARAM_INPUT_1 = "bacteria";
+const char* PARAM_INPUT_2 = "antibiotic";
+
 // Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
 
@@ -79,6 +82,27 @@ void setup() {
   });
 
   server.serveStatic("/", SD, "/");
+
+  server.on("/string", HTTP_GET, [] (AsyncWebServerRequest *request) {
+    String inputMessage1;
+    String inputMessage2;
+    // GET input1 value on <ESP_IP>/string?bacteria=<inputMessage1>&antibiotic=<inputMessage2>
+    if (request->hasParam(PARAM_INPUT_1) && request->hasParam(PARAM_INPUT_2)) {
+      inputMessage1 = request->getParam(PARAM_INPUT_1)->value();
+      inputMessage2 = request->getParam(PARAM_INPUT_2)->value();
+      //digitalWrite(inputMessage1.toInt(), inputMessage2.toInt());
+    }
+    else {
+      inputMessage1 = "No message sent";
+      inputMessage2 = "No message sent";
+    }
+    Serial.print("Bacteria: ");
+    Serial.print(inputMessage1);
+    Serial.print(" - Antibiotic: ");
+    Serial.println(inputMessage2);
+    //Uncomment the line below to check directly in the web page if it is working
+    //request->send(200, "text/plain", "OK");
+  });
 
   server.begin();
 }
