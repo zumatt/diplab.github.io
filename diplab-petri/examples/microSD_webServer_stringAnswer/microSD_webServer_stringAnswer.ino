@@ -27,7 +27,7 @@ const char* ssid = "DipPLab";
 const char* password = "password";
 
 const char* PARAM_INPUT_1 = "bacteria";
-const char* PARAM_INPUT_2 = "antibiotic";
+const char* PARAM_INPUT_2 = "ab";
 
 // Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
@@ -87,21 +87,24 @@ void setup() {
     String inputMessage1;
     String inputMessage2;
     // GET input1 value on <ESP_IP>/string?bacteria=<inputMessage1>&antibiotic=<inputMessage2>
-    if (request->hasParam(PARAM_INPUT_1) && request->hasParam(PARAM_INPUT_2)) {
+    if (request->hasParam(PARAM_INPUT_1)) {
       inputMessage1 = request->getParam(PARAM_INPUT_1)->value();
-      inputMessage2 = request->getParam(PARAM_INPUT_2)->value();
-      //digitalWrite(inputMessage1.toInt(), inputMessage2.toInt());
     }
     else {
       inputMessage1 = "No message sent";
+    }
+    if (request->hasParam(PARAM_INPUT_2)) {
+      inputMessage2 = request->getParam(PARAM_INPUT_2)->value();
+    }
+    else {
       inputMessage2 = "No message sent";
     }
     Serial.print("Bacteria: ");
     Serial.print(inputMessage1);
     Serial.print(" - Antibiotic: ");
     Serial.println(inputMessage2);
-    //Uncomment the line below to check directly in the web page if it is working
-    //request->send(200, "text/plain", "OK");
+    //Here you send the action after receiving the input
+    request->send(SD, "/index.html", "text/html");
   });
 
   server.begin();
