@@ -12,6 +12,7 @@
                             LIBRARIES
     -----------------------------------------------------------
 */
+#include "Inkplate.h"
 #include <WiFi.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
@@ -37,11 +38,17 @@ const char* ssid = "DiPLab";
 const char* password = "AMRawareness23";
 
 //Here you can choose the URI parameters used in the HTML page
-const char* PARAM_INPUT_1 = "bacteria";
-const char* PARAM_INPUT_2 = "ab";
+const char* PARAM_INPUT_1 = "state";
+const char* PARAM_INPUT_2 = "bacteria";
+const char* PARAM_INPUT_3 = "ab1";
+const char* PARAM_INPUT_4 = "ab2";
+const char* PARAM_INPUT_5 = "ab3";
 
 //Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
+
+//State variable to check where we are with the experience
+int state = 0;
 
 /*
     -----------------------------------------------------------
@@ -85,6 +92,11 @@ void initWiFi() {
   Serial.println(WiFi.softAPIP());  //Here we print the IP Address of the AccessPoint
 }
 
+//After this comment state functions to control the experience
+void state0() {
+  
+}
+
 /*
     -----------------------------------------------------------
                           SETUP FUNCTION
@@ -113,27 +125,60 @@ void setup() {
 
   //Do something when is received something from the query after "string"
   server.on("/string", HTTP_GET, [] (AsyncWebServerRequest *request) {
-    String inputMessage1;
-    String inputMessage2;
-    // GET input1 value on <ESP_IP>/string?bacteria=<inputMessage1>&antibiotic=<inputMessage2>
+    String inputMessage1; //state
+    String inputMessage2; //bacteria
+    String inputMessage3; //ab1
+    String inputMessage4; //ab2
+    String inputMessage5; //ab3
+
+    // GET input1 value on <ESP_IP>/string?state
     if (request->hasParam(PARAM_INPUT_1)) {
       inputMessage1 = request->getParam(PARAM_INPUT_1)->value();
     }
     else {
       inputMessage1 = "No message sent";
     }
-    // GET input2 value on <ESP_IP>/string?bacteria=<inputMessage1>&antibiotic=<inputMessage2>
+    // GET input2 value on <ESP_IP>/string?bacteria
     if (request->hasParam(PARAM_INPUT_2)) {
       inputMessage2 = request->getParam(PARAM_INPUT_2)->value();
     }
     else {
       inputMessage2 = "No message sent";
     }
+    // GET input3 value on <ESP_IP>/string?ab1
+    if (request->hasParam(PARAM_INPUT_3)) {
+      inputMessage3 = request->getParam(PARAM_INPUT_3)->value();
+    }
+    else {
+      inputMessage3 = "No message sent";
+    }
+    // GET input4 value on <ESP_IP>/string?ab2
+    if (request->hasParam(PARAM_INPUT_4)) {
+      inputMessage4 = request->getParam(PARAM_INPUT_4)->value();
+    }
+    else {
+      inputMessage4 = "No message sent";
+    }
+    // GET input4 value on <ESP_IP>/string?ab3
+    if (request->hasParam(PARAM_INPUT_5)) {
+      inputMessage5 = request->getParam(PARAM_INPUT_5)->value();
+    }
+    else {
+      inputMessage5 = "No message sent";
+    }
+
     //Print on console the input messages
-    Serial.print("Bacteria: ");
+    Serial.print("State: ");
     Serial.print(inputMessage1);
-    Serial.print(" - Antibiotic: ");
+    Serial.print(" - Bateria: ");
     Serial.println(inputMessage2);
+    Serial.print(" - Antibiotic n°1: ");
+    Serial.println(inputMessage3);
+    Serial.print(" - Antibiotic n°2: ");
+    Serial.println(inputMessage4);
+    Serial.print(" - Antibiotic n°3: ");
+    Serial.println(inputMessage5);
+    
     //Here you send the action after receiving the input
     request->send(SD, "/index.html", "text/html");
   });
