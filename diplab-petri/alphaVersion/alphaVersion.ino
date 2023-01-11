@@ -19,6 +19,10 @@
 #include "FS.h"
 #include "SD.h"
 #include "SPI.h"
+#include "LIS3DHTR.h"
+#include <Wire.h>
+LIS3DHTR<TwoWire> LIS; //IIC
+#define WIRE Wire
 
 //The next 5 lines are needed to change the pins for SD Card reader
 #define SCK  14
@@ -32,6 +36,9 @@ SPIClass spi = SPIClass(VSPI);
                             VARIABLES
     -----------------------------------------------------------
 */
+
+//Buttons setup
+#define BUTTON_PIN 12 // GIOP13 or GPIO12 or GPIO14 pin connected to button
 
 //Here you can insert your network credentials
 const char* ssid = "DiPLab";
@@ -132,6 +139,66 @@ void state0() {
   display.display();
 }
 
+void state1() {
+  //Confirm the connection and start an introduction to the exp
+  return;
+}
+
+void state2(){
+  //Introduction spread bacteria
+  return;
+}
+
+void state3(){
+  //Introduction place antibiotics
+  return;
+}
+
+void state4(){
+  //Introduction microscope mode
+  return;
+}
+
+void state5(){
+  //Introduction history mode
+  return;
+}
+
+void state6(){
+  //Start experience: enter Name and class code
+  return;
+}
+
+void state7(){
+  //Bacteria selection
+  return;
+}
+
+void state8(){
+  //Bacteria spreading
+  return;
+}
+
+void state9(){
+  //Antibiotic selection
+  return;
+}
+
+void state10(){
+  //Insert of Antibiotic (Shake device!)
+  return;
+}
+
+void state11(){
+  //Control center (History/Microscope mode)
+  return;
+}
+
+void state12(){
+  //Save the experience
+  return;
+}
+
 /*
     -----------------------------------------------------------
                           SETUP FUNCTION
@@ -179,11 +246,19 @@ void setup() {
     // GET input1 value on <ESP_IP>/string?state
     if (request->hasParam(PARAM_INPUT_1)) {
       inputMessage1 = request->getParam(PARAM_INPUT_1)->value();
-      if(inputMessage1 == "0"){state0();}
-      else if(inputMessage1 == "1"){//state1();}
-      Serial.println("State 1");}
-      else if(inputMessage1 == "2"){//state2();}
-      Serial.println("State 2");}
+      if(inputMessage1 == "0")      {state0();}
+      else if(inputMessage1 == "1") {state1();}
+      else if(inputMessage1 == "2") {state2();}
+      else if(inputMessage1 == "3") {state3();}
+      else if(inputMessage1 == "4") {state4();}
+      else if(inputMessage1 == "5") {state5();}
+      else if(inputMessage1 == "6") {state6();}
+      else if(inputMessage1 == "7") {state7();}
+      else if(inputMessage1 == "8") {state8();}
+      else if(inputMessage1 == "9") {state9();}
+      else if(inputMessage1 == "10"){state10();}
+      else if(inputMessage1 == "11"){state11();}
+      else if(inputMessage1 == "12"){state12();}
     }
     else {
       inputMessage1 = "No message sent";
