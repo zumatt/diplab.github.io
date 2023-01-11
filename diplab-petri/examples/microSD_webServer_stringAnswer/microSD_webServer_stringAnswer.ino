@@ -7,7 +7,6 @@
    Reference at https://RandomNerdTutorials.com/esp32-web-server-microsd-card/
 */
 
-#include <Arduino.h>
 #include <WiFi.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
