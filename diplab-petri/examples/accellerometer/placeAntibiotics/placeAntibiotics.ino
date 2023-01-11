@@ -9,7 +9,7 @@
    28th December 2022 by Matteo Subet
 */
 
-#include "Inkplate.h"
+#include "Inkplate-mod.h"
 #include "LIS3DHTR.h"
 #include <Wire.h>
 LIS3DHTR<TwoWire> LIS; //IIC

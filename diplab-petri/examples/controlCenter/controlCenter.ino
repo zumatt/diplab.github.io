@@ -10,7 +10,7 @@
 #error "Wrong board selection for this example, please select Inkplate 6PLUS in the boards menu."
 #endif
 
-#include "Inkplate.h"   //Include Inkplate library to the sketch
+#include "Inkplate-mod.h"   //Include Inkplate library to the sketch
 #include "htmlCode.h"   //Include .h file where we stored out html code of our web page
 #include <WebServer.h>  //Include ESP32 library for Web server
 #include <WiFi.h>       //Include ESP32 WiFi library
