@@ -15,10 +15,10 @@
 #include "SD.h"
 #include "SPI.h"
 
-#define SCK  14
-#define MISO  12
-#define MOSI  13
-#define CS  15
+#define SCK 14
+#define MISO 12
+#define MOSI 13
+#define CS 15
 
 SPIClass spi = SPIClass(VSPI);
 

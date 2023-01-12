@@ -53,6 +53,15 @@ const char* PARAM_INPUT_5 = "ab3";
 const char* PARAM_INPUT_6 = "name";
 const char* PARAM_INPUT_7 = "classcode";
 
+//String where to save the message from the webPage
+String inputMessage1; //state
+String inputMessage2; //bacteria
+String inputMessage3; //ab1
+String inputMessage4; //ab2
+String inputMessage5; //ab3
+String inputMessage6; //name
+String inputMessage7; //classcode
+
 //State variable to check where we are with the experience
 int state = 0;
 
@@ -62,6 +71,14 @@ int dispH = 758;                                          //Display Height
 int petriD = (dispH/2)-10;                                //Petri dish diameter
 int xC =  (dispW/2)-(petriD);                             //X position of left side of petri dish
 int yC =  (dispH/2)-(petriD);                             //Y position of top side of petri dish
+int xC2 = (dispW/2)+(petriD);                             //X position of right side of petri dish
+int yC2 = (dispH/2)+(petriD);                             //Y position of bottom side of petri dish
+int yPos = dispH/2;                                       //Center y of petri dish
+int xPos = dispW/2;                                       //Center x of petri dish
+int step = petriD/10;                                     //Step of each line of bacteria
+
+//Variables for the controlCenter state
+int counter;
 
 //Create a string where to save the Access Point IP address
 IPAddress serverIP;
@@ -121,86 +138,6 @@ void initWiFi() {
   Serial.println(serverIP);  //Here we print the IP Address of the AccessPoint
 }
 
-//After this comment state functions to control the experience
-void state0() {
-  display.clearDisplay();
-  display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
-  display.setCursor(xC+100, yC+250);
-  display.println("Connect to ");
-  display.setCursor(xC+100, yC+300);
-  display.print(ssid);
-  display.println(" WiFi with pass: ");
-  display.setCursor(xC+100, yC+350);
-  display.println(password);
-  display.setCursor(xC+100, yC+400);
-  display.print("Open web browser and write");
-  display.setCursor(xC+100, yC+450);
-  display.print("http://");
-  display.print(serverIP);
-  display.println('/');
-  display.display();
-}
-
-void state1() {
-  //Confirm the connection and start an introduction to the exp
-  return;
-}
-
-void state2(){
-  //Introduction spread bacteria
-  return;
-}
-
-void state3(){
-  //Introduction place antibiotics
-  return;
-}
-
-void state4(){
-  //Introduction microscope mode
-  return;
-}
-
-void state5(){
-  //Introduction history mode
-  return;
-}
-
-void state6(){
-  //Start experience: enter Name and class code
-  return;
-}
-
-void state7(){
-  //Bacteria selection
-  return;
-}
-
-void state8(){
-  //Bacteria spreading
-  return;
-}
-
-void state9(){
-  //Antibiotic selection
-  return;
-}
-
-void state10(){
-  //Insert of Antibiotic (Shake device!)
-  return;
-}
-
-void state11(){
-  //Control center (History/Microscope mode)
-  return;
-}
-
-void state12(){
-  //Save the experience
-  return;
-}
-
 /*
     -----------------------------------------------------------
                           SETUP FUNCTION
@@ -238,97 +175,7 @@ void setup() {
   server.serveStatic("/", SD, "/");
 
   //Do something when is received something from the query after "string"
-  server.on("/string", HTTP_GET, [] (AsyncWebServerRequest *request) {
-    String inputMessage1; //state
-    String inputMessage2; //bacteria
-    String inputMessage3; //ab1
-    String inputMessage4; //ab2
-    String inputMessage5; //ab3
-    String inputMessage6; //name
-    String inputMessage7; //classcode
-
-    // GET input1 value on <ESP_IP>/string?state
-    if (request->hasParam(PARAM_INPUT_1)) {
-      inputMessage1 = request->getParam(PARAM_INPUT_1)->value();
-      if(inputMessage1 == "0")      {state0();}
-      else if(inputMessage1 == "1") {state1();}
-      else if(inputMessage1 == "2") {state2();}
-      else if(inputMessage1 == "3") {state3();}
-      else if(inputMessage1 == "4") {state4();}
-      else if(inputMessage1 == "5") {state5();}
-      else if(inputMessage1 == "6") {state6();}
-      else if(inputMessage1 == "7") {state7();}
-      else if(inputMessage1 == "8") {state8();}
-      else if(inputMessage1 == "9") {state9();}
-      else if(inputMessage1 == "10"){state10();}
-      else if(inputMessage1 == "11"){state11();}
-      else if(inputMessage1 == "12"){state12();}
-    }
-    else {
-      inputMessage1 = "No message sent";
-    }
-    // GET input2 value on <ESP_IP>/string?bacteria
-    if (request->hasParam(PARAM_INPUT_2)) {
-      inputMessage2 = request->getParam(PARAM_INPUT_2)->value();
-    }
-    else {
-      inputMessage2 = "No message sent";
-    }
-    // GET input3 value on <ESP_IP>/string?ab1
-    if (request->hasParam(PARAM_INPUT_3)) {
-      inputMessage3 = request->getParam(PARAM_INPUT_3)->value();
-    }
-    else {
-      inputMessage3 = "No message sent";
-    }
-    // GET input4 value on <ESP_IP>/string?ab2
-    if (request->hasParam(PARAM_INPUT_4)) {
-      inputMessage4 = request->getParam(PARAM_INPUT_4)->value();
-    }
-    else {
-      inputMessage4 = "No message sent";
-    }
-    // GET input5 value on <ESP_IP>/string?ab3
-    if (request->hasParam(PARAM_INPUT_5)) {
-      inputMessage5 = request->getParam(PARAM_INPUT_5)->value();
-    }
-    else {
-      inputMessage5 = "No message sent";
-    }
-    // GET input6 value on <ESP_IP>/string?name
-    if (request->hasParam(PARAM_INPUT_6)) {
-      inputMessage6 = request->getParam(PARAM_INPUT_6)->value();
-    }
-    else {
-      inputMessage6 = "No message sent";
-    }
-     // GET input7 value on <ESP_IP>/string?classcode
-    if (request->hasParam(PARAM_INPUT_7)) {
-      inputMessage7 = request->getParam(PARAM_INPUT_7)->value();
-    }
-    else {
-      inputMessage7 = "No message sent";
-    }
-
-    //Print on console the input messages
-    Serial.print("State: ");
-    Serial.print(inputMessage1);
-    Serial.print(" - Bateria: ");
-    Serial.println(inputMessage2);
-    Serial.print(" - Antibiotic n°1: ");
-    Serial.println(inputMessage3);
-    Serial.print(" - Antibiotic n°2: ");
-    Serial.println(inputMessage4);
-    Serial.print(" - Antibiotic n°3: ");
-    Serial.println(inputMessage5);
-    Serial.print(" - Name: ");
-    Serial.println(inputMessage6);
-    Serial.print(" - Class Code: ");
-    Serial.println(inputMessage7);
-    
-    //Here you send the action after receiving the input
-    request->send(SD, "/index.html", "text/html");
-  });
+  serverReceive();
 
   //Start the server
   server.begin();
