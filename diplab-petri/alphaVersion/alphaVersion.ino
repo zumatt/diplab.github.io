@@ -50,6 +50,8 @@ const char* PARAM_INPUT_2 = "bacteria";
 const char* PARAM_INPUT_3 = "ab1";
 const char* PARAM_INPUT_4 = "ab2";
 const char* PARAM_INPUT_5 = "ab3";
+const char* PARAM_INPUT_6 = "name";
+const char* PARAM_INPUT_7 = "classcode";
 
 //State variable to check where we are with the experience
 int state = 0;
@@ -242,6 +244,8 @@ void setup() {
     String inputMessage3; //ab1
     String inputMessage4; //ab2
     String inputMessage5; //ab3
+    String inputMessage6; //name
+    String inputMessage7; //classcode
 
     // GET input1 value on <ESP_IP>/string?state
     if (request->hasParam(PARAM_INPUT_1)) {
@@ -284,12 +288,26 @@ void setup() {
     else {
       inputMessage4 = "No message sent";
     }
-    // GET input4 value on <ESP_IP>/string?ab3
+    // GET input5 value on <ESP_IP>/string?ab3
     if (request->hasParam(PARAM_INPUT_5)) {
       inputMessage5 = request->getParam(PARAM_INPUT_5)->value();
     }
     else {
       inputMessage5 = "No message sent";
+    }
+    // GET input6 value on <ESP_IP>/string?name
+    if (request->hasParam(PARAM_INPUT_6)) {
+      inputMessage6 = request->getParam(PARAM_INPUT_6)->value();
+    }
+    else {
+      inputMessage6 = "No message sent";
+    }
+     // GET input7 value on <ESP_IP>/string?classcode
+    if (request->hasParam(PARAM_INPUT_7)) {
+      inputMessage7 = request->getParam(PARAM_INPUT_7)->value();
+    }
+    else {
+      inputMessage7 = "No message sent";
     }
 
     //Print on console the input messages
@@ -303,6 +321,10 @@ void setup() {
     Serial.println(inputMessage4);
     Serial.print(" - Antibiotic n°3: ");
     Serial.println(inputMessage5);
+    Serial.print(" - Name: ");
+    Serial.println(inputMessage6);
+    Serial.print(" - Class Code: ");
+    Serial.println(inputMessage7);
     
     //Here you send the action after receiving the input
     request->send(SD, "/index.html", "text/html");
