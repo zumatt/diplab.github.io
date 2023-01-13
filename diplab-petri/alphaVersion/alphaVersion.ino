@@ -38,7 +38,14 @@ SPIClass spi = SPIClass(VSPI);
 */
 
 //Buttons setup
-#define BUTTON_PIN 12 // GIOP13 or GPIO12 or GPIO14 pin connected to button
+#define fwdBtn_PIN 36  // GPIO36(S-VP) or GPIO39(S-VN) pin connected to button
+#define bckBtn_PIN 39
+int lastState_fwd = HIGH;     // the previous state from the fwd button pin
+int currentState_fwd;         // the current reading from the fwd input pin
+int lastState_bck = HIGH;     // the previous state from the bck button pin
+int currentState_bck;         // the current reading from the bck input pin
+int counter = 0;              // the counter indicating the state of the button bck (--) / fwd (++)
+String modality;              //ControlCenter modality
 
 //Here you can insert your network credentials
 const char* ssid = "DiPLab";
@@ -52,6 +59,7 @@ const char* PARAM_INPUT_4 = "ab2";
 const char* PARAM_INPUT_5 = "ab3";
 const char* PARAM_INPUT_6 = "name";
 const char* PARAM_INPUT_7 = "classcode";
+const char* PARAM_INPUT_8 = "microscopeAb";
 
 //String where to save the message from the webPage
 String inputMessage1; //state
@@ -61,9 +69,7 @@ String inputMessage4; //ab2
 String inputMessage5; //ab3
 String inputMessage6; //name
 String inputMessage7; //classcode
-
-//State variable to check where we are with the experience
-int state = 0;
+String inputMessage8; //microscopeAB
 
 //Variables to display stuff on the E-Ink display
 int dispW = 1024;                                         //Display Width
@@ -76,9 +82,28 @@ int yC2 = (dispH/2)+(petriD);                             //Y position of bottom
 int yPos = dispH/2;                                       //Center y of petri dish
 int xPos = dispW/2;                                       //Center x of petri dish
 int step = petriD/10;                                     //Step of each line of bacteria
+int arrY[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of Y axis for checking if a line was drawn
+int lenArrY = *(&arrY + 1) - arrY;                        //Array of Y axis length
+int arrX[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of X axis for checking if a line was drawn
+int lenArrX = *(&arrX + 1) - arrX;                        //Array of X axis length
+double accX, accY;                                        //Variables to store accellerometer data
+int ab1_x, ab1_y;                                         //Position of first antibiotic
+int ab2_x, ab2_y;                                         //Position of second antibiotic
+int ab3_x, ab3_y;                                         //Position of third antibiotic
+int abDiameter = 25;                                      //Dimension of the AB circle
+int ab1_resistance, ab2_resistance, ab3_resistance;        //Store resistance value for each AB (diamenter multiplier!)
+int ab1_res_8h  = ab1_resistance / 3;                     //Store resistance value for AB 1 in history mode
+int ab1_res_12h = ab1_resistance / 2;
+int ab1_res_24h = ab1_resistance;
+int ab2_res_8h  = ab2_resistance / 3;                     //Store resistance value for AB 2 in history mode
+int ab2_res_12h = ab2_resistance / 2;
+int ab2_res_24h = ab2_resistance;
+int ab3_res_8h  = ab3_resistance / 3;                     //Store resistance value for AB 3 in history mode
+int ab3_res_12h = ab3_resistance / 2;
+int ab3_res_24h = ab3_resistance;
 
-//Variables for the controlCenter state
-int counter;
+//Check how many antibiotics are selected
+int arrAb[3] = {0,0,0};
 
 //Create a string where to save the Access Point IP address
 IPAddress serverIP;
@@ -150,10 +175,20 @@ void setup() {
   //The next line is needed to change the SD Card reader with pins for Inkplate 6PLUS
   spi.begin(SCK, MISO, MOSI, CS);
 
+  //Setup the two buttons' pins
+  pinMode(fwdBtn_PIN, INPUT_PULLUP);
+  pinMode(bckBtn_PIN, INPUT_PULLUP);
+  
   //Begin and clear display
   display.begin();
   display.clearDisplay();
   display.display();
+
+  //Setup accellerometer
+  LIS.begin(WIRE,0x19); //IIC init
+  delay(100);
+  LIS.setFullScaleRange(LIS3DHTR_RANGE_2G);
+  LIS.setOutputDataRate(LIS3DHTR_DATARATE_50HZ);
 
   //Display settings
   display.setTextSize(3);
@@ -191,5 +226,32 @@ void setup() {
 */
 
 void loop() {
+  //Check if we need to activate the digitalRead for buttons
+  if(inputMessage1 == "4" || inputMessage1 == "5"){
+
+  //Update variables for Buttons
+  currentState_fwd = digitalRead(fwdBtn_PIN);
+  currentState_bck = digitalRead(bckBtn_PIN);
+
+  //Call function to check buttons condition
+  buttonsCondition();
+  } //END IF digitalRead Buttons
+
+  //Check if we need to get data from accellerometer
+  if(inputMessage1 == "8" || inputMessage1 == "10"){
+
+    //Update variables for accellerometer
+    accX = LIS.getAccelerationX(); //Get accellerometer X data
+    accY = LIS.getAccelerationY(); //Get accellerometer Y data
+
+    //Call drawing function for bacteria
+    if(inputMessage1 == "8"){
+      drawingLoop();
+    }
   
+    //Call shake detection for placing ABs
+    if (inputMessage1 == "10"){
+      abShake();
+    }
+  } //END IF data from accellerometer
 }

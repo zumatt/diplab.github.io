@@ -27,9 +27,9 @@ int yC2 = (dispH/2)+(petriD);                             //Y position of bottom
 double accX, accY;                                        //Variables to store accellerometer data
 int yPos = dispH/2;                                       //Center y of petri dish
 int xPos = dispW/2;                                       //Center x of petri dish
-int ant1_x, ant1_y;                                       //Position of first antibiotic
-int ant2_x, ant2_y;                                       //Position of second antibiotic
-int ant3_x, ant3_y;                                       //Position of third antibiotic
+int ab1_x, ab1_y;                                       //Position of first antibiotic
+int ab2_x, ab2_y;                                       //Position of second antibiotic
+int ab3_x, ab3_y;                                       //Position of third antibiotic
 
 void setup() {
   Serial.begin(115200);
@@ -64,17 +64,17 @@ void loop() {
       display.drawLine(xC, yC+(a*petriD/10), xC2, yC+(a*petriD/10), BLACK);}
     //END of redraw base layer
 
-    ant1_x = random(xC+100, xC2-100);
-    ant1_y = random(yC+100, yC2-100);
-    display.fillCircle(ant1_x, ant1_y, 25, 1);  //First Antibiotic
+    ab1_x = random(xC+100, xC2-100);
+    ab1_y = random(yC+100, yC2-100);
+    display.fillCircle(ab1_x, ab1_y, 25, 1);  //First Antibiotic
 
-    ant2_x = random(xC+100, xC2-100);
-    ant2_y = random(yC+100, yC2-100);
-    display.fillCircle(ant2_x, ant2_y, 25, 1);  //Second Antibiotic
+    ab2_x = random(xC+100, xC2-100);
+    ab2_y = random(yC+100, yC2-100);
+    display.fillCircle(ab2_x, ab2_y, 25, 1);  //Second Antibiotic
 
-    ant3_x = random(xC+100, xC2-100);
-    ant3_y = random(yC+100, yC2-100);
-    display.fillCircle(ant3_x, ant3_y, 25, 1);  //Third Antibiotic
+    ab3_x = random(xC+100, xC2-100);
+    ab3_y = random(yC+100, yC2-100);
+    display.fillCircle(ab3_x, ab3_y, 25, 1);  //Third Antibiotic
 
     display.partialUpdate();
     delay(1000);               //This delay is needed because of accidental shakes
