@@ -193,7 +193,14 @@ void state10(){
 
 void state11(){
   //Control center (History/Microscope mode)
-  return;
+  if(inputMessage9 == "1"){
+    //The next three lines are only for test!
+    //To start test pass the query <ESP_IP>/string?test=1
+    ab1_resistance = 2;
+    ab2_resistance = 4;
+    ab3_resistance = 8
+  }
+  
 }
 
 void state12(){

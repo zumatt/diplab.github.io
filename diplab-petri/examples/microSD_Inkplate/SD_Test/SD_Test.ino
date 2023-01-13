@@ -178,6 +178,10 @@ void testFileIO(fs::FS &fs, const char * path){
 void setup(){
   Serial.begin(115200);
   spi.begin(SCK, MISO, MOSI, CS);
+  pinMode(CS, OUTPUT);
+  digitalWrite(CS, LOW);
+
+  
 
   if (!SD.begin(CS,spi,80000000)) {
     Serial.println("Card Mount Failed");

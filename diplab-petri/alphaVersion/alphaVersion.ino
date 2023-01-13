@@ -60,6 +60,7 @@ const char* PARAM_INPUT_5 = "ab3";
 const char* PARAM_INPUT_6 = "name";
 const char* PARAM_INPUT_7 = "classcode";
 const char* PARAM_INPUT_8 = "microscopeAb";
+const char* PARAM_INPUT_9 = "test";
 
 //String where to save the message from the webPage
 String inputMessage1; //state
@@ -70,6 +71,7 @@ String inputMessage5; //ab3
 String inputMessage6; //name
 String inputMessage7; //classcode
 String inputMessage8; //microscopeAB
+String inputMessage9; //test (0, 1 or 2)
 
 //Variables to display stuff on the E-Ink display
 int dispW = 1024;                                         //Display Width

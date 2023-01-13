@@ -63,6 +63,13 @@ void serverReceive(){
     else {
       inputMessage8 = "No message sent";
     }
+     // GET input9 value on <ESP_IP>/string?test
+    if (request->hasParam(PARAM_INPUT_9)) {
+      inputMessage9 = request->getParam(PARAM_INPUT_9)->value();
+    }
+    else {
+      inputMessage9 = "2";
+    }
 
     //Check state
     if(inputMessage1 == "0")      {request->send(SD, "/index.html", "text/html");state0();}
@@ -82,8 +89,12 @@ void serverReceive(){
       else if(inputMessage1 == "12"){request->send(SD, "/index.html", "text/html");state12();}
 
     //Print on console the input messages
-    Serial.print("State: ");
-    Serial.print(inputMessage1);
+    Serial.print("Test: ");
+    if(inputMessage9 == "0"){ Serial.println("No");}else if(inputMessage9 == "1"){Serial.println("Yes");else if(inputMessage9 == "2"){Serial.println("Not received - could be no.");}else{Serial.println("Error!");}
+    Serial.println("----------------------------------");
+    Serial.print("Query from the browser: ");
+    Serial.print(" - State: ");
+    Serial.println(inputMessage1);
     Serial.print(" - Bateria: ");
     Serial.println(inputMessage2);
     Serial.print(" - Antibiotic n°1: ");
