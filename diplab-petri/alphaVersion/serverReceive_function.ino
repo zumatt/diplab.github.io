@@ -6,14 +6,14 @@ void serverReceive(){
       inputMessage1 = request->getParam(PARAM_INPUT_1)->value();
     }
     else {
-      inputMessage1 = "No message sent";
+      //inputMessage1 = "No message sent";
     }
     // GET input2 value on <ESP_IP>/string?bacteria
     if (request->hasParam(PARAM_INPUT_2)) {
       inputMessage2 = request->getParam(PARAM_INPUT_2)->value();
     }
     else {
-      inputMessage2 = "No message sent";
+      //inputMessage2 = "No message sent";
     }
     // GET input3 value on <ESP_IP>/string?ab1
     if (request->hasParam(PARAM_INPUT_3)) {
@@ -21,7 +21,7 @@ void serverReceive(){
       if(arrAb[0] == 0){arrAb[0] = 1;}
     }
     else {
-      inputMessage3 = "No message sent";
+      //inputMessage3 = "No message sent";
       if(arrAb[0] == 1){arrAb[0] = 0;}
     }
     // GET input4 value on <ESP_IP>/string?ab2
@@ -30,7 +30,7 @@ void serverReceive(){
       if(arrAb[1] == 0){arrAb[1] = 1;}
     }
     else {
-      inputMessage4 = "No message sent";
+      //inputMessage4 = "No message sent";
       if(arrAb[1] == 1){arrAb[1] = 0;}
     }
     // GET input5 value on <ESP_IP>/string?ab3
@@ -39,7 +39,7 @@ void serverReceive(){
       if(arrAb[2] == 0){arrAb[2] = 1;}
     }
     else {
-      inputMessage5 = "No message sent";
+      //inputMessage5 = "No message sent";
       if(arrAb[2] == 1){arrAb[2] = 0;}
     }
     // GET input6 value on <ESP_IP>/string?name
@@ -47,21 +47,21 @@ void serverReceive(){
       inputMessage6 = request->getParam(PARAM_INPUT_6)->value();
     }
     else {
-      inputMessage6 = "No message sent";
+      //inputMessage6 = "No message sent";
     }
      // GET input7 value on <ESP_IP>/string?classcode
     if (request->hasParam(PARAM_INPUT_7)) {
       inputMessage7 = request->getParam(PARAM_INPUT_7)->value();
     }
     else {
-      inputMessage7 = "No message sent";
+      //inputMessage7 = "No message sent";
     }
      // GET input8 value on <ESP_IP>/string?microscopeAb
     if (request->hasParam(PARAM_INPUT_8)) {
       inputMessage8 = request->getParam(PARAM_INPUT_8)->value();
     }
     else {
-      inputMessage8 = "No message sent";
+      //inputMessage8 = "No message sent";
     }
      // GET input9 value on <ESP_IP>/string?test
     if (request->hasParam(PARAM_INPUT_9)) {
@@ -75,7 +75,7 @@ void serverReceive(){
       inputMessage10 = request->getParam(PARAM_INPUT_10)->value();
     }
     else {
-      inputMessage10 = "No message sent";
+      //inputMessage10 = "No message sent";
     }
 
     //Check state
