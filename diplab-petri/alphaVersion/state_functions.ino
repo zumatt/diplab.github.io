@@ -77,14 +77,16 @@ void state4(){
   ab1_resistance = 2;
   ab2_resistance = 4;
   ab3_resistance = 8;
+  updateResistanceValue();
 
-  modality = "history";
+  inputMessage10 = "history";
   historyMode();
   //Same thing as history mode but with data already inserted
 }
 
 void state5(){
-  modality = "microscope";
+  inputMessage10 = "microscope";
+  inputMessage8 = "1";
   //Introduction microscope mode
   microscopeMode();
   //Same thing as microscope mode but with data already inserted
@@ -103,6 +105,11 @@ void state6(){
   ab1_resistance = 0;
   ab2_resistance = 0;
   ab3_resistance = 0;
+  updateResistanceValue();
+
+  //Reset value of inputMessage10 & inputMessage8
+  inputMessage8 = "";
+  inputMessage10 = "";
 
   //Start experience: enter Name and class code
   display.clearDisplay();
@@ -140,10 +147,17 @@ void state8(){
   //Bacteria spreading (everything is in the loop)
   accX = 0;
   accY = 0;
+  display.clearDisplay();
+  display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
+  display.display();
+  readyToSpread = 1;
   Serial.println("State 8 activated!");
 }
 
 void state9(){
+  //Reset controller
+  readyToSpread = 0;
+
   //Antibiotic selection
   if (arrAb[0]+arrAb[1]+arrAb[2] == 3){
     //All antibiotics are displayed
@@ -188,6 +202,10 @@ void state10(){
   //Insert of Antibiotic (Shake device!)
   accX = 0;
   accY = 0;
+  display.clearDisplay();
+  baseLayer();
+  display.display();
+  readyToSpread = 1;
   Serial.println("State 10 activated!");
 }
 
@@ -198,12 +216,25 @@ void state11(){
     //To start test pass the query <ESP_IP>/string?test=1
     ab1_resistance = 2;
     ab2_resistance = 4;
-    ab3_resistance = 8
+    ab3_resistance = 8;
+    updateResistanceValue();
   }
-  
+  if(inputMessage10 == "history"){
+    historyMode();
+  }else if(inputMessage10 == "microscope"){
+    microscopeMode();
+  }
 }
 
 void state12(){
   //Save the experience
-  return;
+  baseLayer();
+
+      display.fillCircle(ab1_x, ab1_y, abDiameter*ab1_resistance, 0);
+    display.fillCircle(ab1_x, ab1_y, abDiameter, 1);
+      display.fillCircle(ab2_x, ab2_y,  abDiameter*ab2_resistance, 0);
+    display.fillCircle(ab2_x, ab2_y, abDiameter, 1);
+      display.fillCircle(ab3_x, ab3_y,  abDiameter*ab3_resistance, 0);
+    display.fillCircle(ab3_x, ab3_y, abDiameter, 1);
+    display.display();
 }

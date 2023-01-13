@@ -1,5 +1,5 @@
 void buttonsCondition(){
-if(modality == "history"){  
+if(inputMessage10 == "history"){  
       if(lastState_fwd == LOW && currentState_fwd == HIGH){
         if (counter < 3){counter ++;}
         historyCondition();
@@ -8,7 +8,7 @@ if(modality == "history"){
         if (counter != 0){counter --;}
         historyCondition();
       }
-    } else if(modality == "microscope"){  
+    } else if(inputMessage10 == "microscope"){  
       if(lastState_fwd == LOW && currentState_fwd == HIGH){
         if (counter < 3){counter ++;}
         microscopeCondition();

@@ -61,17 +61,22 @@ const char* PARAM_INPUT_6 = "name";
 const char* PARAM_INPUT_7 = "classcode";
 const char* PARAM_INPUT_8 = "microscopeAb";
 const char* PARAM_INPUT_9 = "test";
+const char* PARAM_INPUT_10 = "controlCenter";
 
 //String where to save the message from the webPage
-String inputMessage1; //state
-String inputMessage2; //bacteria
-String inputMessage3; //ab1
-String inputMessage4; //ab2
-String inputMessage5; //ab3
-String inputMessage6; //name
-String inputMessage7; //classcode
-String inputMessage8; //microscopeAB
-String inputMessage9; //test (0, 1 or 2)
+String inputMessage1;  //state
+String inputMessage2;  //bacteria
+String inputMessage3;  //ab1
+String inputMessage4;  //ab2
+String inputMessage5;  //ab3
+String inputMessage6;  //name
+String inputMessage7;  //classcode
+String inputMessage8;  //microscopeAB
+String inputMessage9;  //test (0, 1 or 2)
+String inputMessage10; //controlCenter
+
+//Controller for screen ready to spread bacteria
+bool readyToSpread;
 
 //Variables to display stuff on the E-Ink display
 int dispW = 1024;                                         //Display Width
@@ -93,16 +98,16 @@ int ab1_x, ab1_y;                                         //Position of first an
 int ab2_x, ab2_y;                                         //Position of second antibiotic
 int ab3_x, ab3_y;                                         //Position of third antibiotic
 int abDiameter = 25;                                      //Dimension of the AB circle
-int ab1_resistance, ab2_resistance, ab3_resistance;        //Store resistance value for each AB (diamenter multiplier!)
-int ab1_res_8h  = ab1_resistance / 3;                     //Store resistance value for AB 1 in history mode
-int ab1_res_12h = ab1_resistance / 2;
-int ab1_res_24h = ab1_resistance;
-int ab2_res_8h  = ab2_resistance / 3;                     //Store resistance value for AB 2 in history mode
-int ab2_res_12h = ab2_resistance / 2;
-int ab2_res_24h = ab2_resistance;
-int ab3_res_8h  = ab3_resistance / 3;                     //Store resistance value for AB 3 in history mode
-int ab3_res_12h = ab3_resistance / 2;
-int ab3_res_24h = ab3_resistance;
+double ab1_resistance, ab2_resistance, ab3_resistance;       //Store resistance value for each AB (diamenter multiplier!)
+double ab1_res_8h  = ab1_resistance / 3;                  //Store resistance value for AB 1 in history mode
+double ab1_res_12h = ab1_resistance / 2;
+double ab1_res_24h = ab1_resistance;
+double ab2_res_8h  = ab2_resistance / 3;                  //Store resistance value for AB 2 in history mode
+double ab2_res_12h = ab2_resistance / 2;
+double ab2_res_24h = ab2_resistance;
+double ab3_res_8h  = ab3_resistance / 3;                  //Store resistance value for AB 3 in history mode
+double ab3_res_12h = ab3_resistance / 2;
+double ab3_res_24h = ab3_resistance;
 
 //Check how many antibiotics are selected
 int arrAb[3] = {0,0,0};
@@ -189,7 +194,7 @@ void setup() {
   //Setup accellerometer
   LIS.begin(WIRE,0x19); //IIC init
   delay(100);
-  LIS.setFullScaleRange(LIS3DHTR_RANGE_2G);
+  LIS.setFullScaleRange(LIS3DHTR_RANGE_4G);
   LIS.setOutputDataRate(LIS3DHTR_DATARATE_50HZ);
 
   //Display settings
@@ -229,7 +234,7 @@ void setup() {
 
 void loop() {
   //Check if we need to activate the digitalRead for buttons
-  if(inputMessage1 == "4" || inputMessage1 == "5"){
+  if(inputMessage1 == "4" || inputMessage1 == "5" || inputMessage1 == "11"){
 
   //Update variables for Buttons
   currentState_fwd = digitalRead(fwdBtn_PIN);
@@ -247,12 +252,17 @@ void loop() {
     accY = LIS.getAccelerationY(); //Get accellerometer Y data
 
     //Call drawing function for bacteria
-    if(inputMessage1 == "8"){
+    if(inputMessage1 == "8" && readyToSpread == 1){
       drawingLoop();
     }
   
     //Call shake detection for placing ABs
-    if (inputMessage1 == "10"){
+    if (inputMessage1 == "10" && readyToSpread == 1){
+      Serial.println("Shake ready!");
+      Serial.print("Acc x: ");
+      Serial.println(accX);
+      Serial.print("Acc y: ");
+      Serial.println(accY);
       abShake();
     }
   } //END IF data from accellerometer

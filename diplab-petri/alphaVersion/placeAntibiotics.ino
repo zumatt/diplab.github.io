@@ -1,7 +1,6 @@
 void abShake(){
   if (accX >= 3.00 || accX <= -3.00 || accY >= 3.00 || accY <= -3.00){
-    display.clearDisplay();
-    baseLayer();
+    Serial.println("Shake detected!");
 
     ab1_x = random(xC+100, xC2-100);
     ab1_y = random(yC+100, yC2-100);

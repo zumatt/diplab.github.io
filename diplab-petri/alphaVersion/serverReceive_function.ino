@@ -70,14 +70,21 @@ void serverReceive(){
     else {
       inputMessage9 = "2";
     }
+     // GET input9 value on <ESP_IP>/string?controlCenter
+    if (request->hasParam(PARAM_INPUT_10)) {
+      inputMessage10 = request->getParam(PARAM_INPUT_10)->value();
+    }
+    else {
+      inputMessage10 = "No message sent";
+    }
 
     //Check state
     if(inputMessage1 == "0")      {request->send(SD, "/index.html", "text/html");state0();}
       else if(inputMessage1 == "1") {request->send(SD, "/index.html", "text/html");state1();}
       else if(inputMessage1 == "2") {request->send(SD, "/index.html", "text/html");state2(0);}
-      else if(inputMessage1 == "21") {request->send(SD, "/index.html", "text/html");state2(1);}
+      else if(inputMessage1 == "2.1") {request->send(SD, "/index.html", "text/html");state2(1);}
       else if(inputMessage1 == "3") {request->send(SD, "/index.html", "text/html");state3(0);}
-      else if(inputMessage1 == "31") {request->send(SD, "/index.html", "text/html");state3(1);}
+      else if(inputMessage1 == "3.1") {request->send(SD, "/index.html", "text/html");state3(1);}
       else if(inputMessage1 == "4") {request->send(SD, "/index.html", "text/html");state4();}
       else if(inputMessage1 == "5") {request->send(SD, "/index.html", "text/html");state5();}
       else if(inputMessage1 == "6") {request->send(SD, "/index.html", "text/html");state6();}
@@ -90,9 +97,9 @@ void serverReceive(){
 
     //Print on console the input messages
     Serial.print("Test: ");
-    if(inputMessage9 == "0"){ Serial.println("No");}else if(inputMessage9 == "1"){Serial.println("Yes");else if(inputMessage9 == "2"){Serial.println("Not received - could be no.");}else{Serial.println("Error!");}
+    if(inputMessage9 == "0"){ Serial.println("No");}else if(inputMessage9 == "1"){Serial.println("Yes");}else if(inputMessage9 == "2"){Serial.println("Not received - could be no.");}else{Serial.println("Error!");}
     Serial.println("----------------------------------");
-    Serial.print("Query from the browser: ");
+    Serial.println("Query from the browser: ");
     Serial.print(" - State: ");
     Serial.println(inputMessage1);
     Serial.print(" - Bateria: ");
@@ -109,5 +116,7 @@ void serverReceive(){
     Serial.println(inputMessage7);
     Serial.print(" - Microscope AB: ");
     Serial.println(inputMessage8);
+    Serial.println("----------------------------------");
+    Serial.println();
   });
 }
