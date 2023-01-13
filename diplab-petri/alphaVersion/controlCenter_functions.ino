@@ -3,10 +3,10 @@ void microscopeMode(){
     baseLayer();
 
       display.fillCircle(ab1_x, ab1_y, abDiameter*ab1_resistance, 0);
-    display.fillCircle(ab1_x, ab1_y, abDiameter, 1);
       display.fillCircle(ab2_x, ab2_y,  abDiameter*ab2_resistance, 0);
-    display.fillCircle(ab2_x, ab2_y, abDiameter, 1);
       display.fillCircle(ab3_x, ab3_y,  abDiameter*ab3_resistance, 0);
+    display.fillCircle(ab1_x, ab1_y, abDiameter, 1);
+    display.fillCircle(ab2_x, ab2_y, abDiameter, 1);
     display.fillCircle(ab3_x, ab3_y, abDiameter, 1);
     display.display();
 }
@@ -36,10 +36,10 @@ void historyBtn(double j,double k,double l){
     baseLayer();
 
       display.fillCircle(ab1_x, ab1_y, abDiameter*j, 0);
-    display.fillCircle(ab1_x, ab1_y, abDiameter, 1);
       display.fillCircle(ab2_x, ab2_y, abDiameter*k, 0);
-    display.fillCircle(ab2_x, ab2_y, abDiameter, 1);
       display.fillCircle(ab3_x, ab3_y, abDiameter*l, 0);
+    display.fillCircle(ab1_x, ab1_y, abDiameter, 1);
+    display.fillCircle(ab2_x, ab2_y, abDiameter, 1);
     display.fillCircle(ab3_x, ab3_y, abDiameter, 1);
     display.partialUpdate();
 }

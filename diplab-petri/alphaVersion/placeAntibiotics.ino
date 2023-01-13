@@ -1,6 +1,7 @@
 void abShake(){
   if (accX >= 3.00 || accX <= -3.00 || accY >= 3.00 || accY <= -3.00){
-    Serial.println("Shake detected!");
+    display.clearDisplay();
+    baseLayer();
 
     ab1_x = random(xC+100, xC2-100);
     ab1_y = random(yC+100, yC2-100);
@@ -14,7 +15,7 @@ void abShake(){
     ab3_y = random(yC+100, yC2-100);
     display.fillCircle(ab3_x, ab3_y, 25, 1);  //Third Antibiotic
 
-    display.partialUpdate();
+    display.display();
     delay(1000);
   }
 }

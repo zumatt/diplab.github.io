@@ -5,6 +5,9 @@
    SUPSI MAInD
 
    Based on Inkplate 6PLUS (ESP32)
+
+   Notes for the beta:
+    - Create a block system to block the user in the spreading bacteria if they didn't finished the spreading process.
 */
 
 /*
@@ -235,6 +238,7 @@ void setup() {
 void loop() {
   //Check if we need to activate the digitalRead for buttons
   if(inputMessage1 == "4" || inputMessage1 == "5" || inputMessage1 == "11"){
+  //Serial.println("We are in the loop!");
 
   //Update variables for Buttons
   currentState_fwd = digitalRead(fwdBtn_PIN);
@@ -257,12 +261,7 @@ void loop() {
     }
   
     //Call shake detection for placing ABs
-    if (inputMessage1 == "10" && readyToSpread == 1){
-      Serial.println("Shake ready!");
-      Serial.print("Acc x: ");
-      Serial.println(accX);
-      Serial.print("Acc y: ");
-      Serial.println(accY);
+    if (inputMessage1 == "10"){
       abShake();
     }
   } //END IF data from accellerometer

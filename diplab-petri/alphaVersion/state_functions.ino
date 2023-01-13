@@ -202,10 +202,6 @@ void state10(){
   //Insert of Antibiotic (Shake device!)
   accX = 0;
   accY = 0;
-  display.clearDisplay();
-  baseLayer();
-  display.display();
-  readyToSpread = 1;
   Serial.println("State 10 activated!");
 }
 
@@ -220,10 +216,12 @@ void state11(){
     updateResistanceValue();
   }
   if(inputMessage10 == "history"){
+    Serial.println("We are in history mode!");
     historyMode();
   }else if(inputMessage10 == "microscope"){
+    Serial.println("We are in microscope mode!");
     microscopeMode();
-  }
+  } else{Serial.println("Error in state11");}
 }
 
 void state12(){
@@ -231,10 +229,10 @@ void state12(){
   baseLayer();
 
       display.fillCircle(ab1_x, ab1_y, abDiameter*ab1_resistance, 0);
-    display.fillCircle(ab1_x, ab1_y, abDiameter, 1);
       display.fillCircle(ab2_x, ab2_y,  abDiameter*ab2_resistance, 0);
-    display.fillCircle(ab2_x, ab2_y, abDiameter, 1);
       display.fillCircle(ab3_x, ab3_y,  abDiameter*ab3_resistance, 0);
+    display.fillCircle(ab1_x, ab1_y, abDiameter, 1);
+    display.fillCircle(ab2_x, ab2_y, abDiameter, 1);
     display.fillCircle(ab3_x, ab3_y, abDiameter, 1);
     display.display();
 }

@@ -116,6 +116,8 @@ void serverReceive(){
     Serial.println(inputMessage7);
     Serial.print(" - Microscope AB: ");
     Serial.println(inputMessage8);
+    Serial.print(" - Control center modality: ");
+    Serial.println(inputMessage10);
     Serial.println("----------------------------------");
     Serial.println();
   });
