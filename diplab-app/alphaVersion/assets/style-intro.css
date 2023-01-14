@@ -195,3 +195,11 @@ p{
     font-size: 13px;
   }
 }
+
+.skipButton {
+  color: rgba(239, 239, 239, 1);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(239, 239, 239, 1);
+  background-color: rgba(213, 255, 45, 0);
+}
