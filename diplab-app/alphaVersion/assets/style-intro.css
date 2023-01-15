@@ -103,7 +103,6 @@ p{
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 200px;
 }
 .diplab-petri-image {
   display: flex;
@@ -169,7 +168,7 @@ p{
   bottom: 0;
   left: 0;
   width: 100%;
-  margin-bottom: 5em;
+  margin-bottom: 10vh;
 }
 .button {
   display: flex;
@@ -202,4 +201,68 @@ p{
   border-width: 1px;
   border-color: rgba(239, 239, 239, 1);
   background-color: rgba(213, 255, 45, 0);
+}
+
+.description-input {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-top: 15vh;
+  height: auto;
+  color: rgba(239, 239, 239, 1);
+  font-family: "Inconsolata", monospace;
+  margin-left: 15vw;
+  margin-right: 15vw;
+  font-size: 20px;
+}
+@media (max-width: 640px) {
+  .description-input {
+    margin-top: 15vh;
+    font-size: 17px;
+  }
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-top: 3vh;
+  border-radius: 1em;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(239, 239, 239, 1);
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  background-color: rgba(0, 0, 0, 0);
+  margin-left: 15vw;
+  margin-right: 15vw;
+  font-family: "Inconsolata", sans-serif;
+  color: rgba(239, 239, 239, 1);
+  min-width: 60vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 640px) {
+  .form-input {
+    font-size: 12px;
+  }
+}
+
+.formContainer{
+  margin-top: 8vh;
+}
+
+.footer-submit{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin-bottom: 10vh;
+}
+
+.control-center-main {
+  display: flex;
+  position: relative;
 }
