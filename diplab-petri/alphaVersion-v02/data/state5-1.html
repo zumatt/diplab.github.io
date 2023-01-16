@@ -1,0 +1,72 @@
+<!DOCTYPE HTML><html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="assets/style-intro.css">
+  <script src="assets/main.js" defer></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="manifest" href="assets/site.webmanifest">
+  <title>DiPLab - Alpha Version - State 5</title>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="builder-columns div">
+        <div class="builder-column column">
+          <a href="/string?state=5" class="a" data-el="a-1"><</a>
+        </div>
+        <div class="builder-column column-2">
+          <div class="title"><p>DiPLab</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="body-text">
+    <description-input class="description-input" data-dom-state="description-input-1">
+        To start the experience you need to insert your name and class code.
+        This will allow you to save your experiment.
+      </p>
+    </description-input>
+  </div>
+    <form
+      action="/string"
+      class="formContainer"
+      method='get'
+      target='_self'
+    >
+      <input
+       name="name"
+       placeholder="Write your name here (e.g. Reto)"
+       type="text"
+       maxlength="20"
+       class="form-input"
+       required
+      ></input>
+      <input
+       name="classcode"
+       placeholder="Insert the class code provided (e.g. #25478)"
+       type="text"
+       maxlength="5"
+       class="form-input"
+       required
+      ></input>
+      <input
+       name="state"
+       value="6"
+       type="text"
+       maxlength="1"
+       class="form-input"
+       style="display: none;"
+       required
+      ></input>
+        <div class="footer-submit">
+        <input
+          type="submit"
+          class="button"
+          value="Start the experience!"
+          style="margin-top: 3vh;border: none; padding-left: 5em; padding-right: 5em; font-size: 15px;"
+        ></input></div>
+    </form>
+</body>
+</html>

@@ -19,6 +19,7 @@ void state0() {
 }
 
 void state1() {
+  delay(10000);
   //Confirm the connection and start an introduction to the exp
   display.clearDisplay();
   display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
