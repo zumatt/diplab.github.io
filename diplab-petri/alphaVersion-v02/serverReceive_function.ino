@@ -89,7 +89,7 @@ void serverReceive(){
       else if(inputMessage1 == "5") {request->send(SPIFFS, "/state5.html", "text/html");state5();}
       else if(inputMessage1 == "6") {request->send(SPIFFS, "/state6.html", "text/html");state6();}
       else if(inputMessage1 == "7") {request->send(SPIFFS, "/state7.html", "text/html");state7();}
-      else if(inputMessage1 == "8") {request->send(SPIFFS, "/state8.html", "text/html");state8();}
+      else if(inputMessage1 == "8") {request->send(SPIFFS, "/state7-1.html", "text/html");state8();}
       else if(inputMessage1 == "9") {request->send(SPIFFS, "/state9.html", "text/html");state9();}
       else if(inputMessage1 == "10"){request->send(SPIFFS, "/state10.html", "text/html");state10();}
       else if(inputMessage1 == "11"){request->send(SPIFFS, "/state11.html", "text/html");state11();}

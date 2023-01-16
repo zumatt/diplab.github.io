@@ -45,6 +45,14 @@ void state2(int k){
 }
 
 void state3(int k){
+  //AB introduction position
+  ab1_x = xC2-100;
+  ab1_y = yC+150;
+  ab2_x = xC+150;
+  ab2_y = yC+450;
+  ab3_x = xC+400;
+  ab3_y = yC+600;
+
   //Introduction place antibiotics
     display.clearDisplay();
 
@@ -56,22 +64,14 @@ void state3(int k){
       display.drawLine(xC, yC+(j*petriD/10), xC2, yC+(j*petriD/10), BLACK);}
     //END of redraw base layer
     if (k == 1){
-    display.fillCircle(random(xC+100, xC2-100), random(xC+100, xC2-100), 25, 1);  //First Antibiotic
-    display.fillCircle(random(xC+100, xC2-100), random(xC+100, xC2-100), 25, 1);  //Second Antibiotic
-    display.fillCircle(random(xC+100, xC2-100), random(xC+100, xC2-100), 25, 1);  //Third Antibiotic
+    display.fillCircle(ab1_x, ab1_y, 25, 1);  //First Antibiotic
+    display.fillCircle(ab2_x, ab2_y, 25, 1);  //Second Antibiotic
+    display.fillCircle(ab3_x, ab3_y, 25, 1);  //Third Antibiotic
     display.display();} else {display.display();}
 }
 
 void state4(){
   //Introduction history mode
-
-  //AB introduction position
-  ab1_x = xC2-100;
-  ab1_y = yC+150;
-  ab2_x = xC+150;
-  ab2_y = yC+450;
-  ab3_x = xC+400;
-  ab3_y = yC+600;
 
   //Resistance introduction value
   ab1_resistance = 2;
@@ -204,6 +204,7 @@ void state10(){
   accY = 0;
   display.clearDisplay();
   display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
+  baseLayer();
   display.display();
   Serial.println("State 10 activated!");
 }

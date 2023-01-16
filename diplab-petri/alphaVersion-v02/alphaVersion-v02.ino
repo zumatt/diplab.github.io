@@ -181,9 +181,9 @@ void setup() {
   Serial.println("WiFi init:");
   initWiFi();
   Serial.println("WiFi init END");
-  Serial.println("SD Card init:");
+  Serial.println("SPIFFS init START");
   initSPIFFS();
-  Serial.println("SD Card init END");
+  Serial.println("SPIFFS init END");
 
   //Here we set what it need to happen after a client open the ESP32 IP address
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
