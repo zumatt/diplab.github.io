@@ -1,6 +1,9 @@
 void abShake(){
   if (accX >= 3.00 || accX <= -3.00 || accY >= 3.00 || accY <= -3.00){
-
+    display.clearDisplay();
+    display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
+    baseLayer();
+    
     ab1_x = random(xC+100, xC2-100);
     ab1_y = random(yC+100, yC2-100);
     display.fillCircle(ab1_x, ab1_y, 25, 1);  //First Antibiotic
