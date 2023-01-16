@@ -112,10 +112,6 @@ p{
   margin-right: auto;
   max-height: 30vw;
 }
-@media (max-width: 991px) {
-  .antibiotic {
-  }
-}
 @media (max-width: 640px) {
   .antibiotic {
     padding-left: 10vw;
