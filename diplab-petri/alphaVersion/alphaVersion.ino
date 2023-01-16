@@ -8,6 +8,9 @@
 
    Notes for the beta:
     - Create a block system to block the user in the spreading bacteria if they didn't finished the spreading process.
+    - Find another solution for the ab communication is hard to send three different querys from the web
+      ^- for that is quite easy: send one single query and then split it...
+      ^- or do it in three different steps (3 different webPages first for AB1 etc.)
 */
 
 /*
@@ -214,7 +217,7 @@ void setup() {
 
   //Here we set what it need to happen after a client open the ESP32 IP address
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SD, "/index.html", "text/html");
+    request->send(SD, "/state0.html", "text/html");
   });
   //Load favicon, css and other files on the SD card
   server.serveStatic("/", SD, "/");

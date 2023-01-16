@@ -79,21 +79,21 @@ void serverReceive(){
     }
 
     //Check state
-    if(inputMessage1 == "0")      {request->send(SD, "/index.html", "text/html");state0();}
-      else if(inputMessage1 == "1") {request->send(SD, "/index.html", "text/html");state1();}
-      else if(inputMessage1 == "2") {request->send(SD, "/index.html", "text/html");state2(0);}
-      else if(inputMessage1 == "2.1") {request->send(SD, "/index.html", "text/html");state2(1);}
-      else if(inputMessage1 == "3") {request->send(SD, "/index.html", "text/html");state3(0);}
-      else if(inputMessage1 == "3.1") {request->send(SD, "/index.html", "text/html");state3(1);}
-      else if(inputMessage1 == "4") {request->send(SD, "/index.html", "text/html");state4();}
-      else if(inputMessage1 == "5") {request->send(SD, "/index.html", "text/html");state5();}
-      else if(inputMessage1 == "6") {request->send(SD, "/index.html", "text/html");state6();}
-      else if(inputMessage1 == "7") {request->send(SD, "/index.html", "text/html");state7();}
-      else if(inputMessage1 == "8") {request->send(SD, "/index.html", "text/html");state8();}
-      else if(inputMessage1 == "9") {request->send(SD, "/index.html", "text/html");state9();}
-      else if(inputMessage1 == "10"){request->send(SD, "/index.html", "text/html");state10();}
-      else if(inputMessage1 == "11"){request->send(SD, "/index.html", "text/html");state11();}
-      else if(inputMessage1 == "12"){request->send(SD, "/index.html", "text/html");state12();}
+    if(inputMessage1 == "0")      {request->send(SD, "/state0.html", "text/html");state0();}
+      else if(inputMessage1 == "1") {request->send(SD, "/state1.html", "text/html");state1();}
+      else if(inputMessage1 == "2") {request->send(SD, "/state2.html", "text/html");state2(0);}
+      else if(inputMessage1 == "2.1") {request->send(SD, "/state2-1.html", "text/html");state2(1);}
+      else if(inputMessage1 == "3") {request->send(SD, "/state3.html", "text/html");state3(0);}
+      else if(inputMessage1 == "3.1") {request->send(SD, "/state3-1.html", "text/html");state3(1);}
+      else if(inputMessage1 == "4") {request->send(SD, "/state4.html", "text/html");state4();}
+      else if(inputMessage1 == "5") {request->send(SD, "/stae5.html", "text/html");state5();}
+      else if(inputMessage1 == "6") {request->send(SD, "/state6.html", "text/html");state6();}
+      else if(inputMessage1 == "7") {request->send(SD, "/state7.html", "text/html");state7();}
+      else if(inputMessage1 == "8") {request->send(SD, "/state8.html", "text/html");state8();}
+      else if(inputMessage1 == "9") {request->send(SD, "/state9.html", "text/html");state9();}
+      else if(inputMessage1 == "10"){request->send(SD, "/state10.html", "text/html");state10();}
+      else if(inputMessage1 == "11"){request->send(SD, "/state11.html", "text/html");state11();}
+      else if(inputMessage1 == "12"){request->send(SD, "/state12.html", "text/html");state12();}
 
     //Print on console the input messages
     Serial.print("Test: ");
