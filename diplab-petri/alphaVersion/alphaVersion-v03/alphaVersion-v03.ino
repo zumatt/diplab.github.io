@@ -5,9 +5,6 @@
    SUPSI MAInD
 
    Based on Inkplate 6PLUS (ESP32)
-
-   Notes for the beta:
-    - Create a block system to block the user in the spreading bacteria if they didn't finished the spreading process.
 */
 
 /*
@@ -79,8 +76,10 @@ int xPos = dispW/2;                                         //Center x of petri 
 int step = petriD/10;                                       //Step of each line of bacteria
 int arrY[21] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of Y axis for checking if a line was drawn
 int lenArrY = *(&arrY + 1) - arrY;                          //Array of Y axis length
+int sumArrY;                                                //Sum of Array on axis Y
 int arrX[21] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of X axis for checking if a line was drawn
 int lenArrX = *(&arrX + 1) - arrX;                          //Array of X axis length
+int sumArrX;                                                //Sum of Array on axis X
 double accX, accY;                                          //Variables to store accellerometer data
 int ab1_x, ab1_y;                                           //Position of first antibiotic
 int ab2_x, ab2_y;                                           //Position of second antibiotic
@@ -228,6 +227,18 @@ void loop() {
     //Call drawing function for bacteria
     if(j_state == 8 && readyToSpread == 1){
       drawingLoop();
+
+      if (sumArrX == lenArrX && sumArrY == lenArrY){
+        String jsonString = "";
+        StaticJsonDocument<200> doc;                      // create a JSON container
+        JsonObject object = doc.to<JsonObject>();         // create a JSON Object
+        object["spreadingBacteria"] = 1;                  // write data into the JSON object -> I used "rand1" and "rand2" here, but you can use anything else
+        serializeJson(doc, jsonString);                   // convert JSON object to string
+        Serial.println(jsonString);                       // print JSON string to console for debug purposes (you can comment this out)
+        webSocket.broadcastTXT(jsonString);               // send JSON string to clients
+      } else {
+        checkLoopSpreading();
+      }
     }
   
     //Call shake detection for placing ABs
@@ -235,6 +246,7 @@ void loop() {
       abShake();
       //Serial.println("Ab shake activated!");
     }
+  } //END IF data from accellerometer
 
     //Wait
     unsigned long now = millis();
@@ -242,7 +254,8 @@ void loop() {
     //Call shake detection for placing ABs
     if (j_state == 11){
       if ((unsigned long)(now - previousMillis) > interval) {
-        
+        Serial.println("Checking for web data...");
+
         String jsonString = "";
         StaticJsonDocument<200> doc;                      // create a JSON container
         JsonObject object = doc.to<JsonObject>();         // create a JSON Object
@@ -255,6 +268,4 @@ void loop() {
         previousMillis = now;
       }
     }
-
-  } //END IF data from accellerometer
 }

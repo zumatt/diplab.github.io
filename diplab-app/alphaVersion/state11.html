@@ -58,12 +58,12 @@
   </div>
   <div class="body-text">
     <p id="historyComm" class="body-text-2" style="text-align:center; margin-top:10vh; display: inline-block;">
-      Actual time:
+      Time:
       <span id='historyVal' style="font-size: 1.3em;">-</span>
       hours.
     </p>
     <p id="microscopeComm" class="body-text-2 hided" style="text-align:center; margin-top:10vh; display: inline-block;">
-      Actual magnification:
+      Magnification:
       <span id='microscopeVal' style="font-size: 1.3em;">-</span>
       x.
     </p>
@@ -88,6 +88,7 @@
   
   function init() {
       Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      Socket.onmessage = function(event) { processCommand(event); };
       }
   
   function button_nextFunction() {

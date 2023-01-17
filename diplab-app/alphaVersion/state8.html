@@ -138,6 +138,7 @@
   var abVal_Input1;
   var abVal_Input2;
   var abVal_Input3;
+  var spreadingCheck;
 
   document.getElementById('btn_next').addEventListener('click', button_nextFunction);
   document.getElementById('btn_back').addEventListener('click', button_backFunction);
@@ -246,11 +247,14 @@
   
   function init() {
       Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      Socket.onmessage = function(event) { processCommand(event); };
       }
 
   function button_nextFunction() {
+    if(spreadingCheck != 1){
+      alert("You need to finish spreading bacteria before!");
+    } else{
       if(ab[0] + ab[1] + ab[2] == 3){
-        console.log("Going to state 9!");
         var msg = {
                   state: 9, 
                   ab1: ab1Val,
@@ -264,7 +268,8 @@
         } else {
           alert("To continue you need to select 3 antibiotics!");
           };
-      }
+    }
+  }
   
   function button_backFunction() {
       var msg = {state: 7};
@@ -273,6 +278,12 @@
       window.location.href='state7.html';
       console.log("Message sent: " + JSON.stringify(msg));
       }
+  
+  function processCommand(event){
+    var obj = JSON.parse(event.data);
+    spreadingCheck = obj.spreadingBacteria;
+    console.log(obj.spreadingBacteria);
+    }
 
   window.onload = function(event){
       init();

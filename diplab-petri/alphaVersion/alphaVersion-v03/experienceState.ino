@@ -170,9 +170,11 @@ void state11(){
   }
   if(j_controlCenter == "history"){
     Serial.println("We are in history mode!");
+    historyHours = 0;
     historyMode();
   }else if(j_controlCenter == "microscope"){
     Serial.println("We are in microscope mode!");
+    microscopeMagnify = 0;
     microscopeMode();
   } else{Serial.println("Error in state11");}
 }

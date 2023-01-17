@@ -85,3 +85,12 @@ void drawBacteria_x(int j, int k, double w){
       //Serial.println(" x !");
   }  
 }
+
+void checkLoopSpreading(){
+  for(int i=0; i<=lenArrY; i++){
+    sumArrY += lenArrY[i];
+  }
+  for(int i=0; i<=lenArrX; i++){
+    sumArrX += lenArrX[i];
+  }
+}
