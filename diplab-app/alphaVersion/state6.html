@@ -160,11 +160,7 @@
       }
   
   function button_backFunction() {
-      var msg = {state: 1};
-      var jsonString = JSON.stringify(msg);
-      Socket.send(jsonString);
       window.location.href='state5-1.html';
-      console.log("Message sent: " + JSON.stringify(msg));
       }
 
   window.onload = function(event){

@@ -1,12 +1,10 @@
 <!DOCTYPE HTML><html>
+<!-----------HEAD----------->
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="assets/style-experience.css">
-  <script src="assets/main.js" defer></script>
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-  <link rel="manifest" href="assets/site.webmanifest">
   <title>DiPLab - Alpha Version - State 8</title>
 </head>
 <body>
@@ -14,7 +12,9 @@
     <div>
       <div class="builder-columns div">
         <div class="builder-column column">
-          <a href="/string?state=7" class="a" data-el="a-1"><</a>
+          <button type="button" class="a" id='btn_back'>
+            <
+          </button>
         </div>
         <div class="builder-column column-2">
           <div class="title"><p>DiPLab</p></div>
@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-  <form action="/string" method='get' target='_self'>
+  <form id="abForm">
   <div class="antibiotic">
     <div class="img-column">
       <div class="antibiotic-img" data-el="antibiotic-img">
@@ -120,19 +120,77 @@
     </div>
   </div>
   <input
-       name="state"
-       value="9"
-       type="text"
-       maxlength="1"
-       class="form-input"
-       style="display: none;"
-       required
-      ></input>
-  <input
-          type="submit"
+          id="btn_next"
           class="button"
           value="Choose antibiotics"
           style="border: none; margin-left: auto; margin-right: auto; margin-top: 3vh;"
         ></input>
 </form>
+</body>
+<!-----------SCRIPT----------->
+<script>
+  var Socket;
+
+  document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+  document.getElementById('btn_back').addEventListener('click', button_backFunction);
+  document.getElementById('checkboxInput1').addEventListener('click', function() {
+    if (this.checked) {
+      console.log("AB1 is checked..");
+    } else {
+      console.log("AB1 is not checked..");
+    }
+  });
+  document.getElementById('checkboxInput2').addEventListener('click', function() {
+    if (this.checked) {
+      console.log("AB2 is checked..");
+    } else {
+      console.log("AB2 is not checked..");
+    }
+  });
+  document.getElementById('checkboxInput3').addEventListener('click', function() {
+    if (this.checked) {
+      console.log("AB3 is checked..");
+    } else {
+      console.log("AB3 is not checked..");
+    }
+  });
+  
+  function init() {
+      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      }
+
+  function button_nextFunction() {
+      var x = document.getElementById("abForm");
+      var ab1Val = x.elements[0].value;
+      var ab2Val = x.elements[1].value;
+      var ab3Val = x.elements[2].value;
+      var msg = {
+                  state: 9, 
+                  ab1: ab1Val,
+                  ab2: ab2Val,
+                  ab3: ab3Val
+                };
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      console.log("Message sent: " + JSON.stringify(msg));
+      if(ab1Val != "" && ab2Val != "" && ab3Val != ""){
+        console.log("Going to state 9!");
+        //window.location.href='state9.html';
+        } else {
+          alert("To continue you need to select 3 antibiotics!");
+          };
+      }
+  
+  function button_backFunction() {
+      var msg = {state: 7};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state7.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+
+  window.onload = function(event){
+      init();
+  }
+  </script>
 </html>
