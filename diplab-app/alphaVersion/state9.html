@@ -48,7 +48,7 @@
       }
   
   function button_nextFunction() {
-      var msg = {state: 10, controlCenter: "history"};
+      var msg = {state: 10};
       var jsonString = JSON.stringify(msg);
       Socket.send(jsonString);
       window.location.href='state10.html';
