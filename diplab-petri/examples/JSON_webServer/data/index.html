@@ -6,19 +6,26 @@
 <h1>Lets generate a random number</h1>
 <p>The first random number is: <span id='rand1'>-</span></p>
 <p>The second random number is: <span id='rand2'>-</span></p>
-<p><button type='button' id='BTN_SEND_BACK'>Send info to ESP32</button></p>
+<p><button type='button' id='BTN_SEND_1'>Send info to ESP32 - #1</button></p>
+<p><button type='button' id='BTN_SEND_2'>Send info to ESP32 - #2</button></p>
 </span>
 </body>
 <script>
 var Socket;
-document.getElementById('BTN_SEND_BACK').addEventListener('click', button_send_back);
+document.getElementById('BTN_SEND_1').addEventListener('click', button_send_one);
+document.getElementById('BTN_SEND_2').addEventListener('click', button_send_two);
 function init() {
     Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
     Socket.onmessage = function(event) { processCommand(event); };
     }
 
-function button_send_back() {
+function button_send_one() {
     var msg = {brand: 'Gibson',type: 'Les Paul Studio',year: 2010,color: 'white'};
+    Socket.send(JSON.stringify(msg));
+    }
+
+function button_send_two() {
+    var msg = {brand: 'Roland',type: 'Electric',year: 2010,color: 'white', location: 'Mendrisio'};
     Socket.send(JSON.stringify(msg));
     }
 

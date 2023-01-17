@@ -3,7 +3,6 @@
 #include <WebSocketsServer.h>
 #include <ArduinoJson.h>                              // needed for JSON encapsulation (send multiple variables with one string)
 #include <AsyncTCP.h>
-#include <ESPAsyncWebServer.h>
 #include "SPIFFS.h"
 
 const char* ssid = "DiPLab Test";
@@ -100,11 +99,13 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
         const char* g_type = doc["type"];
         const int g_year = doc["year"];
         const char* g_color = doc["color"];
+        const char* g_location = doc["location"];
         Serial.println("Received guitar info from user");
         Serial.println("Brand: " + String(g_brand));
         Serial.println("Type: " + String(g_type));
         Serial.println("Year: " + String(g_year));
         Serial.println("Color: " + String(g_color));
+        Serial.println("Location: " + String(g_location));
       }
       Serial.println("");
       break;
