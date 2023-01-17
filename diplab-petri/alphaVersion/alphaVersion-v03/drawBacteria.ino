@@ -88,9 +88,9 @@ void drawBacteria_x(int j, int k, double w){
 
 void checkLoopSpreading(){
   for(int i=0; i<=lenArrY; i++){
-    sumArrY += lenArrY[i];
+    sumArrY += arrY[i];
   }
   for(int i=0; i<=lenArrX; i++){
-    sumArrX += lenArrX[i];
+    sumArrX += arrX[i];
   }
 }
