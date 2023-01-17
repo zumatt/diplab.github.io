@@ -1,20 +1,21 @@
 <!DOCTYPE HTML><html>
+<!-----------HEAD----------->
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="assets/style-intro.css">
-  <script src="assets/main.js" defer></script>
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-  <link rel="manifest" href="assets/site.webmanifest">
-  <title>DiPLab - Alpha Version - State 5</title>
+  <title>DiPLab - Alpha Version - State 5.1</title>
 </head>
+<!-----------BODY----------->
 <body>
   <div class="header">
     <div>
       <div class="builder-columns div">
         <div class="builder-column column">
-          <a href="state1.html" class="a" data-el="a-1"><</a>
+          <button type="button" class="a" id='btn_back'>
+            <
+          </button>
         </div>
         <div class="builder-column column-2">
           <div class="title"><p>DiPLab</p></div>
@@ -30,10 +31,8 @@
     </description-input>
   </div>
     <form
-      action="/string"
+      id="infoFrm"
       class="formContainer"
-      method='get'
-      target='_self'
     >
       <input
        name="name"
@@ -51,22 +50,55 @@
        class="form-input"
        required
       ></input>
-      <input
-       name="state"
-       value="6"
-       type="text"
-       maxlength="1"
-       class="form-input"
-       style="display: none;"
-       required
-      ></input>
         <div class="footer-submit">
         <input
-          type="submit"
           class="button"
+          id="btn_next"
           value="Start the experience!"
-          style="margin-top: 3vh;border: none; padding-left: 5em; padding-right: 5em; font-size: 15px;"
+          style="margin-top: 3vh; padding-left: 5em; padding-right: 5em; font-size: 15px;"
         ></input></div>
     </form>
 </body>
+<!-----------SCRIPT----------->
+<script>
+  var Socket;
+
+  document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+  document.getElementById('btn_back').addEventListener('click', button_backFunction);
+  
+  function init() {
+      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      }
+  
+  function button_nextFunction() {
+      var x = document.getElementById("infoFrm");
+      var nameVal = x.elements[0].value;
+      var classcodeVal = x.elements[1].value;
+      var msg = {
+                  state: 6, 
+                  name: nameVal,
+                  classcode: classcodeVal
+                };
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      console.log("Message sent: " + JSON.stringify(msg));
+      if(nameVal != "" && classcodeVal != ""){
+        window.location.href='state6.html';
+        } else {
+          alert("To continue you need to compile\nname and classcode!");
+          };
+      }
+  
+  function button_backFunction() {
+      var msg = {state: 1};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state1.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+
+  window.onload = function(event){
+      init();
+  }
+  </script>
 </html>

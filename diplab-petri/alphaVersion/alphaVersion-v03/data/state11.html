@@ -1,20 +1,21 @@
 <!DOCTYPE HTML><html>
+<!-----------HEAD----------->
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="assets/style-intro.css">
-  <script src="assets/main.js" defer></script>
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" type="text/css" href="assets/style-controlcenter.css">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-  <link rel="manifest" href="assets/site.webmanifest">
   <title>DiPLab - Alpha Version - State 11</title>
 </head>
+<!-----------BODY----------->
 <body>
   <div class="header">
     <div>
       <div class="builder-columns div">
         <div class="builder-column column">
-          <a href="/string?state=10" class="a" data-el="a-1"><</a>
+          <button type="button" class="a" id='btn_back'>
+            <
+          </button>
         </div>
         <div class="builder-column column-2">
           <div class="title"><p>DiPLab</p></div>
@@ -30,53 +31,150 @@
     </body-text>
   </div>
   <div class="control-center-main">
-    <a
-      href="/string?state=11&test=1&controlCenter=history"
-      class="button"
-      data-el="button"
-    >
+    <button type="button" class="button selectedButton" id='btn_history'>
       History
-    </a>
-    <a
-      href="/string?state=11&test=1&controlCenter=microscope&microscopeAb=1"
-      class="button"
-      data-el="button-2"
-    >
-      Mircoscope
-    </a>
+    </button>
+    <button type="button" class="button" id="btn_microscope">
+      Microscope
+    </button>
   </div>
-  <div class="body-text">
+  <div id="microscopeAbSelector1" class="body-text hided">
     <body-text class="body-text-2" style="text-align:center; margin-top:10vh;">
       <p>
         For microscope mode, select the antibiotic to zoom:
       </p>    
     </body-text>
   </div>
-  <div class="control-center-main">
-    <a
-      href="/string?state=11&test=1&controlCenter=microscope&microscopeAb=1"
-      class="button"
-      data-el="button"
-    >
+  <div id="microscopeAbSelector2" class="control-center-main hided">
+    <button type="button" class="button selectedButton" id='btn_ab1'>
       AB 1
-    </a>
-    <a
-      href="/string?state=11&test=1&controlCenter=microscope&microscopeAb=2"
-      class="button"
-      data-el="button-2"
-    >
+    </button>
+    <button type="button" class="button" id='btn_ab2'>
       AB 2
-    </a>
-    <a
-      href="/string?state=11&test=1&controlCenter=microscope&microscopeAb=3"
-      class="button"
-      data-el="button-3"
-    >
+    </button>
+    <button type="button" class="button" id='btn_ab3'>
       AB 3
-    </a>
+    </button>
   </div>
     <div class="footer-button">
-      <a href="/string?state=12" class="button" data-el="button">Save the experience</a>
+      <button type="button" class="button selectedButton" id='btn_next'>
+        End the experience!
+      </button>
     </div>  
 </body>
+<!-----------SCRIPT----------->
+<script>
+  var Socket;
+
+  document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+  document.getElementById('btn_back').addEventListener('click', button_backFunction);
+  document.getElementById('btn_history').addEventListener('click', button_historyFunction);
+  document.getElementById('btn_microscope').addEventListener('click', button_microscopeFunction);
+  document.getElementById('btn_ab1').addEventListener('click', button_ab1Function);
+  document.getElementById('btn_ab2').addEventListener('click', button_ab2Function);
+  document.getElementById('btn_ab3').addEventListener('click', button_ab3Function);
+  
+  function init() {
+      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      }
+  
+  function button_nextFunction() {
+    var msg = {state: 12};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state12.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+  
+  function button_backFunction() {
+      var msg = {state: 10};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state10.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+  
+  function button_historyFunction() {
+      document.getElementById('btn_history').classList.add("selectedButton");
+      document.getElementById('btn_microscope').classList.remove("selectedButton");
+      document.getElementById('microscopeAbSelector1').classList.add("hided");
+      document.getElementById('microscopeAbSelector2').classList.add("hided");
+      var msg = {
+                  state: 11,
+                  controlCenter: "history",
+                  test: 1
+                };
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+
+  function button_microscopeFunction() {
+      document.getElementById('btn_history').classList.remove("selectedButton");
+      document.getElementById('btn_microscope').classList.add("selectedButton");
+      document.getElementById('microscopeAbSelector1').classList.remove("hided");
+      document.getElementById('microscopeAbSelector2').classList.remove("hided");
+      document.getElementById('btn_ab1').classList.add("selectedButton");
+      document.getElementById('btn_ab2').classList.remove("selectedButton");
+      document.getElementById('btn_ab3').classList.remove("selectedButton");
+    var msg = {
+                state: 11,
+                test:1,
+                controlCenter: "microscope",
+                microscopeAb: 1
+              };
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+
+  function button_ab1Function(){
+    document.getElementById('btn_ab1').classList.add("selectedButton");
+    document.getElementById('btn_ab2').classList.remove("selectedButton");
+    document.getElementById('btn_ab3').classList.remove("selectedButton");
+    var msg = {
+                state: 11,
+                test:1,
+                controlCenter: "microscope",
+                microscopeAb: 1
+              };
+    var jsonString = JSON.stringify(msg);
+    Socket.send(jsonString);
+    console.log("Message sent: " + JSON.stringify(msg));
+  }
+
+  function button_ab2Function(){
+    document.getElementById('btn_ab1').classList.remove("selectedButton");
+    document.getElementById('btn_ab2').classList.add("selectedButton");
+    document.getElementById('btn_ab3').classList.remove("selectedButton");
+    var msg = {
+                state: 11,
+                test:1,
+                controlCenter: "microscope",
+                microscopeAb: 2
+              };
+    var jsonString = JSON.stringify(msg);
+    Socket.send(jsonString);
+    console.log("Message sent: " + JSON.stringify(msg));
+  }
+
+  function button_ab3Function(){
+    document.getElementById('btn_ab1').classList.remove("selectedButton");
+    document.getElementById('btn_ab2').classList.remove("selectedButton");
+    document.getElementById('btn_ab3').classList.add("selectedButton");
+    var msg = {
+                state: 11,
+                test:1,
+                controlCenter: "microscope",
+                microscopeAb: 3
+              };
+    var jsonString = JSON.stringify(msg);
+    Socket.send(jsonString);
+    console.log("Message sent: " + JSON.stringify(msg));
+  }
+  
+  window.onload = function(event){
+      init();
+  }
+  </script>
 </html>

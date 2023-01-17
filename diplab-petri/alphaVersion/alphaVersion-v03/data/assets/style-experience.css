@@ -51,6 +51,7 @@ p{
   margin-left: 8vw;
   margin-right: auto;
   text-decoration:none;
+  background: rgba(0, 0, 0, 0);
 }
 @media (max-width: 991px) {
   .a {
@@ -282,6 +283,7 @@ p{
   font-family: "Inconsolata", monospace;
   margin-top: 3vh;
   text-decoration: none;
+  border-width: 0;
 }
 @media (max-width: 640px) {
   .button {

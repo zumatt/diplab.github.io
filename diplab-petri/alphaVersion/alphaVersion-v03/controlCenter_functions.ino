@@ -1,3 +1,9 @@
+/*
+    -----------------------------------------------------------
+                          CONTROL CENTER
+    -----------------------------------------------------------
+*/
+
 void microscopeMode(){
     counter = 0;
     baseLayer();
@@ -47,9 +53,11 @@ void historyBtn(double j,double k,double l){
 void historyCondition(){
   if(counter == 0){ //0h
     Serial.println("History mode: 0h !");
+    historyHours = 0;
     historyMode();
   } else if(counter == 1){ //8h
     Serial.println("History mode: 8h !");
+    historyHours = 8;
     Serial.print("AB 1: ");
     Serial.print(ab1_res_8h);
     Serial.print(" - AB 2: ");
@@ -59,6 +67,7 @@ void historyCondition(){
     historyBtn(ab1_res_8h,ab2_res_8h,ab3_res_8h);
   } else if(counter == 2){ //12h
     Serial.println("History mode: 12h !");
+    historyHours = 12;
     Serial.print("AB 1: ");
     Serial.print(ab1_res_12h);
     Serial.print(" - AB 2: ");
@@ -68,6 +77,7 @@ void historyCondition(){
     historyBtn(ab1_res_12h,ab2_res_12h,ab3_res_12h);
   } else if(counter == 3){ //24h
     Serial.println("History mode: 24h !");
+    historyHours = 24;
     historyBtn(ab1_res_24h,ab2_res_24h,ab3_res_24h);
   }
 }
@@ -75,19 +85,21 @@ void historyCondition(){
 void microscopeCondition(){
   if(counter == 0){ //0x
     Serial.println("Microscope mode: 0x !");
+    microscopeMagnify = 8;
     microscopeMode();
   } else if(counter == 1){ //4x
     Serial.println("Microscope mode: 4x !");
+    microscopeMagnify = 4;
     baseLayer();
-    if (inputMessage8 == "1"){
+    if (j_microscopeAB == 1){
       display.fillCircle(dispW/2, dispH/2, ab1_resistance*abDiameter, 0);
     display.fillCircle(dispW/2, dispH/2, abDiameter, 1);
     display.display();
-    } else if (inputMessage8 == "2"){
+    } else if (j_microscopeAB == 2){
       display.fillCircle(dispW/2, dispH/2, ab2_resistance*abDiameter, 0);
     display.fillCircle(dispW/2, dispH/2, abDiameter, 1);
     display.display();
-    } else if (inputMessage8 == "3"){
+    } else if (j_microscopeAB == 3){
       display.fillCircle(dispW/2, dispH/2, ab3_resistance*abDiameter, 0);
     display.fillCircle(dispW/2, dispH/2, abDiameter, 1);
     display.display();
@@ -96,16 +108,17 @@ void microscopeCondition(){
     }
   } else if(counter == 2){ //10x
     Serial.println("Microscope mode: 10x !");
+    microscopeMagnify = 10;
     baseLayer();
-    if (inputMessage8 == "1"){
+    if (j_microscopeAB == 1){
       display.fillCircle(dispW/2, dispH/2, abDiameter*ab1_resistance*2, 0);
     display.fillCircle(dispW/2, dispH/2, abDiameter*2, 1);
     display.display();
-    } else if (inputMessage8 == "2"){
+    } else if (j_microscopeAB == 2){
       display.fillCircle(dispW/2, dispH/2, abDiameter*ab2_resistance*2, 0);
     display.fillCircle(dispW/2, dispH/2, abDiameter*2, 1);
     display.display();
-    } else if (inputMessage8 == "3"){
+    } else if (j_microscopeAB == 3){
       display.fillCircle(dispW/2, dispH/2, abDiameter*ab3_resistance*2, 0);
     display.fillCircle(dispW/2, dispH/2, abDiameter*2, 1);
     display.display();
@@ -114,19 +127,20 @@ void microscopeCondition(){
     }
   } else if(counter == 3){ //40
     Serial.println("Microscope mode: 40x !");
+    microscopeMagnify = 40;
     baseLayer();
     for(int i=0; i<=500; i++){
       display.fillCircle(random(xC, xC2), random(yC, yC2), 2, 1);
     }
-    if (inputMessage8 == "1"){
+    if (j_microscopeAB == 1){
       display.fillCircle(dispW/2, dispH/2, abDiameter*ab1_resistance*3, 0);
     display.fillCircle(dispW/2, dispH/2, abDiameter*3, 1);
     display.display();
-    } else if (inputMessage8 == "2"){
+    } else if (j_microscopeAB == 2){
       display.fillCircle(dispW/2, dispH/2, abDiameter*ab2_resistance*3, 0);
     display.fillCircle(dispW/2, dispH/2, abDiameter*3, 1);
     display.display();
-    } else if (inputMessage8 == "3"){
+    } else if (j_microscopeAB == 3){
       display.fillCircle(dispW/2, dispH/2, abDiameter*ab3_resistance*3, 0);
     display.fillCircle(dispW/2, dispH/2, abDiameter*3, 1);
     display.display();

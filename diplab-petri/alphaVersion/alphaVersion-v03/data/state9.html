@@ -1,20 +1,21 @@
 <!DOCTYPE HTML><html>
+<!-----------HEAD----------->
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="assets/style-intro.css">
-  <script src="assets/main.js" defer></script>
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-  <link rel="manifest" href="assets/site.webmanifest">
   <title>DiPLab - Alpha Version - State 9</title>
 </head>
+<!-----------BODY----------->
 <body>
   <div class="header">
     <div>
       <div class="builder-columns div">
         <div class="builder-column column">
-          <a href="/string?state=8" class="a" data-el="a-1"><</a>
+          <button type="button" class="a" id='btn_back'>
+            <
+          </button>
         </div>
         <div class="builder-column column-2">
           <div class="title"><p>DiPLab</p></div>
@@ -30,7 +31,45 @@
     </body-text>
   </div>
     <div class="footer-button">
-      <a href="/string?state=10&controlCenter=history" class="button" data-el="button">Continue</a>
+      <button type="button" class="button" id='btn_next'>
+        CONTINUE
+      </button>
     </div>  
 </body>
+<!-----------SCRIPT----------->
+<script>
+  var Socket;
+
+  document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+  document.getElementById('btn_back').addEventListener('click', button_backFunction);
+  
+  function init() {
+      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      }
+  
+  function button_nextFunction() {
+      var msg = {state: 10};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state10.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+  
+  function button_backFunction() {
+      var msg = {
+                  state: 8,
+                  ab1: undefined,
+                  ab2: undefined,
+                  ab3: undefined
+                };
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state8.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+
+  window.onload = function(event){
+      init();
+  }
+  </script>
 </html>

@@ -1,20 +1,21 @@
 <!DOCTYPE HTML><html>
+<!-----------HEAD----------->
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="assets/style-experience.css">
-  <script src="assets/main.js" defer></script>
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-  <link rel="manifest" href="assets/site.webmanifest">
   <title>DiPLab - Alpha Version - State 6</title>
 </head>
+<!-----------BODY----------->
 <body>
   <div class="header">
     <div>
       <div class="builder-columns div">
         <div class="builder-column column">
-          <a href="state5-1.html" class="a" data-el="a-1"><</a>
+          <button type="button" class="a" id='btn_back'>
+            <
+          </button>
         </div>
         <div class="builder-column column-2">
           <div class="title"><p>DiPLab</p></div>
@@ -40,7 +41,7 @@
         <p>Escherica Coli</p>
       </bacteria-title>
       <bacteria-description class="antibiotic-description">
-        <p>COLI</p>
+        <p id="descr_bacteria1">COLI</p>
       </bacteria-description>
       <bacteria-description class="antibiotic-description-2">
         <p>Petri media:</p>
@@ -49,9 +50,9 @@
         <p>chromogenic</p>
         <p style="margin-top:1vh;">Resistance: 80%</p>
       </bacteria-description>
-      <a href="/string?state=7&bacteria=coli" class="button" data-el="button">
+      <button type="button" class="button" id='btn_bacteria1'>
         Add
-      </a>
+      </button>
     </div>
   </div>
   <div class="antibiotic">
@@ -72,7 +73,7 @@
         <p>Staphilococcus</p>
       </bacteria-title>
       <bacteria-description class="antibiotic-description">
-        <p>STAPH</p>
+        <p id="descr_bacteria2">STAPH</p>
       </bacteria-description>
       <bacteria-description class="antibiotic-description-2">
         <p>Petri media:</p>
@@ -81,9 +82,9 @@
         <p>tryptic soy</p>
         <p style="margin-top:1vh;">Resistance: 97%</p>
       </bacteria-description>
-      <a href="/string?state=7&bacteria=staph" class="button" data-el="button">
+      <button type="button" class="button" id='btn_bacteria2'>
         Add
-      </a>
+      </button>
     </div>
   </div>
   <div class="antibiotic">
@@ -104,7 +105,7 @@
         <p>Salmonella t.</p>
       </bacteria-title>
       <bacteria-description class="antibiotic-description">
-        <p>SLM</p>
+        <p id="descr_bacteria3">SLM</p>
       </bacteria-description>
       <bacteria-description class="antibiotic-description-2">
         <p>Petri media:</p>
@@ -113,9 +114,57 @@
         <p>chromoselect</p>
         <p style="margin-top:1vh;">Resistance: 60%</p>
       </bacteria-description>
-      <a href="/string?state=7&bacteria=slm" class="button" data-el="button">
+      <button type="button" class="button" id='btn_bacteria3'>
         Add
-      </a>
+      </button>
     </div>
   </div>
+</body>
+<!-----------SCRIPT----------->
+<script>
+  var Socket;
+
+  document.getElementById('btn_bacteria1').addEventListener('click', function(){
+    button_bacteriaFunction(1);}
+  );
+  document.getElementById('btn_bacteria2').addEventListener('click', function(){
+    button_bacteriaFunction(2);}
+  );
+  document.getElementById('btn_bacteria3').addEventListener('click', function(){
+    button_bacteriaFunction(3);}
+  );
+  document.getElementById('btn_back').addEventListener('click', button_backFunction);
+  
+  function init() {
+      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      }
+  
+  function button_bacteriaFunction(a) {
+      if(a == 1){
+        var bacteriaVal = document.getElementById("descr_bacteria1").textContent;
+      } else if(a == 2){
+        var bacteriaVal = document.getElementById("descr_bacteria2").textContent;
+      } else if(a == 3){
+        var bacteriaVal = document.getElementById("descr_bacteria3").textContent;
+      } else {
+        var bacteriaVal = "Error!";
+      }
+      var msg = {
+                  state: 7, 
+                  bacteria: bacteriaVal
+                };
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state7.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+  
+  function button_backFunction() {
+      window.location.href='state5-1.html';
+      }
+
+  window.onload = function(event){
+      init();
+  }
+  </script>
 </html>

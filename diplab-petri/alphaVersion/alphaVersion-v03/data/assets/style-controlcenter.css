@@ -180,8 +180,11 @@ p{
   padding-bottom: 1em;
   padding-left: 3em;
   padding-right: 3em;
-  background-color: rgba(213, 255, 45, 1);
-  color: rgba(42, 42, 42, 1);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(213, 255, 45, 1);
+  background-color: rgba(213, 255, 45, 0);
+  color:rgba(213, 255, 45, 1);
   border-radius: 1em;
   text-align: center;
   cursor: pointer;
@@ -189,7 +192,6 @@ p{
   margin-right: auto;
   font-family: "Inconsolata", monospace;
   text-decoration:none;
-  border-width: 0;
 }
 @media (max-width: 640px) {
   .button {
@@ -197,12 +199,10 @@ p{
   }
 }
 
-.skipButton {
-  color: rgba(239, 239, 239, 1);
-  border-style: solid;
-  border-width: 1px;
-  border-color: rgba(239, 239, 239, 1);
-  background-color: rgba(213, 255, 45, 0);
+.selectedButton {
+  background-color: rgba(213, 255, 45, 1);
+  border-width: 0;
+  color:#2a2a2a;
 }
 
 .description-input {
@@ -267,4 +267,8 @@ p{
 .control-center-main {
   display: flex;
   position: relative;
+}
+
+.hided{
+  display: none !important;
 }

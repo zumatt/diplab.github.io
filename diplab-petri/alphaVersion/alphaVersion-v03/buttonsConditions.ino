@@ -1,5 +1,11 @@
+/*
+    -----------------------------------------------------------
+                          BTN CHECK
+    -----------------------------------------------------------
+*/
+
 void buttonsCondition(){
-if(inputMessage10 == "history"){  
+if(j_controlCenter == "history"){  
       if(lastState_fwd == LOW && currentState_fwd == HIGH){
         if (counter < 3){counter ++;}
         historyCondition();
@@ -8,7 +14,7 @@ if(inputMessage10 == "history"){
         if (counter != 0){counter --;}
         historyCondition();
       }
-    } else if(inputMessage10 == "microscope"){  
+    } else if(j_controlCenter == "microscope"){  
       if(lastState_fwd == LOW && currentState_fwd == HIGH){
         if (counter < 3){counter ++;}
         microscopeCondition();

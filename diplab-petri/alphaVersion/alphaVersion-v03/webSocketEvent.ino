@@ -1,3 +1,9 @@
+/*
+    -----------------------------------------------------------
+                          WEB EVENT
+    -----------------------------------------------------------
+*/
+
 void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) { // event structure
 
   switch (type) {
@@ -18,17 +24,44 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
       }
       else {
         // JSON string was received correctly, so information can be retrieved:
-        const char* g_brand = doc["brand"];
-        const char* g_type = doc["type"];
-        const int g_year = doc["year"];
-        const char* g_color = doc["color"];
-        const char* g_location = doc["location"];
-        Serial.println("Received guitar info from user");
-        Serial.println("Brand: " + String(g_brand));
-        Serial.println("Type: " + String(g_type));
-        Serial.println("Year: " + String(g_year));
-        Serial.println("Color: " + String(g_color));
-        Serial.println("Location: " + String(g_location));
+        const int   d_state = doc["state"];
+        const char* d_name = doc["name"];
+        const int   d_classcode = doc["classcode"];
+        const char* d_bacteria = doc["bacteria"];
+        const char* d_ab1 = doc["ab1"];
+        const char* d_ab2 = doc["ab2"];
+        const char* d_ab3 = doc["ab3"];
+        const char* d_controlCenter = doc["controlCenter"];
+        const int   d_test = doc["test"];
+        const int   d_microscopeAb = doc["microscopeAb"];
+
+        j_state = d_state;
+        j_bacteria = d_bacteria;
+        j_ab1 = d_ab1;
+        j_ab2 = d_ab2;
+        j_ab3 = d_ab3;
+        j_name = d_name;
+        j_classcode = d_classcode;
+        j_microscopeAB = d_microscopeAb;
+        j_test = d_test;
+        j_controlCenter = d_controlCenter;
+
+        Serial.println("----------------------------------");
+        Serial.println("");
+        Serial.println("Info received from webPage:");
+        Serial.println("");
+        Serial.println("  - State: " + String(d_state));
+        Serial.println("  - Name: " + String(d_name));
+        Serial.println("  - Classcode: " + String(d_classcode));
+        Serial.println("  - Bacteria: " + String(d_bacteria));
+        Serial.println("  - Antibiotic 1 : " + String(d_ab1));
+        Serial.println("  - Antibiotic 2 : " + String(d_ab2));
+        Serial.println("  - Antibiotic 3 : " + String(d_ab3));
+        Serial.println("  - Control center : " + String(d_controlCenter));
+        Serial.println("  - Test : " + String(d_controlCenter));
+        Serial.println("  - Microscope AB : " + String(d_microscopeAb));
+        Serial.println("");
+        Serial.println("----------------------------------");
       }
       Serial.println("");
       break;

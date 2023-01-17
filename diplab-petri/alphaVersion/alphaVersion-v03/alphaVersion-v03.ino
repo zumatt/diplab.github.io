@@ -8,9 +8,6 @@
 
    Notes for the beta:
     - Create a block system to block the user in the spreading bacteria if they didn't finished the spreading process.
-    - Find another solution for the ab communication is hard to send three different querys from the web
-      ^- for that is quite easy: send one single query and then split it...
-      ^- or do it in three different steps (3 different webPages first for AB1 etc.)
 */
 
 /*
@@ -50,29 +47,21 @@ String modality;              //ControlCenter modality
 const char* ssid = "DiPLab";
 const char* password = "AMRawareness23";
 
-//Here you can choose the URI parameters used in the HTML page
-const char* PARAM_INPUT_1 = "state";
-const char* PARAM_INPUT_2 = "bacteria";
-const char* PARAM_INPUT_3 = "ab1";
-const char* PARAM_INPUT_4 = "ab2";
-const char* PARAM_INPUT_5 = "ab3";
-const char* PARAM_INPUT_6 = "name";
-const char* PARAM_INPUT_7 = "classcode";
-const char* PARAM_INPUT_8 = "microscopeAb";
-const char* PARAM_INPUT_9 = "test";
-const char* PARAM_INPUT_10 = "controlCenter";
-
 //String where to save the message from the webPage
-String inputMessage1;  //state
-String inputMessage2;  //bacteria
-String inputMessage3;  //ab1
-String inputMessage4;  //ab2
-String inputMessage5;  //ab3
-String inputMessage6;  //name
-String inputMessage7;  //classcode
-String inputMessage8;  //microscopeAB
-String inputMessage9;  //test (0, 1 or 2)
-String inputMessage10; //controlCenter
+int    j_state;          //state
+String j_bacteria;       //bacteria
+String j_ab1;            //ab1
+String j_ab2;            //ab2
+String j_ab3;            //ab3
+String j_name;           //name
+int    j_classcode;      //classcode
+int    j_microscopeAB;   //microscopeAB
+int    j_test;           //test (0, 1 or 2)
+String j_controlCenter;  //controlCenter
+
+//Save message for the webPage
+int historyHours;
+int microscopeMagnify;
 
 //Controller for screen ready to spread bacteria
 bool readyToSpread;
@@ -113,6 +102,9 @@ int arrAb[3] = {0,0,0};
 
 //Create a string where to save the Access Point IP address
 IPAddress serverIP;
+
+int interval = 1000;                                  // send data to the client every 1000ms -> 1s
+unsigned long previousMillis = 0;                     // we use the "millis()" command for time reference and this will output an unsigned long
 
 /*
     -----------------------------------------------------------
@@ -197,9 +189,6 @@ void setup() {
   //Load favicon, css and other files on the SD card
   server.serveStatic("/", SPIFFS, "/");
 
-  //Do something when is received something from the query after "string"
-  serverReceive();
-
   //Start the server & the webSocket
   server.begin();
   webSocket.begin();
@@ -221,7 +210,7 @@ void loop() {
   webSocket.loop();
 
   //Check if we need to activate the digitalRead for buttons
-  if(inputMessage1 == "11"){
+  if(j_state == 11){
   //Serial.println("We are in the loop!");
 
   //Update variables for Buttons
@@ -233,21 +222,42 @@ void loop() {
   } //END IF digitalRead Buttons
 
   //Check if we need to get data from accellerometer
-  if(inputMessage1 == "8" || inputMessage1 == "10"){
+  if(j_state == 8 || j_state == 10){
 
     //Update variables for accellerometer
     accX = LIS.getAccelerationX(); //Get accellerometer X data
     accY = LIS.getAccelerationY(); //Get accellerometer Y data
 
     //Call drawing function for bacteria
-    if(inputMessage1 == "8" && readyToSpread == 1){
+    if(j_state == 8 && readyToSpread == 1){
       drawingLoop();
     }
   
     //Call shake detection for placing ABs
-    if (inputMessage1 == "10"){
+    if (j_state == 10){
       abShake();
       //Serial.println("Ab shake activated!");
     }
+
+    //Wait
+    unsigned long now = millis();
+
+    //Call shake detection for placing ABs
+    if (j_state == 11){
+      if ((unsigned long)(now - previousMillis) > interval) {
+        
+        String jsonString = "";
+        StaticJsonDocument<200> doc;                      // create a JSON container
+        JsonObject object = doc.to<JsonObject>();         // create a JSON Object
+        object["historyVal"] = historyHours;              // write data into the JSON object -> I used "rand1" and "rand2" here, but you can use anything else
+        object["microscopeVal"] = microscopeMagnify;
+        serializeJson(doc, jsonString);                   // convert JSON object to string
+        Serial.println(jsonString);                       // print JSON string to console for debug purposes (you can comment this out)
+        webSocket.broadcastTXT(jsonString);               // send JSON string to clients
+
+        previousMillis = now;
+      }
+    }
+
   } //END IF data from accellerometer
 }

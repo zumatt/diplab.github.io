@@ -1,3 +1,36 @@
+/*
+    -----------------------------------------------------------
+                      EXPERIENCE CONTROLLER
+    -----------------------------------------------------------
+*/
+void expState(int sNum){
+  if(sNum == 0){
+    state0();
+  } else if(sNum == 1){
+    state1();
+  } else if(sNum == 6){
+    state6();
+  } else if(sNum == 7){
+    state7();
+  } else if(sNum == 8){
+    state8();
+  } else if(sNum == 9){
+    state9();
+  } else if(sNum == 10){
+    state10();
+  } else if(sNum == 11){
+    state11();
+  } else if(sNum == 12){
+    state12();
+  }
+}
+
+/*
+    -----------------------------------------------------------
+                          STATE FUNCTIONS
+    -----------------------------------------------------------
+*/
+
 void state0() {
   //Display all the informations for the WiFi connection
   display.clearDisplay();
@@ -44,9 +77,9 @@ void state6(){
   ab3_resistance = 0;
   updateResistanceValue();
 
-  //Reset value of inputMessage10 & inputMessage8
-  inputMessage8 = "";
-  inputMessage10 = "";
+  //Reset value of j_controlCenter & j_microscopeAB
+  j_microscopeAB = 0;
+  j_controlCenter = "";
 
   //Start experience: enter Name and class code
   display.clearDisplay();
@@ -55,15 +88,15 @@ void state6(){
   display.println("Your name:");
   display.setCursor(xC+100, yC+300);
   Serial.print("Name from the web : ");
-  Serial.println(inputMessage6);
-  display.println(inputMessage6);
+  Serial.println(j_name);
+  display.println(j_name);
   display.setCursor(xC+100, yC+400);
   display.print("Your class code:");
   display.setCursor(xC+100, yC+450);
   display.print("#");
   Serial.print("Class code from the web : ");
-  Serial.println(inputMessage7);
-  display.println(inputMessage7);
+  Serial.println(j_classcode);
+  display.println(j_classcode);
   display.display();
 }
 
@@ -72,7 +105,7 @@ void state7(){
   display.clearDisplay();
   display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
   display.setCursor(xC+100, yC+300);
-  display.println(inputMessage2);
+  display.println(j_bacteria);
   display.setCursor(xC+100, yC+350);
   display.println("is correctly uploaded");
   display.setCursor(xC+100, yC+400);
@@ -102,13 +135,13 @@ void state9(){
     display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
     display.setCursor(xC+100, yC+250);
     display.print("AB 1: ");
-    display.println(inputMessage3);
+    display.println(j_ab1);
     display.setCursor(xC+100, yC+300);
     display.print("AB 2: ");
-    display.println(inputMessage4);
+    display.println(j_ab2);
     display.setCursor(xC+100, yC+350);
     display.print("AB 3: ");
-    display.println(inputMessage5);
+    display.println(j_ab3);
     display.setCursor(xC+100, yC+400);
     display.print("are correctly uploaded");
     display.setCursor(xC+100, yC+450);
@@ -148,7 +181,7 @@ void state10(){
 
 void state11(){
   //Control center (History/Microscope mode)
-  if(inputMessage9 == "1"){
+  if(j_test == 1){
     //The next three lines are only for test!
     //To start test pass the query <ESP_IP>/string?test=1
     ab1_resistance = 2;
@@ -156,10 +189,10 @@ void state11(){
     ab3_resistance = 8;
     updateResistanceValue();
   }
-  if(inputMessage10 == "history"){
+  if(j_controlCenter == "history"){
     Serial.println("We are in history mode!");
     historyMode();
-  }else if(inputMessage10 == "microscope"){
+  }else if(j_controlCenter == "microscope"){
     Serial.println("We are in microscope mode!");
     microscopeMode();
   } else{Serial.println("Error in state11");}
@@ -176,4 +209,20 @@ void state12(){
     display.fillCircle(ab2_x, ab2_y, abDiameter, 1);
     display.fillCircle(ab3_x, ab3_y, abDiameter, 1);
     display.display();
+
+    String jsonString = "";
+    StaticJsonDocument<200> doc;                      // create a JSON container
+    JsonObject object = doc.to<JsonObject>();         // create a JSON Object
+    object["ab1_x"] = ab1_x;                          // write data into the JSON object -> I used "rand1" and "rand2" here, but you can use anything else
+    object["ab1_y"] = ab1_y;
+    object["ab2_x"] = ab2_x;
+    object["ab2_y"] = ab2_y;
+    object["ab3_x"] = ab3_x;
+    object["ab3_y"] = ab3_y;
+    object["ab1_resistance"] = ab1_resistance;
+    object["ab2_resistance"] = ab2_resistance;
+    object["ab3_resistance"] = ab3_resistance;
+    serializeJson(doc, jsonString);                   // convert JSON object to string
+    Serial.println(jsonString);                       // print JSON string to console for debug purposes (you can comment this out)
+    webSocket.broadcastTXT(jsonString);               // send JSON string to clients
 }
