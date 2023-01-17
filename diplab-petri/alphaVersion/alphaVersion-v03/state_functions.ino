@@ -25,74 +25,9 @@ void state1() {
   display.setCursor(xC+100, yC+300);
   display.println("Your device is connected!");
   display.setCursor(xC+100, yC+350);
-  display.println("You can start the introduction.");
+  display.println("You can start the experience!");
   display.display();
 }
-
-/*
-void state2(int k){
-  //Introduction spread bacteria
-  display.clearDisplay();
-  display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
-  if(k == 1){
-    for(int i=1; i<=20; i++){  
-      display.drawLine(xC+(i*petriD/10), yC, xC+(i*petriD/10), yC2, BLACK);}
-    for(int j=1; j<=20; j++){  
-      display.drawLine(xC, yC+(j*petriD/10), xC2, yC+(j*petriD/10), BLACK);}
-  display.display();
-  } else{
-    display.display();
-  }
-}
-
-void state3(int k){
-  //AB introduction position
-  ab1_x = xC2-100;
-  ab1_y = yC+150;
-  ab2_x = xC+150;
-  ab2_y = yC+450;
-  ab3_x = xC+400;
-  ab3_y = yC+600;
-
-  //Introduction place antibiotics
-    display.clearDisplay();
-
-    //Redraw base layer
-    display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
-    for(int i=1; i<=20; i++){  
-      display.drawLine(xC+(i*petriD/10), yC, xC+(i*petriD/10), yC2, BLACK);}
-    for(int j=1; j<=20; j++){  
-      display.drawLine(xC, yC+(j*petriD/10), xC2, yC+(j*petriD/10), BLACK);}
-    //END of redraw base layer
-    if (k == 1){
-    display.fillCircle(ab1_x, ab1_y, 25, 1);  //First Antibiotic
-    display.fillCircle(ab2_x, ab2_y, 25, 1);  //Second Antibiotic
-    display.fillCircle(ab3_x, ab3_y, 25, 1);  //Third Antibiotic
-    display.display();} else {display.display();}
-}
-
-void state4(){
-  //Introduction history mode
-
-  //Resistance introduction value
-  ab1_resistance = 2;
-  ab2_resistance = 4;
-  ab3_resistance = 8;
-  updateResistanceValue();
-
-  inputMessage10 = "history";
-  historyMode();
-  //Same thing as history mode but with data already inserted
-}
-
-void state5(){
-  inputMessage10 = "microscope";
-  inputMessage8 = "1";
-  //Introduction microscope mode
-  microscopeMode();
-  //Same thing as microscope mode but with data already inserted
-}
-*/
 
 void state6(){
   //Reset AB position for later

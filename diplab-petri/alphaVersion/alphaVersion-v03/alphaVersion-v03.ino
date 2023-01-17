@@ -78,33 +78,33 @@ String inputMessage10; //controlCenter
 bool readyToSpread;
 
 //Variables to display stuff on the E-Ink display
-int dispW = 1024;                                         //Display Width
-int dispH = 758;                                          //Display Height
-int petriD = (dispH/2)-10;                                //Petri dish diameter
-int xC =  (dispW/2)-(petriD);                             //X position of left side of petri dish
-int yC =  (dispH/2)-(petriD);                             //Y position of top side of petri dish
-int xC2 = (dispW/2)+(petriD);                             //X position of right side of petri dish
-int yC2 = (dispH/2)+(petriD);                             //Y position of bottom side of petri dish
-int yPos = dispH/2;                                       //Center y of petri dish
-int xPos = dispW/2;                                       //Center x of petri dish
-int step = petriD/10;                                     //Step of each line of bacteria
-int arrY[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of Y axis for checking if a line was drawn
-int lenArrY = *(&arrY + 1) - arrY;                        //Array of Y axis length
-int arrX[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of X axis for checking if a line was drawn
-int lenArrX = *(&arrX + 1) - arrX;                        //Array of X axis length
-double accX, accY;                                        //Variables to store accellerometer data
-int ab1_x, ab1_y;                                         //Position of first antibiotic
-int ab2_x, ab2_y;                                         //Position of second antibiotic
-int ab3_x, ab3_y;                                         //Position of third antibiotic
-int abDiameter = 25;                                      //Dimension of the AB circle
-double ab1_resistance, ab2_resistance, ab3_resistance;       //Store resistance value for each AB (diamenter multiplier!)
-double ab1_res_8h  = ab1_resistance / 3;                  //Store resistance value for AB 1 in history mode
+int dispW = 1024;                                           //Display Width
+int dispH = 758;                                            //Display Height
+int petriD = (dispH/2)-10;                                  //Petri dish diameter
+int xC =  (dispW/2)-(petriD);                               //X position of left side of petri dish
+int yC =  (dispH/2)-(petriD);                               //Y position of top side of petri dish
+int xC2 = (dispW/2)+(petriD);                               //X position of right side of petri dish
+int yC2 = (dispH/2)+(petriD);                               //Y position of bottom side of petri dish
+int yPos = dispH/2;                                         //Center y of petri dish
+int xPos = dispW/2;                                         //Center x of petri dish
+int step = petriD/10;                                       //Step of each line of bacteria
+int arrY[21] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of Y axis for checking if a line was drawn
+int lenArrY = *(&arrY + 1) - arrY;                          //Array of Y axis length
+int arrX[21] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of X axis for checking if a line was drawn
+int lenArrX = *(&arrX + 1) - arrX;                          //Array of X axis length
+double accX, accY;                                          //Variables to store accellerometer data
+int ab1_x, ab1_y;                                           //Position of first antibiotic
+int ab2_x, ab2_y;                                           //Position of second antibiotic
+int ab3_x, ab3_y;                                           //Position of third antibiotic
+int abDiameter = 25;                                        //Dimension of the AB circle
+double ab1_resistance, ab2_resistance, ab3_resistance;      //Store resistance value for each AB (diamenter multiplier!)
+double ab1_res_8h  = ab1_resistance / 3;                    //Store resistance value for AB 1 in history mode
 double ab1_res_12h = ab1_resistance / 2;
 double ab1_res_24h = ab1_resistance;
-double ab2_res_8h  = ab2_resistance / 3;                  //Store resistance value for AB 2 in history mode
+double ab2_res_8h  = ab2_resistance / 3;                    //Store resistance value for AB 2 in history mode
 double ab2_res_12h = ab2_resistance / 2;
 double ab2_res_24h = ab2_resistance;
-double ab3_res_8h  = ab3_resistance / 3;                  //Store resistance value for AB 3 in history mode
+double ab3_res_8h  = ab3_resistance / 3;                    //Store resistance value for AB 3 in history mode
 double ab3_res_12h = ab3_resistance / 2;
 double ab3_res_24h = ab3_resistance;
 
@@ -221,7 +221,7 @@ void loop() {
   webSocket.loop();
 
   //Check if we need to activate the digitalRead for buttons
-  if(inputMessage1 == "4" || inputMessage1 == "5" || inputMessage1 == "11"){
+  if(inputMessage1 == "11"){
   //Serial.println("We are in the loop!");
 
   //Update variables for Buttons

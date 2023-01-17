@@ -1,20 +1,21 @@
 <!DOCTYPE HTML><html>
+<!-----------HEAD----------->
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="assets/style-intro.css">
-  <script src="assets/main.js" defer></script>
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-  <link rel="manifest" href="assets/site.webmanifest">
   <title>DiPLab - Alpha Version - State 1</title>
 </head>
+<!-----------BODY----------->
 <body>
   <div class="header">
     <div>
       <div class="builder-columns div">
         <div class="builder-column column">
-          <a href="/string?state=0" class="a" data-el="a-1"><</a>
+          <button type="button" class="a" id='btn_back'>
+            <
+          </button>
         </div>
         <div class="builder-column column-2">
           <div class="title"><p>DiPLab</p></div>
@@ -46,7 +47,36 @@
     </body-text>
   </div>
     <div class="footer-button">
-      <a href="state5-1.html" class="button" data-el="button">Next</a>
+      <button type="button" class="button" id='btn_next'>
+        Next
+      </button>
     </div>  
 </body>
+<!-----------SCRIPT----------->
+<script>
+  var Socket;
+
+  document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+  document.getElementById('btn_back').addEventListener('click', button_backFunction);
+  
+  function init() {
+      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      }
+  
+  function button_nextFunction() {
+      window.location.href='state5-1.html';
+      }
+  
+  function button_backFunction() {
+      var msg = {state: 0};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state0.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+
+  window.onload = function(event){
+      init();
+  }
+  </script>
 </html>

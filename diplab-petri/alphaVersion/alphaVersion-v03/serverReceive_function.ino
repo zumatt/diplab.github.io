@@ -81,12 +81,6 @@ void serverReceive(){
     //Check state
     if(inputMessage1 == "0")      {request->send(SPIFFS, "/state0.html", "text/html");state0();}
       else if(inputMessage1 == "1") {request->send(SPIFFS, "/state1.html", "text/html");state1();}
-      /*else if(inputMessage1 == "2") {request->send(SPIFFS, "/state2.html", "text/html");state2(0);}
-      else if(inputMessage1 == "2.1") {request->send(SPIFFS, "/state2-1.html", "text/html");state2(1);}
-      else if(inputMessage1 == "3") {request->send(SPIFFS, "/state3.html", "text/html");state3(0);}
-      else if(inputMessage1 == "3.1") {request->send(SPIFFS, "/state3-1.html", "text/html");state3(1);}
-      else if(inputMessage1 == "4") {request->send(SPIFFS, "/state4.html", "text/html");state4();}
-      else if(inputMessage1 == "5") {request->send(SPIFFS, "/state5.html", "text/html");state5();}*/
       else if(inputMessage1 == "6") {request->send(SPIFFS, "/state6.html", "text/html");state6();}
       else if(inputMessage1 == "7") {request->send(SPIFFS, "/state7.html", "text/html");state7();}
       else if(inputMessage1 == "8") {request->send(SPIFFS, "/state7-1.html", "text/html");state8();}

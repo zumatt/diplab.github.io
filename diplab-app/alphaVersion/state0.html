@@ -1,23 +1,43 @@
 <!DOCTYPE HTML><html>
+<!-----------HEAD----------->
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="assets/style-state0.css">
-  <script src="/assets/main.js" defer></script>
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-  <link rel="manifest" href="assets/site.webmanifest">
   <title>DiPLab - Alpha Version - State 0</title>
 </head>
+<!-----------BODY----------->
 <body>
   <div class="title">
     <div class="title-description"><p>Welcome to</p></div>
     <div class="title-2"><p>DiPLab</p></div>
   </div>
   <div class="footer-button">
-    <a href="/string?state=1" class="button" data-el="button">
+    <button type="button" class="button" id='btn_confirmConnection'>
       Confirm the connection
-    </a>
+    </button>
   </div>
 </body>
+<!-----------SCRIPT----------->
+<script>
+  var Socket;
+  document.getElementById('btn_confirmConnection').addEventListener('click', button_function);
+  
+  function init() {
+      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      }
+  
+  function button_function() {
+      var msg = {state: 1};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state1.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+  
+  window.onload = function(event){
+      init();
+  }
+  </script>
 </html>

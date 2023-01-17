@@ -7,7 +7,24 @@ void drawingLoop(){
       else if (i==1){a=-9;b=-0.9;}
       else if (i==2){a=-8;b=-0.8;}
       else if (i==3){a=-7;b=-0.7;}
-      else if (i==4){a=-6;b=-0.6;} else if (i==5){a=-5;b=-0.5;} else if (i==6){a=-4;b=-0.4;} else if (i==7){a=-3;b=-0.3;} else if (i==8){a=-2;b=-0.2;} else if (i==9){a=-1;b=-0.1;} else if (i==10){a=0;b=0.0;} else if (i==11){a=1;b=0.1;} else if (i==12){a=2;b=0.2;} else if (i==13){a=3;b=0.3;} else if (i==14){a=4;b=0.4;} else if (i==15){a=5;b=0.5;} else if (i==16){a=6;b=0.6;} else if (i==17){a=7;b=0.7;} else if (i==18){a=8;b=0.8;} else if (i==19){a=9;b=0.9;} else if (i==20){a=10;b=1.0;}
+      else if (i==4){a=-6;b=-0.6;}
+      else if (i==5){a=-5;b=-0.5;}
+      else if (i==6){a=-4;b=-0.4;}
+      else if (i==7){a=-3;b=-0.3;}
+      else if (i==8){a=-2;b=-0.2;}
+      else if (i==9){a=-1;b=-0.1;}
+      else if (i==10){a=0;b=0.0;}
+      else if (i==11){a=1;b=0.1;}
+      else if (i==12){a=2;b=0.2;}
+      else if (i==13){a=3;b=0.3;}
+      else if (i==14){a=4;b=0.4;}
+      else if (i==15){a=5;b=0.5;}
+      else if (i==16){a=6;b=0.6;}
+      else if (i==17){a=7;b=0.7;}
+      else if (i==18){a=8;b=0.8;}
+      else if (i==19){a=9;b=0.9;}
+      else if (i==20){a=10;b=1.0;}
+      else if (i==21){a=11;b=1.1;}
     drawBacteria_y(i, a, b); //Draw line function
   }
 
@@ -36,6 +53,7 @@ void drawingLoop(){
       else if (h==18){a=8;b=0.8;}
       else if (h==19){a=9;b=0.9;}
       else if (h==20){a=10;b=1.0;}
+      else if (h==21){a=11;b=1.1;}
     drawBacteria_x(h, a, b); //Draw line function
   }
 }
