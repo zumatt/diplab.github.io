@@ -129,8 +129,6 @@ void state9(){
   readyToSpread = 0;
 
   //Antibiotic selection
-  if (arrAb[0]+arrAb[1]+arrAb[2] == 3){
-    //All antibiotics are displayed
     display.clearDisplay();
     display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
     display.setCursor(xC+100, yC+250);
@@ -147,25 +145,6 @@ void state9(){
     display.setCursor(xC+100, yC+450);
     display.println("in your DiPLab Petri!");
     display.display();
-  } else if(arrAb[0]+arrAb[1]+arrAb[2] == 2){
-      display.clearDisplay();
-      display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
-      display.setCursor(xC+100, yC+350);
-      display.println("You need to select 1 more AB");
-      display.partialUpdate();
-  } else if (arrAb[0]+arrAb[1]+arrAb[2] == 1){
-      display.clearDisplay();
-      display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
-      display.setCursor(xC+100, yC+350);
-      display.println("You need to select 2 more ABs");
-      display.partialUpdate();
-  } else if (arrAb[0]+arrAb[1]+arrAb[2] == 0){
-      display.clearDisplay();
-      display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
-      display.setCursor(xC+100, yC+350);
-      display.println("You need to select 3 ABs");
-      display.partialUpdate();
-  }
 }
 
 void state10(){

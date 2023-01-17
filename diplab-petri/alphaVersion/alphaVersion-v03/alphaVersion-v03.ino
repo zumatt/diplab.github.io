@@ -97,9 +97,6 @@ double ab3_res_8h  = ab3_resistance / 3;                    //Store resistance v
 double ab3_res_12h = ab3_resistance / 2;
 double ab3_res_24h = ab3_resistance;
 
-//Check how many antibiotics are selected
-int arrAb[3] = {0,0,0};
-
 //Create a string where to save the Access Point IP address
 IPAddress serverIP;
 

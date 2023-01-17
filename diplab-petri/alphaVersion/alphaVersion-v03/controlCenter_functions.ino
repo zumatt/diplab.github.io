@@ -31,9 +31,9 @@ void baseLayer(){
     display.clearDisplay();
       //Draw base layer
     display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
-    for(int i=1; i<=21; i++){  
+    for(int i=0; i<=20; i++){  
       display.drawLine(xC+(i*petriD/10), yC, xC+(i*petriD/10), yC2, BLACK);}
-    for(int a=1; a<=21; a++){  
+    for(int a=0; a<=20; a++){  
       display.drawLine(xC, yC+(a*petriD/10), xC2, yC+(a*petriD/10), BLACK);}
     //END of draw base layer
 }

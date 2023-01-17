@@ -7,12 +7,13 @@
 void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) { // event structure
 
   switch (type) {
+    /*
     case WStype_DISCONNECTED: // client disconnected
       Serial.println("Client disconnected");
       break;
     case WStype_CONNECTED:
       Serial.println("Client connected");
-      break;
+      break;*/
     case WStype_TEXT:
       // try to decipher the JSON string received
       StaticJsonDocument<200> doc;                    // create a JSON container
@@ -45,6 +46,8 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
         j_microscopeAB = d_microscopeAb;
         j_test = d_test;
         j_controlCenter = d_controlCenter;
+        
+        expState(d_state);
 
         Serial.println("----------------------------------");
         Serial.println("");
