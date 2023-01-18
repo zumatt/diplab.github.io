@@ -76,10 +76,10 @@ int xPos = dispW/2;                                         //Center x of petri 
 int step = petriD/10;                                       //Step of each line of bacteria
 int arrY[21] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of Y axis for checking if a line was drawn
 int lenArrY = *(&arrY + 1) - arrY;                          //Array of Y axis length
-int sumArrY;                                                //Sum of Array on axis Y
+bool arrYcompleted;
 int arrX[21] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of X axis for checking if a line was drawn
 int lenArrX = *(&arrX + 1) - arrX;                          //Array of X axis length
-int sumArrX;                                                //Sum of Array on axis X
+bool arrXcompleted;
 double accX, accY;                                          //Variables to store accellerometer data
 int ab1_x, ab1_y;                                           //Position of first antibiotic
 int ab2_x, ab2_y;                                           //Position of second antibiotic
@@ -228,7 +228,7 @@ void loop() {
     if(j_state == 8 && readyToSpread == 1){
       drawingLoop();
 
-      if (sumArrX == lenArrX && sumArrY == lenArrY){
+      if (arrXcompleted == true && arrYcompleted == true){
         String jsonString = "";
         StaticJsonDocument<200> doc;                      // create a JSON container
         JsonObject object = doc.to<JsonObject>();         // create a JSON Object

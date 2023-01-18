@@ -87,10 +87,15 @@ void drawBacteria_x(int j, int k, double w){
 }
 
 void checkLoopSpreading(){
-  for(int i=0; i<=lenArrY; i++){
-    sumArrY += arrY[i];
+  if(arrY[0]+arrY[1]+arrY[2]+arrY[3]+arrY[4]+arrY[5]+arrY[6]+arrY[7]+arrY[8]+arrY[9]+arrY[10]+arrY[11]+arrY[12]+arrY[13]+arrY[14]+arrY[15]+arrY[16]+arrY[17]+arrY[18]+arrY[19]+arrY[20] == 21){
+     arrYcompleted = true;
+  } else {
+     arrYcompleted = false;
   }
-  for(int i=0; i<=lenArrX; i++){
-    sumArrX += arrX[i];
+
+  if(arrX[0]+arrX[1]+arrX[2]+arrX[3]+arrX[4]+arrX[5]+arrX[6]+arrX[7]+arrX[8]+arrX[9]+arrX[10]+arrX[11]+arrX[12]+arrX[13]+arrX[14]+arrX[15]+arrX[16]+arrX[17]+arrX[18]+arrX[19]+arrX[20] == 21){
+     arrXcompleted = true;
+  } else {
+     arrXcompleted = false;
   }
 }

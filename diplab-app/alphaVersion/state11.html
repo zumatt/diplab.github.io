@@ -24,7 +24,7 @@
     </div>
   </div>
   <div class="body-text">
-    <body-text class="body-text-2" style="text-align:center; margin-top:10vh;">
+    <body-text class="body-text-2" style="text-align:center; margin-top:2vh;">
       <p>
         Select the modality:
       </p>    
@@ -39,7 +39,7 @@
     </button>
   </div>
   <div id="microscopeAbSelector1" class="body-text hided">
-    <body-text class="body-text-2" style="text-align:center; margin-top:10vh;">
+    <body-text class="body-text-2" style="text-align:center; margin-top:3vh;">
       <p>
         For microscope mode, select the antibiotic to zoom:
       </p>    
@@ -57,15 +57,15 @@
     </button>
   </div>
   <div class="body-text">
-    <p id="historyComm" class="body-text-2" style="text-align:center; margin-top:10vh; display: inline-block;">
+    <p id="historyComm" class="body-text-2" style="text-align:center; margin-top:3vh; display: inline-block;">
       Time:
-      <span id='historyVal' style="font-size: 1.3em;">-</span>
-      hours.
+      <span id='historyVal' style="color: rgba(213, 255, 45, 1); font-size: 1.7em; font-weight: 600;">-</span>
+      hours. <br><br><br> In history mode you will have the possibility to see the evolution of the DiPLab Petri in 4 different steps: 0 hours, 8h, 12h and 24h.
     </p>
-    <p id="microscopeComm" class="body-text-2 hided" style="text-align:center; margin-top:10vh; display: inline-block;">
+    <p id="microscopeComm" class="body-text-2 hided" style="text-align:center; margin-top:3vh; display: inline-block;">
       Magnification:
-      <span id='microscopeVal' style="font-size: 1.3em;">-</span>
-      x.
+      <span id='microscopeVal' style="color: rgba(213, 255, 45, 1); font-size: 1.7em; font-weight: 600;">-</span>
+      X.  <br><br><br>  In microscope mode you will have the possibility to see each AB inserted in the DiPLab Petri in 4 different steps: 0x, 4x, 10x and 40x.
     </p>
   </div>
     <div class="footer-button">
@@ -92,11 +92,16 @@
       }
   
   function button_nextFunction() {
-    var msg = {state: 12};
+    var r = confirm("Are you shure you want to finish your experience?");
+    if (r == true) {
+      var msg = {state: 12};
       var jsonString = JSON.stringify(msg);
       Socket.send(jsonString);
       window.location.href='state12.html';
       console.log("Message sent: " + JSON.stringify(msg));
+    } else {
+      alert("Ok! You will continue the experience");
+    }
       }
   
   function button_backFunction() {
