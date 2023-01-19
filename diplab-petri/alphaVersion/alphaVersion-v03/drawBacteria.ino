@@ -62,7 +62,7 @@ void drawBacteria_y(int j, int k, double w){
   //Statement that check the accellerometer Position and if the line was already drawn or not
   if(::arrY[j] == 0 && accY >= (0.0+w) && accY <= (0.09+w)){
       //Function to draw the line
-      display.drawLine(::xC, ::yPos-(k*::step), ::xC2, ::yPos-(k*::step), BLACK);
+      display.drawLine(::xC, ::yPos+(k*::step), ::xC2, ::yPos+(k*::step), BLACK);
       //Partial update to the screen (check that this works only with BLACK / WHITE color and not with 0 / 1
       display.partialUpdate();
       ::arrY[j] = 1;

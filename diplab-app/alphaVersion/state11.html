@@ -5,6 +5,7 @@
   <link rel="stylesheet" type="text/css" href="assets/style-controlcenter.css">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <script src="assets/resistanceMap.js"></script>
   <title>DiPLab - Alpha Version - State 11</title>
 </head>
 <!-----------BODY----------->
@@ -77,6 +78,10 @@
 <!-----------SCRIPT----------->
 <script>
   var Socket;
+  var bacteriaVal;
+  var CMX30val;
+  var TE30val;
+  var CIP5val;
 
   document.getElementById('btn_next').addEventListener('click', button_nextFunction);
   document.getElementById('btn_back').addEventListener('click', button_backFunction);
@@ -119,10 +124,26 @@
       document.getElementById('microscopeAbSelector2').classList.add("hided");
       document.getElementById('microscopeComm').classList.add("hided");
       document.getElementById('historyComm').classList.remove("hided");
+      if(bacteriaVal == "COLI"){
+        CMX30val = coliMap.get("CMX30");
+        TE30val = coliMap.get("TE30");
+        CIP5val = coliMap.get("CIP5");
+      } else if(bacteriaVal == "STAPH"){
+        CMX30val = staphMap.get("CMX30");
+        TE30val = staphMap.get("TE30");
+        CIP5val = staphMap.get("CIP5");
+      } else if(bacteriaVal == "SLM"){
+        CMX30val = slmMap.get("CMX30");
+        TE30val = slmMap.get("TE30");
+        CIP5val = slmMap.get("CIP5");
+      };
       var msg = {
                   state: 11,
                   controlCenter: "history",
-                  test: 1
+                  test: 1,
+                  CMX30_res: CMX30val,
+                  TE30_res: TE30val,
+                  CIP5_res: CIP5val
                 };
       var jsonString = JSON.stringify(msg);
       Socket.send(jsonString);
@@ -199,6 +220,10 @@
     var obj = JSON.parse(event.data);
     document.getElementById('historyVal').innerHTML = obj.historyVal;
     document.getElementById('microscopeVal').innerHTML = obj.microscopeVal;
+    bacteriaVal = obj.bacteriaVal;
+    resistanceMap(bacteriaVal);
+    console.log("Resistance: \n");
+    console.log("Resistance: \n");
     console.log(obj.historyVal);console.log(obj.microscopeVal);
     }
   

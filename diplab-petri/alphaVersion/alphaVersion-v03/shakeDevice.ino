@@ -5,7 +5,7 @@
 */
 
 void abShake(){
-  if (accX >= 3.00 || accX <= -3.00 || accY >= 3.00 || accY <= -3.00){
+  if (accX >= 2.00 || accX <= -2.00 || accY >= 2.00 || accY <= -2.00){
     display.clearDisplay();
     display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
     baseLayer();
