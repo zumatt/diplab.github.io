@@ -54,7 +54,7 @@ void setup()
     }
     Serial.println("\nWiFi OK! Downloading...");
 
-    if (!display.drawImage("https://raw.githubusercontent.com/zumatt/diplab/main/diplab-petri/visualTest/DiPLab-VisualTest-1.bmp", 0, 0, false, true))
+    if (!display.drawImage("https://raw.githubusercontent.com/zumatt/diplab/main/diplab-petri/visualTest/DiPLab-VisualTest-1.png", 0, 0, false, true))
     {
         Serial.println("Image open error");
     }
