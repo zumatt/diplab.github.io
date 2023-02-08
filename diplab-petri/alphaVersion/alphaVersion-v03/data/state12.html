@@ -6,6 +6,9 @@
   <link rel="stylesheet" type="text/css" href="assets/style-petri.css">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <script src="assets/dom-to-image.min.js"></script>
+  <script src="assets/FileSaver.min.js"></script>
+  <script src="assets/jquery-3.6.3.min.js"></script>
   <title>DiPLab - Alpha Version - State 12</title>
 </head>
 <!-----------BODY----------->
@@ -490,4 +493,15 @@
     </button>
   </div> 
 </body>
+<script>
+  var node = document.getElementById('PetriResult');
+  var btn = document.getElementById('btn_next');
+
+  btn.onclick = function() {
+    domtoimage.toBlob(document.getElementById('PetriResult')).then(function(blob) {
+      window.saveAs(blob, 'PetriResult.png');
+    });
+  }
+
+</script>
 </html>
