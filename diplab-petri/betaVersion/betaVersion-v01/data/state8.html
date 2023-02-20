@@ -1,0 +1,281 @@
+<!DOCTYPE HTML><html>
+<!-----------HEAD----------->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="assets/style-experience.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <title>DiPLab - Alpha Version - State 8</title>
+</head>
+<!-----------BODY----------->
+<body>
+  <div class="header">
+    <div>
+      <div class="builder-columns div">
+        <div class="builder-column column">
+          <button type="button" class="a" id='btn_back'>
+            <
+          </button>
+        </div>
+        <div class="builder-column column-2">
+          <div class="title"><p>DiPLab</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form id="abForm">
+  <div class="antibiotic">
+    <div class="img-column">
+      <div class="antibiotic-img" data-el="antibiotic-img">
+        <picture>
+          <img
+          loading="lazy"
+          src="assets/eColi.jpeg"
+          class="image"
+        />
+        </picture>
+        <div class="builder-image-sizer image-sizer"></div>
+      </div>
+    </div>
+    <div class="info-column">
+      <bacteria-title class="antibiotic-title">
+        <p>Cefuroxime</p>
+      </bacteria-title>
+      <bacteria-description class="antibiotic-description">
+        <p id="description_ab1">CXM30</p>
+      </bacteria-description>
+      <bacteria-description class="antibiotic-description-2">
+        <p>Broad spectrum</p>
+      </bacteria-description>
+      <bacteria-description class="antibiotic-description-3">
+        <p>Approved in 1977</p>
+      </bacteria-description>
+      <div class="checkbox">
+        <input type="checkbox" name="ab1" value="cxm30" id="checkboxInput1" />
+        <label for="checkboxInput1">Add</label>
+      </div>
+    </div>
+  </div>
+  <div class="antibiotic">
+    <div class="img-column">
+      <div class="antibiotic-img" data-el="antibiotic-img">
+        <picture>
+          <img
+          loading="lazy"
+          src="assets/eColi.jpeg"
+          class="image"
+        />
+        </picture>
+        <div class="builder-image-sizer image-sizer"></div>
+      </div>
+    </div>
+    <div class="info-column">
+      <bacteria-title class="antibiotic-title">
+        <p>Tetracycline</p>
+      </bacteria-title>
+      <bacteria-description class="antibiotic-description">
+        <p id="description_ab2">TE30</p>
+      </bacteria-description>
+      <bacteria-description class="antibiotic-description-2">
+        <p>Broad spectrum</p>
+      </bacteria-description>
+      <bacteria-description class="antibiotic-description-3">
+        <p>Approved in 1978</p>
+      </bacteria-description>
+      <div class="checkbox">
+        <input type="checkbox" name="ab2" value="te30" id="checkboxInput2" />
+        <label for="checkboxInput2">Add</label>
+      </div>
+    </div>
+  </div>
+  <div class="antibiotic">
+    <div class="img-column">
+      <div class="antibiotic-img" data-el="antibiotic-img">
+        <picture>
+          <img
+          loading="lazy"
+          src="assets/eColi.jpeg"
+          class="image"
+        />
+        </picture>
+        <div class="builder-image-sizer image-sizer"></div>
+      </div>
+    </div>
+    <div class="info-column">
+      <bacteria-title class="antibiotic-title">
+        <p>Ciprofloxacin</p>
+      </bacteria-title>
+      <bacteria-description class="antibiotic-description">
+        <p id="description_ab3">CIP5</p>
+      </bacteria-description>
+      <bacteria-description class="antibiotic-description-2">
+        <p>Broad spectrum</p>
+      </bacteria-description>
+      <bacteria-description class="antibiotic-description-3">
+        <p>Approved in 1987</p>
+      </bacteria-description>
+      <div class="checkbox">
+        <input type="checkbox" name="ab3" value="cip5" id="checkboxInput3" />
+        <label for="checkboxInput3">Add</label>
+      </div>
+    </div>
+  </div>
+  <input
+          id="btn_next"
+          class="button"
+          value="Choose antibiotics"
+          style="border: none; margin-left: auto; margin-right: auto; margin-top: 3vh;"
+        ></input>
+</form>
+</body>
+<!-----------SCRIPT----------->
+<script>
+  var Socket;
+  const ab = [0, 0, 0];
+  var ab1Val;
+  var ab2Val;
+  var ab3Val;
+  var abVal_Input1;
+  var abVal_Input2;
+  var abVal_Input3;
+
+  document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+  document.getElementById('btn_back').addEventListener('click', button_backFunction);
+  document.getElementById('checkboxInput1').addEventListener('click', function() {
+    if (this.checked) {
+      abVal_Input1 = document.getElementById("description_ab1").textContent;
+      if(ab[0] == 0){
+        ab1Val=abVal_Input1;
+        ab[0] = 1;
+      } else if(ab[1] == 0){
+        ab2Val=abVal_Input1;
+        ab[1] = 1;
+      } else if(ab[2] == 0){
+        ab3Val=abVal_Input1;
+        ab[2] = 1;
+      } else if(ab[0] + ab[1] + ab[2] == 3){
+        alert("You already selected 3 antibiotics!");
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB1 CHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "Counter: " + counter + "\n" + "-----------------");
+    } else {
+      if(ab1Val == abVal_Input1){
+        ab1Val=undefined;
+        ab[0] = 0;
+      } else if(ab2Val == abVal_Input1){
+        ab2Val=undefined;
+        ab[1] = 0;
+      } else if(ab3Val == abVal_Input1){
+        ab3Val=undefined;
+        ab[2] = 0;
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB1 UNCHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "Counter: " + counter + "\n" + "-----------------");
+    }
+  });
+  document.getElementById('checkboxInput2').addEventListener('click', function() {
+    if (this.checked) {
+      abVal_Input2 = document.getElementById("description_ab2").textContent;
+      if(ab[0] == 0){
+        ab1Val=abVal_Input2;
+        ab[0] = 1;
+      } else if(ab[1] == 0){
+        ab2Val=abVal_Input2;
+        ab[1] = 1;
+      } else if(ab[2] == 0){
+        ab3Val=abVal_Input2;
+        ab[2] = 1;
+      } else if(ab[0] + ab[1] + ab[2] == 3){
+        alert("You already selected 3 antibiotics!");
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB2 CHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "Counter: " + counter + "\n" + "-----------------");
+    } else {
+      if(ab1Val == abVal_Input2){
+        ab1Val=undefined;
+        ab[0] = 0;
+      } else if(ab2Val == abVal_Input2){
+        ab2Val=undefined;
+        ab[1] = 0;
+      } else if(ab3Val == abVal_Input2){
+        ab3Val=undefined;
+        ab[2] = 0;
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB2 UNCHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "Counter: " + counter + "\n" + "-----------------");
+    }
+  });
+  document.getElementById('checkboxInput3').addEventListener('click', function() {
+    if (this.checked) {
+      abVal_Input3 = document.getElementById("description_ab3").textContent;
+      if(ab[0] == 0){
+        ab1Val=abVal_Input3;
+        ab[0] = 1;
+      } else if(ab[1] == 0){
+        ab2Val=abVal_Input3;
+        ab[1] = 1;
+      } else if(ab[2] == 0){
+        ab3Val=abVal_Input3;
+        ab[2] = 1;
+      } else if(ab[0] + ab[1] + ab[2] == 3){
+        alert("You already selected 3 antibiotics!");
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB3 CHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "Counter: " + counter + "\n" + "-----------------");
+    } else {
+      if(ab1Val == abVal_Input3){
+        ab1Val=undefined;
+        ab[0] = 0;
+      } else if(ab2Val == abVal_Input3){
+        ab2Val=undefined;
+        ab[1] = 0;
+      } else if(ab3Val == abVal_Input3){
+        ab3Val=undefined;
+        ab[2] = 0;
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB3 UNCHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "Counter: " + counter + "\n" + "-----------------");
+    }
+  });
+  
+  function init() {
+      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      Socket.onmessage = function(event) { processCommand(event); };
+      }
+
+  function button_nextFunction() {
+      if(ab[0] + ab[1] + ab[2] == 3){
+        var msg = {
+                  state: 9, 
+                  ab1: ab1Val,
+                  ab2: ab2Val,
+                  ab3: ab3Val
+                };
+        var jsonString = JSON.stringify(msg);
+        Socket.send(jsonString);
+        console.log("Message sent: " + JSON.stringify(msg));
+        window.location.href='state9.html';
+        } else {
+          alert("To continue you need to select 3 antibiotics!");
+          };
+    }
+  
+  function button_backFunction() {
+      var msg = {state: 7};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state7.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+
+  window.onload = function(event){
+      init();
+  }
+  </script>
+</html>

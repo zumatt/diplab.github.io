@@ -1,0 +1,82 @@
+<!DOCTYPE HTML><html>
+<!-----------HEAD----------->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="assets/style-intro.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <title>DiPLab - Alpha Version - State 1</title>
+</head>
+<!-----------BODY----------->
+<body>
+  <div class="header">
+    <div>
+      <div class="builder-columns div">
+        <div class="builder-column column">
+          <button type="button" class="a" id='btn_back'>
+            <
+          </button>
+        </div>
+        <div class="builder-column column-2">
+          <div class="title"><p>DiPLab</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="body-text">
+    <div class="diplab-petri-image" data-el="diplab-petri-image">
+      <picture>
+        <img
+          loading="lazy"
+          src="assets/diplabPetri.png"
+          class="image"
+        />
+      </picture>
+      <div class="builder-image-sizer image-sizer"></div>
+    </div>
+    <body-text class="body-text-2">
+      <p>
+        Welcome to DiPLab the only digital laboratory experience that disseminates
+        the issue of Antimicrobial Resistance using an interactive tool.
+      </p>
+      <p>
+        Thanks to DiPLab you will be able to generate different experiment
+        creating digital petri dishes and see how bacteria evolve and the reaction
+        to antibiotics in a timespan of 48h.
+      </p>
+    </body-text>
+  </div>
+    <div class="footer-button">
+      <button type="button" class="button" id='btn_next'>
+        Next
+      </button>
+    </div>  
+</body>
+<!-----------SCRIPT----------->
+<script>
+  var Socket;
+
+  document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+  document.getElementById('btn_back').addEventListener('click', button_backFunction);
+  
+  function init() {
+      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      }
+  
+  function button_nextFunction() {
+      window.location.href='state5-1.html';
+      }
+  
+  function button_backFunction() {
+      var msg = {state: 0};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state0.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+
+  window.onload = function(event){
+      init();
+  }
+  </script>
+</html>

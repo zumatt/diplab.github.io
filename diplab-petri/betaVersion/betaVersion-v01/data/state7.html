@@ -1,0 +1,73 @@
+<!DOCTYPE HTML><html>
+<!-----------HEAD----------->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="assets/style-intro.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <title>DiPLab - Alpha Version - State 7</title>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="builder-columns div">
+        <div class="builder-column column">
+          <button type="button" class="a" id='btn_back'>
+            <
+          </button>
+        </div>
+        <div class="builder-column column-2">
+          <div class="title"><p>DiPLab</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="body-text">
+    <body-text class="body-text-2">
+      <p>
+        Now you should see the bacteria's name visualized!
+      </p>
+      <p>
+        The next step will be the spreading of bacteria.
+      </p>      
+    </body-text>
+  </div>
+    <div class="footer-button">
+      <button type="button" class="button" id='btn_next'>
+        Let's go!
+      </button>
+    </div>  
+</body>
+<!-----------SCRIPT----------->
+<script>
+  var Socket;
+
+  document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+  document.getElementById('btn_back').addEventListener('click', button_backFunction);
+  
+  function init() {
+      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      Socket.onmessage = function(event) { processCommand(event); };
+      }
+  
+  function button_nextFunction() {
+      var msg = {state: 8};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state7-1.html';
+      }
+  
+  function button_backFunction() {
+      var msg = {state: 6};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state6.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+
+  window.onload = function(event){
+      init();
+  }
+
+  </script>
+</html>

@@ -24,18 +24,18 @@
         <div class="builder-image-sizer image-sizer"></div>
       </div>
     <div class="div-7"><p>Bacteria</p></div>
-    <div class="div-8"><p>Escherica Coli</p></div>
-    <div class="div-9"><p>COLI</p></div>
-    <div class="div-10"><p>PM chromogenic</p></div>
+    <div class="div-8" id="bacteriaName"><p>---</p></div>
+    <div class="div-9" id="bacteriaCode"><p>-</p></div>
+    <p><br></p>
     <div class="div-11"><p>Antibiotic 1</p></div>
-    <div class="div-12"><p>Cefuroxime</p></div>
-    <div class="div-13"><p>CXM30</p></div>
+    <div class="div-12" id="ab1Name"><p>---</p></div>
+    <div class="div-13" id="ab1Code"><p>-</p></div>
     <div class="div-11"><p>Antibiotic 2</p></div>
-    <div class="div-12"><p>Tetracycline</p></div>
-    <div class="div-13"><p>TE30</p></div>
+    <div class="div-12" id="ab2Name"><p>---</p></div>
+    <div class="div-13" id="ab2Code"><p>-</p></div>
     <div class="div-11"><p>Antibiotic 3</p></div>
-    <div class="div-12"><p>Ciprofloxacin</p></div>
-    <div class="div-13"><p>CIP30</p></div>
+    <div class="div-12" id="ab3Name"><p>---</p></div>
+    <div class="div-13" id="ab3Code"><p>-</p></div>
   </div>
 </div>
 </body>
@@ -43,26 +43,48 @@
 <script src="/assets/disableScroll.js"></script>
 <script>
     var Socket;
-
-document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+    var ab1Val;
+    var ab2Val;
+    var ab3Val;
 
 function init() {
     Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+    Socket.onmessage = function(event) { processCommand(event); };
     }
 
-function button_nextFunction() {
-    var x = document.getElementById("infoFrm");
-    var nameVal = x.elements[0].value;
-    var classcodeVal = x.elements[1].value;
-    var msg = {
-                state: 6, 
-                name: nameVal,
-                classcode: classcodeVal
-              };
-    var jsonString = JSON.stringify(msg);
-    Socket.send(jsonString);
-    console.log("Message sent: " + JSON.stringify(msg));
-    }
+function processCommand(event){
+  var obj = JSON.parse(event.data);
+  document.getElementById('bacteriaCode').innerHTML = obj.bacteriaVal;
+  if(ab3Val == "COLI"){document.getElementById('bacteriaName').innerHTML = "Escherica Coli";
+  } else if(ab3Val == "SLM"){document.getElementById('bacteriaName').innerHTML = "Salmonella t.";
+  } else if(ab3Val == "STAPH"){document.getElementById('bacteriaName').innerHTML = "Staphilococcus";
+  } else if(ab3Val == "DGAS"){document.getElementById('bacteriaName').innerHTML = "Deinococcus r.";
+  } else{document.getElementById('antibioticCode').innerHTML = "UN"}
+
+  ab1Val = obj.ab1Val;
+  document.getElementById('ab1Name').innerHTML = ab1Val;
+  if(ab1Val == "Cefuroxime"){document.getElementById('ab1Code').innerHTML = "CIP5";
+  } else if(ab1Val == "Tetracycline"){document.getElementById('ab1Code').innerHTML = "TE30";
+  } else if(ab1Val == "Ciprofloxacin"){document.getElementById('ab1Code').innerHTML = "CIP5";
+  } else if(ab1Val == "Trimethoprim"){document.getElementById('ab1Code').innerHTML = "SXT";
+  } else{document.getElementById('ab1Code').innerHTML = "UN"}
+  
+  ab2Val = obj.ab2Val;
+  document.getElementById('ab2Name').innerHTML = ab2Val;
+  if(ab2Val == "Cefuroxime"){document.getElementById('ab2Code').innerHTML = "CIP5";
+  } else if(ab2Val == "Tetracycline"){document.getElementById('ab2Code').innerHTML = "TE30";
+  } else if(ab2Val == "Ciprofloxacin"){document.getElementById('ab2Code').innerHTML = "CIP5";
+  } else if(ab2Val == "Trimethoprim"){document.getElementById('ab2Code').innerHTML = "SXT";
+  } else{document.getElementById('ab2Code').innerHTML = "UN"}
+
+  ab3Val = obj.ab3Val;
+  document.getElementById('ab3Name').innerHTML = ab3Val;
+  if(ab1Val == "Cefuroxime"){document.getElementById('ab3Code').innerHTML = "CIP5";
+  } else if(ab3Val == "Tetracycline"){document.getElementById('ab3Code').innerHTML = "TE30";
+  } else if(ab3Val == "Ciprofloxacin"){document.getElementById('ab3Code').innerHTML = "CIP5";
+  } else if(ab3Val == "Trimethoprim"){document.getElementById('ab3Code').innerHTML = "SXT";
+  } else{document.getElementById('ab3Code').innerHTML = "UN"}
+  }
 
 window.onload = function(event){
     init();

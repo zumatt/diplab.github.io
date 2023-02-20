@@ -6,7 +6,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
   <script src="assets/resistanceMap.js"></script>-->
-  <title>DiPLab Beta - Home</title>
+  <title>DiPLab Beta - Select bacteria</title>
 </head>
 <!-----------BODY----------->
 <body>
@@ -173,8 +173,8 @@
 <script>
     var Socket;
 
-document.getElementById('btn_back').addEventListener('click', button_backFunciton);
-document.getElementById('btn_info').addEventListener('click', button_infoFunciton);
+document.getElementById('btn_back').addEventListener('click', button_backFunction);
+document.getElementById('btn_info').addEventListener('click', button_infoFunction);
 document.getElementById('btn_addBact1').addEventListener('click',function(){
     button_bacteriaFunction(1);});
 document.getElementById('btn_addBact2').addEventListener('click', function(){
@@ -188,7 +188,7 @@ function init() {
     Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
     }
 
-function button_backFunciton() {
+function button_backFunction() {
   var msg = {state: 1};
   var jsonString = JSON.stringify(msg);
   Socket.send(jsonString);
@@ -196,12 +196,11 @@ function button_backFunciton() {
   console.log("Message sent: " + JSON.stringify(msg));
 }
 
-function button_infoFunciton() {
+function button_infoFunction() {
   alert("In this section you have to select\na bacteria as a base for your Petri!");
 }
 
 function button_bacteriaFunction(a) {
-  console.log("Ok");
   if(a == 1){
     var bacteriaVal = document.getElementById("bact_code1").textContent;
   } else if(a == 2){
@@ -322,7 +321,7 @@ window.onload = function(event){
     font-size: 25px;
     margin-left: 20vw;
     margin-right: 20vw;
-    margin-top:8vh;
+    margin-top:6vh;
   }
   @media (max-width: 640px) {
     .div-2 {

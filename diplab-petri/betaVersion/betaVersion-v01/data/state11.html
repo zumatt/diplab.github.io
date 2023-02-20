@@ -1,0 +1,234 @@
+<!DOCTYPE HTML><html>
+<!-----------HEAD----------->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="assets/style-controlcenter.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <script src="assets/resistanceMap.js"></script>
+  <title>DiPLab - Alpha Version - State 11</title>
+</head>
+<!-----------BODY----------->
+<body>
+  <div class="header">
+    <div>
+      <div class="builder-columns div">
+        <div class="builder-column column">
+          <button type="button" class="a" id='btn_back'>
+            <
+          </button>
+        </div>
+        <div class="builder-column column-2">
+          <div class="title"><p>DiPLab</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="body-text">
+    <body-text class="body-text-2" style="text-align:center; margin-top:2vh;">
+      <p>
+        Select the modality:
+      </p>    
+    </body-text>
+  </div>
+  <div class="control-center-main">
+    <button type="button" class="button selectedButton" id='btn_history'>
+      History
+    </button>
+    <button type="button" class="button" id="btn_microscope">
+      Microscope
+    </button>
+  </div>
+  <div id="microscopeAbSelector1" class="body-text hided">
+    <body-text class="body-text-2" style="text-align:center; margin-top:3vh;">
+      <p>
+        For microscope mode, select the antibiotic to zoom:
+      </p>    
+    </body-text>
+  </div>
+  <div id="microscopeAbSelector2" class="control-center-main hided">
+    <button type="button" class="button selectedButton" id='btn_ab1'>
+      AB 1
+    </button>
+    <button type="button" class="button" id='btn_ab2'>
+      AB 2
+    </button>
+    <button type="button" class="button" id='btn_ab3'>
+      AB 3
+    </button>
+  </div>
+  <div class="body-text">
+    <p id="historyComm" class="body-text-2" style="text-align:center; margin-top:3vh; display: inline-block;">
+      Time:
+      <span id='historyVal' style="color: rgba(213, 255, 45, 1); font-size: 1.7em; font-weight: 600;">-</span>
+      hours. <br><br><br> In history mode you will have the possibility to see the evolution of the DiPLab Petri in 4 different steps: 0 hours, 8h, 12h and 24h.
+    </p>
+    <p id="microscopeComm" class="body-text-2 hided" style="text-align:center; margin-top:3vh; display: inline-block;">
+      Magnification:
+      <span id='microscopeVal' style="color: rgba(213, 255, 45, 1); font-size: 1.7em; font-weight: 600;">-</span>
+      X.  <br><br><br>  In microscope mode you will have the possibility to see each AB inserted in the DiPLab Petri in 4 different steps: 0x, 4x, 10x and 40x.
+    </p>
+  </div>
+    <div class="footer-button">
+      <button type="button" class="button selectedButton" id='btn_next'>
+        End the experience!
+      </button>
+    </div>  
+</body>
+<!-----------SCRIPT----------->
+<script>
+  var Socket;
+  var bacteriaVal;
+  var CMX30val;
+  var TE30val;
+  var CIP5val;
+
+  document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+  document.getElementById('btn_back').addEventListener('click', button_backFunction);
+  document.getElementById('btn_history').addEventListener('click', button_historyFunction);
+  document.getElementById('btn_microscope').addEventListener('click', button_microscopeFunction);
+  document.getElementById('btn_ab1').addEventListener('click', button_ab1Function);
+  document.getElementById('btn_ab2').addEventListener('click', button_ab2Function);
+  document.getElementById('btn_ab3').addEventListener('click', button_ab3Function);
+  
+  function init() {
+      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      Socket.onmessage = function(event) { processCommand(event); };
+      }
+  
+  function button_nextFunction() {
+    var r = confirm("Are you shure you want to finish your experience?");
+    if (r == true) {
+      var msg = {state: 12};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state12.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+    } else {
+      alert("Ok! You will continue the experience");
+    }
+      }
+  
+  function button_backFunction() {
+      var msg = {state: 10};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='state10.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+  
+  function button_historyFunction() {
+      document.getElementById('btn_history').classList.add("selectedButton");
+      document.getElementById('btn_microscope').classList.remove("selectedButton");
+      document.getElementById('microscopeAbSelector1').classList.add("hided");
+      document.getElementById('microscopeAbSelector2').classList.add("hided");
+      document.getElementById('microscopeComm').classList.add("hided");
+      document.getElementById('historyComm').classList.remove("hided");
+      if(bacteriaVal == "COLI"){
+        CMX30val = coliMap.get("CMX30");
+        TE30val = coliMap.get("TE30");
+        CIP5val = coliMap.get("CIP5");
+      } else if(bacteriaVal == "STAPH"){
+        CMX30val = staphMap.get("CMX30");
+        TE30val = staphMap.get("TE30");
+        CIP5val = staphMap.get("CIP5");
+      } else if(bacteriaVal == "SLM"){
+        CMX30val = slmMap.get("CMX30");
+        TE30val = slmMap.get("TE30");
+        CIP5val = slmMap.get("CIP5");
+      };
+      var msg = {
+                  state: 11,
+                  controlCenter: "history",
+                  test: 1,
+                  CMX30_res: CMX30val,
+                  TE30_res: TE30val,
+                  CIP5_res: CIP5val
+                };
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+
+  function button_microscopeFunction() {
+      document.getElementById('btn_history').classList.remove("selectedButton");
+      document.getElementById('btn_microscope').classList.add("selectedButton");
+      document.getElementById('microscopeAbSelector1').classList.remove("hided");
+      document.getElementById('microscopeAbSelector2').classList.remove("hided");
+      document.getElementById('btn_ab1').classList.add("selectedButton");
+      document.getElementById('btn_ab2').classList.remove("selectedButton");
+      document.getElementById('btn_ab3').classList.remove("selectedButton");
+      document.getElementById('microscopeComm').classList.remove("hided");
+      document.getElementById('historyComm').classList.add("hided");
+    var msg = {
+                state: 11,
+                test:1,
+                controlCenter: "microscope",
+                microscopeAb: 1
+              };
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+
+  function button_ab1Function(){
+    document.getElementById('btn_ab1').classList.add("selectedButton");
+    document.getElementById('btn_ab2').classList.remove("selectedButton");
+    document.getElementById('btn_ab3').classList.remove("selectedButton");
+    var msg = {
+                state: 11,
+                test:1,
+                controlCenter: "microscope",
+                microscopeAb: 1
+              };
+    var jsonString = JSON.stringify(msg);
+    Socket.send(jsonString);
+    console.log("Message sent: " + JSON.stringify(msg));
+  }
+
+  function button_ab2Function(){
+    document.getElementById('btn_ab1').classList.remove("selectedButton");
+    document.getElementById('btn_ab2').classList.add("selectedButton");
+    document.getElementById('btn_ab3').classList.remove("selectedButton");
+    var msg = {
+                state: 11,
+                test:1,
+                controlCenter: "microscope",
+                microscopeAb: 2
+              };
+    var jsonString = JSON.stringify(msg);
+    Socket.send(jsonString);
+    console.log("Message sent: " + JSON.stringify(msg));
+  }
+
+  function button_ab3Function(){
+    document.getElementById('btn_ab1').classList.remove("selectedButton");
+    document.getElementById('btn_ab2').classList.remove("selectedButton");
+    document.getElementById('btn_ab3').classList.add("selectedButton");
+    var msg = {
+                state: 11,
+                test:1,
+                controlCenter: "microscope",
+                microscopeAb: 3
+              };
+    var jsonString = JSON.stringify(msg);
+    Socket.send(jsonString);
+    console.log("Message sent: " + JSON.stringify(msg));
+  }
+
+  function processCommand(event){
+    var obj = JSON.parse(event.data);
+    document.getElementById('historyVal').innerHTML = obj.historyVal;
+    document.getElementById('microscopeVal').innerHTML = obj.microscopeVal;
+    bacteriaVal = obj.bacteriaVal;
+    resistanceMap(bacteriaVal);
+    console.log("Resistance: \n");
+    console.log("Resistance: \n");
+    console.log(obj.historyVal);console.log(obj.microscopeVal);
+    }
+  
+  window.onload = function(event){
+      init();
+  }
+  </script>
+</html>

@@ -6,7 +6,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
   <script src="assets/resistanceMap.js"></script>-->
-  <title>DiPLab Beta - Home</title>
+  <title>DiPLab Beta - Select antibiotcs</title>
 </head>
 <!-----------BODY----------->
 <body>
@@ -15,13 +15,13 @@
     <div class="div-menu">
       <div class="builder-columns div-menu2">
         <div class="builder-column-menu column-menu">
-          <div class="div-menu3"><p>&lt;</p></div>
+          <div class="div-menu3" id="btn_back"><p>&lt;</p></div>
         </div>
         <div class="builder-column-menu column-menu2">
           <div class="div-menu4"><p>DiPLab</p></div>
         </div>
         <div class="builder-column-menu column-menu3">
-          <div class="div-menu5"><p>i</p></div>
+          <div class="div-menu5" id="btn_info"><p>i</p></div>
         </div>
       </div>
     </div>
@@ -50,7 +50,7 @@
                 <div class="builder-column column">
                   <div class="separation-line"></div>
                   <div class="div-7"><p>Antibiotic</p></div>
-                  <div class="div-8"><p>Cefuroxime</p></div>
+                  <div class="div-8" id="description_ab1"><p>Cefuroxime</p></div>
                   <div class="div-9"><p>Broad-spectrum</p></div>
                   <div class="div-10"><p>Approved in 1977</p></div>
                   <div class="div-11"><p>Resistance</p></div>
@@ -58,7 +58,7 @@
                   <div class="div-13"><p>to selected bacteria</p></div>
                 </div>
                 <div class="builder-column column-2">
-                  <div class="button">
+                  <div class="button"  id="btn_addAb1">
                     <div class="line-horizontal"></div>
                     <div class="line-vertical"></div>
                   </div>
@@ -84,7 +84,7 @@
                 <div class="builder-column column">
                   <div class="separation-line"></div>
                   <div class="div-7"><p>Antibiotic</p></div>
-                  <div class="div-8"><p>Tetracycline</p></div>
+                  <div class="div-8" id="description_ab2"><p>Tetracycline</p></div>
                   <div class="div-9"><p>Broad-spectrum</p></div>
                   <div class="div-10"><p>Approved in 1978</p></div>
                   <div class="div-11"><p>Resistance</p></div>
@@ -92,7 +92,7 @@
                   <div class="div-13"><p>to selected bacteria</p></div>
                 </div>
                 <div class="builder-column column-2">
-                  <div class="button">
+                  <div class="button"  id="btn_addAb2">
                     <div class="line-horizontal"></div>
                     <div class="line-vertical"></div>
                   </div>
@@ -118,7 +118,7 @@
                 <div class="builder-column column">
                   <div class="separation-line"></div>
                   <div class="div-7"><p>Antibiotic</p></div>
-                  <div class="div-8"><p>Ciprofloxacin</p></div>
+                  <div class="div-8" id="description_ab3"><p>Ciprofloxacin</p></div>
                   <div class="div-9"><p>Broad-spectrum</p></div>
                   <div class="div-10"><p>Approved in 1987</p></div>
                   <div class="div-11"><p>Resistance</p></div>
@@ -126,7 +126,7 @@
                   <div class="div-13"><p>to selected bacteria</p></div>
                 </div>
                 <div class="builder-column column-2">
-                  <div class="button">
+                  <div class="button"  id="btn_addAb3">
                     <div class="line-horizontal"></div>
                     <div class="line-vertical"></div>
                   </div>
@@ -152,7 +152,7 @@
                 <div class="builder-column column">
                   <div class="separation-line"></div>
                   <div class="div-7"><p>Antibiotic</p></div>
-                  <div class="div-8"><p>Trimethoprim</p></div>
+                  <div class="div-8" id="description_ab4"><p>Trimethoprim</p></div>
                   <div class="div-9"><p>Narrow-spectrum</p></div>
                   <div class="div-10"><p>Approved in 1962</p></div>
                   <div class="div-11"><p>Resistance</p></div>
@@ -160,7 +160,7 @@
                   <div class="div-13"><p>to selected bacteria</p></div>
                 </div>
                 <div class="builder-column column-2">
-                  <div class="button">
+                  <div class="button"  id="btn_addAb4">
                     <div class="line-horizontal"></div>
                     <div class="line-vertical"></div>
                   </div>
@@ -176,26 +176,245 @@
 <!-----------SCRIPT----------->
 <script>
     var Socket;
+    const ab = [0, 0, 0, 0];
+    var ab1Val;
+    var ab2Val;
+    var ab3Val;
+    var abVal_Input1;
+    var abVal_Input2;
+    var abVal_Input3;
+    var abVal_Input4;
+    var ab1Check = false;
+    var ab2Check = false;
+    var ab3Check = false;
+    var ab4Check = false;
 
-document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+document.getElementById('btn_back').addEventListener('click', button_backFunction);
+document.getElementById('btn_info').addEventListener('click', button_infoFunction);
+document.getElementById('btn_addAb1').addEventListener('click',function(){
+    button_antibioticFunction(1);});
+document.getElementById('btn_addAb2').addEventListener('click', function(){
+    button_antibioticFunction(2);});
+document.getElementById('btn_addAb3').addEventListener('click', function(){
+    button_antibioticFunction(3);});
+document.getElementById('btn_addAb4').addEventListener('click', function(){
+    button_antibioticFunction(4);});
 
 function init() {
     Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
     }
 
-function button_nextFunction() {
-    var x = document.getElementById("infoFrm");
-    var nameVal = x.elements[0].value;
-    var classcodeVal = x.elements[1].value;
+function button_backFunction() {
     var msg = {
-                state: 6, 
-                name: nameVal,
-                classcode: classcodeVal
+                state: 6,
               };
-    var jsonString = JSON.stringify(msg);
-    Socket.send(jsonString);
-    console.log("Message sent: " + JSON.stringify(msg));
+    window.location.href='bacteriaSelection.html';
     }
+
+function button_infoFunction() {
+  alert("In this section you have to select\nthree antibiotics to see a reaction with your bacteria!");
+}
+
+function nextPhase(){
+  var msg = {
+            state: 9, 
+            ab1: ab1Val,
+            ab2: ab2Val,
+            ab3: ab3Val
+          };
+  var jsonString = JSON.stringify(msg);
+  Socket.send(jsonString);
+  console.log("Message sent: " + JSON.stringify(msg));
+  window.location.href='placingAntibiotics.html';
+}
+
+function button_antibioticFunction(a){
+  if(a == 1){
+    abVal_Input1 = document.getElementById("description_ab1").textContent;
+    if(ab1Check == false){
+      if(ab[0] == 0){
+        ab1Val=abVal_Input1;
+        ab[0] = 1;
+        ab1Check = !ab1Check;
+        document.getElementById("btn_addAb1").setAttribute("style","background-color:#ADFF00");
+      } else if(ab[1] == 0){
+        ab2Val=abVal_Input1;
+        ab[1] = 1;
+        ab1Check = !ab1Check;
+        document.getElementById("btn_addAb1").setAttribute("style","background-color:#ADFF00");
+      } else if(ab[2] == 0){
+        ab3Val=abVal_Input1;
+        ab[2] = 1;
+        ab1Check = !ab1Check;
+        document.getElementById("btn_addAb1").setAttribute("style","background-color:#ADFF00");
+        nextPhase();
+      } else if(ab[0] + ab[1] + ab[2] == 3){
+        alert("You already selected 3 antibiotics!");
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB1 CHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "-----------------");
+    } else {
+      if(ab1Val == abVal_Input1){
+        ab1Val=undefined;
+        ab[0] = 0;
+        ab1Check = !ab1Check;
+        document.getElementById("btn_addAb1").setAttribute("style","background-color:#131313");
+      } else if(ab2Val == abVal_Input1){
+        ab2Val=undefined;
+        ab[1] = 0;
+        ab1Check = !ab1Check;
+        document.getElementById("btn_addAb1").setAttribute("style","background-color:#00000000");
+      } else if(ab3Val == abVal_Input1){
+        ab3Val=undefined;
+        ab[2] = 0;
+        ab1Check = !ab1Check;
+        document.getElementById("btn_addAb1").setAttribute("style","background-color:#00000000");
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB1 UNCHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "-----------------");
+    }
+  } else if (a == 2){
+    abVal_Input2 = document.getElementById("description_ab2").textContent;
+    if(ab2Check == false){
+      if(ab[0] == 0){
+        ab1Val=abVal_Input2;
+        ab[0] = 1;
+        ab2Check = !ab2Check;
+        document.getElementById("btn_addAb2").setAttribute("style","background-color:#ADFF00");
+      } else if(ab[1] == 0){
+        ab2Val=abVal_Input2;
+        ab[1] = 1;
+        ab2Check = !ab2Check;
+        document.getElementById("btn_addAb2").setAttribute("style","background-color:#ADFF00");
+      } else if(ab[2] == 0){
+        ab3Val=abVal_Input2;
+        ab[2] = 1;
+        ab2Check = !ab2Check;
+        document.getElementById("btn_addAb2").setAttribute("style","background-color:#ADFF00");
+        nextPhase();
+      } else if(ab[0] + ab[1] + ab[2] == 3){
+        alert("You already selected 3 antibiotics!");
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB1 CHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "-----------------");
+    } else {
+      if(ab1Val == abVal_Input2){
+        ab1Val=undefined;
+        ab[0] = 0;
+        ab2Check = !ab2Check;
+        document.getElementById("btn_addAb2").setAttribute("style","background-color:#131313");
+      } else if(ab2Val == abVal_Input2){
+        ab2Val=undefined;
+        ab[1] = 0;
+        ab2Check = !ab2Check;
+        document.getElementById("btn_addAb2").setAttribute("style","background-color:#00000000");
+      } else if(ab3Val == abVal_Input2){
+        ab3Val=undefined;
+        ab[2] = 0;
+        ab2Check = !ab2Check;
+        document.getElementById("btn_addAb2").setAttribute("style","background-color:#00000000");
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB1 UNCHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "-----------------");
+    }
+  } else if (a == 3){
+    abVal_Input3 = document.getElementById("description_ab3").textContent;
+    if(ab3Check == false){
+      if(ab[0] == 0){
+        ab1Val=abVal_Input3;
+        ab[0] = 1;
+        ab3Check = !ab3Check;
+        document.getElementById("btn_addAb3").setAttribute("style","background-color:#ADFF00");
+      } else if(ab[1] == 0){
+        ab2Val=abVal_Input3;
+        ab[1] = 1;
+        ab3Check = !ab3Check;
+        document.getElementById("btn_addAb3").setAttribute("style","background-color:#ADFF00");
+      } else if(ab[2] == 0){
+        ab3Val=abVal_Input3;
+        ab[2] = 1;
+        ab3Check = !ab3Check;
+        document.getElementById("btn_addAb3").setAttribute("style","background-color:#ADFF00");
+        nextPhase();
+      } else if(ab[0] + ab[1] + ab[2] == 3){
+        alert("You already selected 3 antibiotics!");
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB1 CHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "-----------------");
+    } else {
+      if(ab1Val == abVal_Input3){
+        ab1Val=undefined;
+        ab[0] = 0;
+        ab3Check = !ab3Check;
+        document.getElementById("btn_addAb3").setAttribute("style","background-color:#131313");
+      } else if(ab2Val == abVal_Input3){
+        ab2Val=undefined;
+        ab[1] = 0;
+        ab3Check = !ab3Check;
+        document.getElementById("btn_addAb3").setAttribute("style","background-color:#00000000");
+      } else if(ab3Val == abVal_Input3){
+        ab3Val=undefined;
+        ab[2] = 0;
+        ab3Check = !ab3Check;
+        document.getElementById("btn_addAb3").setAttribute("style","background-color:#00000000");
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB1 UNCHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "-----------------");
+    }
+  } else if (a == 4){
+    abVal_Input4 = document.getElementById("description_ab4").textContent;
+    if(ab4Check == false){
+      if(ab[0] == 0){
+        ab1Val=abVal_Input4;
+        ab[0] = 1;
+        ab4Check = !ab4Check;
+        document.getElementById("btn_addAb4").setAttribute("style","background-color:#ADFF00");
+      } else if(ab[1] == 0){
+        ab2Val=abVal_Input4;
+        ab[1] = 1;
+        ab4Check = !ab4Check;
+        document.getElementById("btn_addAb4").setAttribute("style","background-color:#ADFF00");
+      } else if(ab[2] == 0){
+        ab3Val=abVal_Input4;
+        ab[2] = 1;
+        ab4Check = !ab4Check;
+        document.getElementById("btn_addAb4").setAttribute("style","background-color:#ADFF00");
+        nextPhase();
+      } else if(ab[0] + ab[1] + ab[2] == 3){
+        alert("You already selected 3 antibiotics!");
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB1 CHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "-----------------");
+    } else {
+      if(ab1Val == abVal_Input4){
+        ab1Val=undefined;
+        ab[0] = 0;
+        ab4Check = !ab4Check;
+        document.getElementById("btn_addAb4").setAttribute("style","background-color:#131313");
+      } else if(ab2Val == abVal_Input4){
+        ab2Val=undefined;
+        ab[1] = 0;
+        ab4Check = !ab4Check;
+        document.getElementById("btn_addAb4").setAttribute("style","background-color:#00000000");
+      } else if(ab3Val == abVal_Input4){
+        ab3Val=undefined;
+        ab[2] = 0;
+        ab4Check = !ab4Check;
+        document.getElementById("btn_addAb4").setAttribute("style","background-color:#00000000");
+      } else {
+        alert("Error on antibiotic input!");
+      }
+      console.log("--- AB1 UNCHECKED ---" + "\n" + "AB1 value: " + ab1Val + "\n" + "AB2 value: " + ab2Val + "\n" + "AB3 value: " + ab3Val + "\n" + "-----------------");
+    }
+  }
+}
 
 window.onload = function(event){
     init();
@@ -296,7 +515,7 @@ window.onload = function(event){
     font-size: 25px;
     margin-left: 20vw;
     margin-right: 20vw;
-    margin-top:8vh;
+    margin-top:6vh;
   }
   @media (max-width: 640px) {
     .div-2 {

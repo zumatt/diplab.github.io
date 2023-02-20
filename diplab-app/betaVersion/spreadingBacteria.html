@@ -6,7 +6,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
   <script src="assets/resistanceMap.js"></script>-->
-  <title>DiPLab Beta - Home</title>
+  <title>DiPLab Beta - Bacteria spreading</title>
 </head>
 <!-----------BODY----------->
 <body>
@@ -47,6 +47,7 @@
 <script src="/assets/disableScroll.js"></script>
 <script>
     var Socket;
+    var spreadingCheck;
 
 document.getElementById('btn_back').addEventListener('click', button_backFunciton);
 document.getElementById('btn_info').addEventListener('click', button_infoFunciton);
@@ -67,7 +68,13 @@ function button_backFunciton() {
 }
 
 function button_nextFunction() {
+  /* UNCOMMENT ONLY WHEN SWAPPING TO ESP32
+  if(spreadingCheck != 1){
+      alert("You need to finish spreading bacteria before!");
+    } else{
       window.location.href='antibioticSelection.html';
+      };*/
+  window.location.href='antibioticSelection.html';
     }
 
 function button_infoFunciton() {
@@ -94,7 +101,7 @@ window.onload = function(event){
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 75vh;
+    height: 70vh;
   }
   .buttonText {
     margin-left: auto;

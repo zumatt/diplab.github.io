@@ -15,13 +15,10 @@
     <div class="div-menu">
       <div class="builder-columns div-menu2">
         <div class="builder-column-menu column-menu">
-          <div class="div-menu3"><p>&lt;</p></div>
+          <div class="div-menu3" id="btn_back"><p>&lt;</p></div>
         </div>
         <div class="builder-column-menu column-menu2">
           <div class="div-menu4"><p>DiPLab</p></div>
-        </div>
-        <div class="builder-column-menu column-menu3">
-          <div class="div-menu5"><p>i</p></div>
         </div>
       </div>
     </div>
@@ -39,7 +36,7 @@
   </div>
   </div>
   <div class="footer">
-    <div class="button"><p class="buttonText">antibiotics placed</p></div>
+    <div class="button" id="btn_next"><p class="buttonText">antibiotics placed</p></div>
   </div>
 </div>
 </body>
@@ -49,24 +46,32 @@
     var Socket;
 
 document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+document.getElementById('btn_back').addEventListener('click', button_backFunction);
 
 function init() {
     Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
     }
 
 function button_nextFunction() {
-    var x = document.getElementById("infoFrm");
-    var nameVal = x.elements[0].value;
-    var classcodeVal = x.elements[1].value;
+    var msg = {state: 11, controlCenter: "history", test: 1};
+    var jsonString = JSON.stringify(msg);
+    Socket.send(jsonString);
+    window.location.href='controlCenter.html';
+    console.log("Message sent: " + JSON.stringify(msg));
+    }
+
+function button_backFunction() {
     var msg = {
-                state: 6, 
-                name: nameVal,
-                classcode: classcodeVal
+                state: 8,
+                ab1: undefined,
+                ab2: undefined,
+                ab3: undefined
               };
     var jsonString = JSON.stringify(msg);
     Socket.send(jsonString);
+    window.location.href='antibioticSelection.html';
     console.log("Message sent: " + JSON.stringify(msg));
-    }
+}
 
 window.onload = function(event){
     init();
@@ -88,7 +93,7 @@ window.onload = function(event){
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 75vh;
+    height: 70vh;
   }
   .buttonText {
     margin-left: auto;

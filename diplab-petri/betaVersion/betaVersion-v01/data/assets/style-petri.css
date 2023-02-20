@@ -1,0 +1,96 @@
+.PetriResult{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80vw;
+    height: 80vw;
+    border-radius: 50%;
+    background-color: #efefef;
+    margin-bottom:5vh;
+}
+.divTable{
+	display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80vw;
+    height: 80vw;
+}
+.divTableRow {
+	display: table-row;
+}
+.divTableHeading {
+	background-color: rgba(0,0,0,0);
+	display: table-header-group;
+}
+.divTableCell, .divTableHead {
+	border: 1px solid #2a2a2a85;
+	display: table-cell;
+	padding: 3px 10px;
+}
+.divTableHeading {
+	background-color: #2a2a2a85;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #2a2a2a85;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+}
+
+.tablet{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #2a2a2a;
+    z-index: 100;
+}
+.resistance{
+    position: absolute;
+    border-radius: 50%;
+    background-color: #efefef;
+}
+
+.ab1_tablet{
+    left: 180px;
+    top: 70px;
+}
+
+.ab1_resistance{
+    width: 80px;
+    height: 80px;
+    left: 160px;
+    top: 50px;
+    z-index: 1;
+}
+
+.ab2_tablet{
+    left: 170px;
+    top: 220px;
+}
+
+.ab2_resistance{
+    width: 100px;
+    height: 100px;
+    left: 140px;
+    top: 190px;
+    z-index: 1;
+}
+
+.ab3_tablet{
+    left: 50px;
+    top: 130px;
+}
+
+.ab3_resistance{
+    width: 60px;
+    height: 60px;
+    left: 40px;
+    top: 120px;
+    z-index: 1;
+}
