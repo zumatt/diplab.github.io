@@ -1,0 +1,185 @@
+<!DOCTYPE HTML><html>
+<!-----------HEAD----------->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="assets/style-controlcenter.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <script src="assets/resistanceMap.js"></script>
+  <title>DiPLab Beta - Home</title>
+</head>
+<!-----------BODY----------->
+<body>
+<div id="webpage">
+<div class="content">
+  <div class="div" data-el="div-1">
+    <picture>
+      <img src="/assets/patternCross.png" class="image"/>
+    </picture>
+    <div class="image-contents"><p class="projectTitle">DiPLab</p></div>
+  </div>
+  <div class="div-2">
+    <p>
+      the only digital laboratory experience that disseminates the issue of
+      antimicrobial resistance using an interactive tool
+    </p>
+  </div>
+</div>
+<div class="footer">
+  <div class="button" id="btn_next"><p class="buttonText">next</p></div>
+</div>
+  <div>
+    <style>
+      body {
+        background-color: #131313;
+      }
+    </style>
+  </div>
+</div>
+</body>
+<!-----------SCRIPT----------->
+<script src="/assets/disableScroll.js"></script>
+<script>
+  var Socket;
+  document.getElementById('btn_next').addEventListener('click', button_function);
+  
+  function init() {
+      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+      }
+  
+  function button_function() {
+      var msg = {state: 1};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='connectionForm.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+      }
+  
+  window.onload = function(event){
+      init();
+  }
+  </script>
+<!-----------STYLE----------->
+<style>
+  body{
+    overflow: hidden;
+    background-color: #131313;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 75vh;
+  }
+  .projectTitle {
+    margin: auto;
+    background-color: #131313;
+  }
+  .buttonText {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .div {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: auto;
+    width: 100%;
+    min-height: 30vw;
+    min-width: 20px;
+    overflow: hidden;
+    line-height: normal;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #131313;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: rgba(241, 241, 241, 1);
+    font-size: 35px;
+    font-family: "Oxygen Mono", monospace;
+  }
+  .image {
+    object-fit: contain;
+    object-position: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  .image-contents {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .div-2 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 2vh;
+    line-height: normal;
+    height: auto;
+    margin-left: 35vw;
+    margin-right: 35vw;
+    font-size: 13px;
+    font-family: "Poppins", sans-serif;
+    color: rgba(241, 241, 241, 1);
+  }
+  .footer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 25vh;
+  }
+  .button {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: auto;
+    height: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30vw;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(241, 241, 241, 1);
+    border-radius: 21px;
+    line-height: normal;
+    font-family: "Poppins", sans-serif;
+    color: rgba(241, 241, 241, 1);
+    font-size: 20px;
+  }
+  @media (max-width: 991px) {
+    .button {
+      width: 75vw;
+    }
+    .div-2 {
+      margin-left: 22vw;
+      margin-right: 22vw;
+    }
+  }
+  @media (max-width: 360px) {
+    .div{
+        font-size: 30px;
+    }
+  }
+  @media (max-width: 640px) {
+    .div {
+      min-height: 75vw;
+      margin-top: 10vh;
+    }
+    .div-2 {
+      margin-left: 12.5vw;
+      margin-right: 12.5vw;
+    }
+  }
+</style>

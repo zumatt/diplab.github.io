@@ -1,0 +1,518 @@
+<!DOCTYPE HTML><html>
+<!-----------HEAD----------->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" type="text/css" href="assets/style-controlcenter.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <script src="assets/resistanceMap.js"></script>-->
+  <title>DiPLab Beta - Home</title>
+</head>
+<!-----------BODY----------->
+<body>
+<div id="webpage">
+  <div class="content">
+    <div class="div-menu">
+      <div class="builder-columns div-menu2">
+        <div class="builder-column-menu column-menu">
+          <div class="div-menu3"><p>&lt;</p></div>
+        </div>
+        <div class="builder-column-menu column-menu2">
+          <div class="div-menu4"><p>DiPLab</p></div>
+        </div>
+        <div class="builder-column-menu column-menu3">
+          <div class="div-menu5"><p>i</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="div-2"><p>customize experience</p></div>
+    <div class="div-3">
+      <p>
+        switch between the history mode or microscope mode to access different informations about AMR
+      </p>
+    </div>
+    <div class="div-4">
+      <div class="builder-columns div-5">
+        <div class="builder-column column">
+          <div class="buttonPressed buttonColumn"><p class="buttonTextPressed">history</p></div>
+        </div>
+        <div class="builder-column column-2">
+          <div class="button-2 buttonColumn"><p class="buttonText">microscope</p></div>
+        </div>
+      </div>
+    </div>
+    <div id="historyContent">
+    <div class="div-6">
+      <div class="builder-columns div-7">
+        <div class="builder-column column-3">
+          <div class="div-8"><p>time</p></div>
+        </div>
+        <div class="builder-column column-4">
+          <div class="div-9"><p>- h</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="div-10">
+      <p>
+        to start the experience you need to insert your name and class code this
+        will allow you to save your experiment.
+      </p>
+    </div>
+  </div>
+  <div id="microscopeContent"  style="display: none;">
+    <div class="div-6">
+      <div class="builder-columns div-5">
+        <div class="builder-column column-5">
+          <div class="buttonPressedColumn buttonColumn3"><p class="buttonTextPressed">Ab1</p></div>
+        </div>
+        <div class="builder-column column-5">
+          <div class="button-2 buttonColumn3"><p class="buttonText">Ab2</p></div>
+        </div>
+        <div class="builder-column column-5">
+          <div class="button-2 buttonColumn3"><p class="buttonText">Ab3</p></div>
+        </div>
+      </div>
+      <div class="builder-columns div-7">
+        <div class="builder-column column-3">
+          <div class="div-8"><p>Cefuroxime</p></div>
+          <div class="div-8"><p>zoom</p></div>
+        </div>
+        <div class="builder-column column-4">
+          <div class="div-8"><p>CXM30</p></div>
+          <div class="div-9"><p>- x</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="div-10">
+      <p>
+        in microscope mode you will have the possibility to see each AB in the DiPLab Petri in 4 different steps: 0x, 4x, 10x and 40x
+      </p>
+    </div>
+  </div>
+  </div>
+  <div class="footer">
+    <div class="buttonPressed"><p class="buttonTextPressed">end the exp</p></div>
+  </div>
+</div>
+</body>
+<!-----------SCRIPT----------->
+<script src="/assets/disableScroll.js"></script>
+<script>
+    var Socket;
+
+document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+
+function init() {
+    Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+    }
+
+function button_nextFunction() {
+    var x = document.getElementById("infoFrm");
+    var nameVal = x.elements[0].value;
+    var classcodeVal = x.elements[1].value;
+    var msg = {
+                state: 6, 
+                name: nameVal,
+                classcode: classcodeVal
+              };
+    var jsonString = JSON.stringify(msg);
+    Socket.send(jsonString);
+    console.log("Message sent: " + JSON.stringify(msg));
+    }
+
+window.onload = function(event){
+    init();
+}
+</script>
+<!-----------STYLE----------->
+<style>
+  body{
+    overflow: hidden;
+    background-color: #131313;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  p{
+    margin: unset;
+  }
+  .div-4 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 8vh;
+    margin-left: 11vw;
+    margin-right: 11vw;
+  }
+  .div-5 {
+    display: flex;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    margin-left: 0px;
+  }
+  .column-2 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(50% - 10px);
+    margin-left: 20px;
+  }
+  .button-2 {
+    width: 25vw;
+    position: relative;
+    margin-top: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    border-radius: 21px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ADFF00;
+    line-height: normal;
+    margin-right: auto;
+    font-family: "Poppins", sans-serif;
+    color: rgba(184, 233, 134, 1);
+    font-size: 20px;
+  }
+  @media (max-width: 991px) {
+    .button-2 {
+      width: 50vw;
+    }
+  }
+  .div-6 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 4vh;
+    margin-left: 11vw;
+  }
+  .div-7 {
+    display: flex;
+    margin-right: 11vw;
+  }
+  .column-3 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(66.666666% - 10px);
+    margin-left: 0px;
+  }
+  .div-8 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 6vh;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    margin-right: auto;
+  }
+  .column-4 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333% - 10px);
+    margin-left: 20px;
+  }
+  .column-5{
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333% - 10px);
+  }
+  .div-9 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 6vh;
+    line-height: normal;
+    height: auto;
+    color: #ADFF00;
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    margin-left: auto;
+  }
+  .div-10 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    margin-right: 20vw;
+    margin-left: 20vw;
+  }
+  @media (max-width: 640px) {
+    .div-10 {
+      margin-left: 11vw;
+      margin-right: 11vw;
+    }
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 75vh;
+  }
+  .buttonText {
+    margin-left: auto;
+    margin-right: auto;
+    color: #ADFF00;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+  }
+  .divImage {
+    position: relative;
+    width: 100%;
+    min-height: 40vw;
+    margin-top: 15vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .image {
+    object-fit: contain;
+    object-position: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  .div-menu {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 78vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .div-menu2 {
+    display: flex;
+  }
+  .column-menu {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333333333336% - 13.333333333333334px);
+    margin-left: 0px;
+  }
+  .div-menu3 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 3vh;
+    line-height: normal;
+    height: auto;
+    color: rgba(175, 175, 175, 1);
+    font-family: "Oxygen Mono", monospace;
+  }
+  .column-menu2 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333333333336% - 13.333333333333334px);
+    margin-left: 20px;
+  }
+  .div-menu4 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 3vh;
+    line-height: normal;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(175, 175, 175, 1);
+    font-family: "Oxygen Mono", monospace;
+  }
+  .column-menu3 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333333333336% - 13.333333333333334px);
+    margin-left: 20px;
+  }
+  .div-menu5 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 3vh;
+    line-height: normal;
+    height: auto;
+    margin-left: auto;
+    color: #ADFF00;
+    font-family: "Oxygen Mono", monospace;
+    margin-left: auto;
+  }
+  .div-2 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 8vh;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    margin-left: 20vw;
+    margin-right: 20vw;
+  }
+  @media (max-width: 640px) {
+    .div-2 {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+  .div-3 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    margin-right: 20vw;
+    margin-left: 20vw;
+  }
+  @media (max-width: 640px) {
+    .div-3 {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+  .form-form {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 15%;
+  }
+  @media (max-width: 640px) {
+    .form-form {
+      margin-top: 30%;
+    }
+  }
+  .form-input {
+    margin-left: 20vw;
+    margin-right: 20vw;
+    background-color: rgba(0, 0, 0, 0);
+    border-style: solid;
+    border-color: #F1F1F1;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    font-family: "Poppins", sans-serif;
+    color: rgba(241, 241, 241, 1);
+    font-size: 18px;
+  }
+  @media (max-width: 640px) {
+    .form-input {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+  .form-input-2 {
+    margin-left: 20vw;
+    margin-right: 20vw;
+    background-color: rgba(0, 0, 0, 0);
+    border-style: solid;
+    border-color: #F1F1F1;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    font-family: "Poppins", sans-serif;
+    color: rgba(241, 241, 241, 1);
+    font-size: 18px;
+    margin-top: 2vh;
+  }
+  @media (max-width: 640px) {
+    .form-input-2 {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+  .footer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 25vh;
+  }
+  .button {
+    width: 30vw;
+    position: relative;
+    margin-top: auto;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    border-radius: 21px;
+    border-color: #ADFF00;
+    border-width: 1px;
+    border-style: solid;
+    line-height: normal;
+    font-family: "Poppins", sans-serif;
+    color: rgba(241, 241, 241, 1);
+    font-size: 20px;
+  }
+  @media (max-width: 991px) {
+    .button {
+      width: 75vw;
+    }
+  }
+  .buttonPressed {
+    width: 30vw;
+    position: relative;
+    margin: auto;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    border-radius: 21px;
+    background-color: #ADFF00;
+    line-height: normal;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+  }
+  @media (max-width: 991px) {
+    .buttonPressed {
+      width: 75vw;
+    }
+  }
+  .buttonPressedColumn {
+    width: 30vw;
+    position: relative;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    border-radius: 21px;
+    background-color: #ADFF00;
+    line-height: normal;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+  }
+  .buttonTextPressed {
+    margin-left: auto;
+    margin-right: auto;
+    color: #131313;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+  }
+  .buttonColumn{
+    width: 35vw;
+    font-size: 16px;
+  }
+  .buttonColumn3{
+    width: 20vw;
+    font-size: 16px;
+  }
+</style>

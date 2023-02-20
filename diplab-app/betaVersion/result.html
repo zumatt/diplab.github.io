@@ -1,0 +1,231 @@
+<!DOCTYPE HTML><html>
+<!-----------HEAD----------->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" type="text/css" href="assets/style-controlcenter.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <script src="assets/resistanceMap.js"></script>-->
+  <title>DiPLab Beta - Home</title>
+</head>
+<!-----------BODY----------->
+<body>
+<div id="webpage">
+  <div class="content">
+    <div class="div"><p>DiPLab</p></div>
+    <div class="resultContainer">
+      <div class="div-4" data-el="div-1">
+        <picture>
+          <img
+            src="/assets/patternCross.png"
+            class="image"
+          />
+        </picture>
+        <div class="builder-image-sizer image-sizer"></div>
+      </div>
+    <div class="div-7"><p>Bacteria</p></div>
+    <div class="div-8"><p>Escherica Coli</p></div>
+    <div class="div-9"><p>COLI</p></div>
+    <div class="div-10"><p>PM chromogenic</p></div>
+    <div class="div-11"><p>Antibiotic 1</p></div>
+    <div class="div-12"><p>Cefuroxime</p></div>
+    <div class="div-13"><p>CXM30</p></div>
+    <div class="div-11"><p>Antibiotic 2</p></div>
+    <div class="div-12"><p>Tetracycline</p></div>
+    <div class="div-13"><p>TE30</p></div>
+    <div class="div-11"><p>Antibiotic 3</p></div>
+    <div class="div-12"><p>Ciprofloxacin</p></div>
+    <div class="div-13"><p>CIP30</p></div>
+  </div>
+</div>
+</body>
+<!-----------SCRIPT----------->
+<script src="/assets/disableScroll.js"></script>
+<script>
+    var Socket;
+
+document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+
+function init() {
+    Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+    }
+
+function button_nextFunction() {
+    var x = document.getElementById("infoFrm");
+    var nameVal = x.elements[0].value;
+    var classcodeVal = x.elements[1].value;
+    var msg = {
+                state: 6, 
+                name: nameVal,
+                classcode: classcodeVal
+              };
+    var jsonString = JSON.stringify(msg);
+    Socket.send(jsonString);
+    console.log("Message sent: " + JSON.stringify(msg));
+    }
+
+window.onload = function(event){
+    init();
+}
+</script>
+<!-----------STYLE----------->
+<style>
+  body{
+    overflow: hidden;
+    background-color: #131313;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  p{
+    margin: unset;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 75vh;
+  }
+  .buttonText {
+    margin-left: auto;
+    margin-right: auto;
+    color: #131313;
+  }
+  .div {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 3vh;
+    line-height: normal;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(175, 175, 175, 1);
+    font-family: "Oxygen Mono", monospace;
+  }
+  .div-7 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 0.5vh;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 9px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+  }
+  .div-8 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 0.5vh;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+  }
+  .div-9 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+    font-style: italic;
+    font-weight: 100;
+  }
+  .div-10 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+    font-weight: 100;
+  }
+  .div-11 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 0.5vh;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 9px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+  }
+  .div-12 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 0.5vh;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+  }
+  .div-13 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+    font-weight: 100;
+  }
+  .resultContainer{
+    margin-left: 11vw;
+    margin-top: 2vh;
+  }
+  .div-4 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 30vw;
+    min-height: 30vw;
+    min-width: 20px;
+    overflow: hidden;
+    margin-bottom: 2vh;
+    border-style: solid;
+    border-width: 4px;
+    border-radius: 50%;
+    border-color: rgba(175, 175, 175, 1);
+  }
+  @media (max-width: 640px) {
+    .div-4 {
+      min-height: 75vw;
+      margin-top: 5vh;
+      width: 75vw;
+    }
+  }
+  .image {
+    object-fit: contain;
+    object-position: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  .image-sizer {
+    width: 100%;
+    padding-top: 28.999999999999996%;
+    pointer-events: none;
+    font-size: 0;
+  }
+</style>
