@@ -37,15 +37,15 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
         const int   d_microscopeAb = doc["microscopeAb"];
 
         j_state = d_state;
-        j_bacteria = d_bacteria;
-        j_ab1 = d_ab1;
-        j_ab2 = d_ab2;
-        j_ab3 = d_ab3;
-        j_name = d_name;
-        j_classcode = d_classcode;
+        if (d_name != ""){j_bacteria = d_bacteria;}
+        if (d_ab1 != ""){j_ab1 = d_ab1;}
+        if (d_ab2 != ""){j_ab2 = d_ab2;}
+        if (d_ab3 != ""){j_ab3 = d_ab3;}
+        if (d_name != ""){j_name = d_name;}
+        if (d_classcode != 0){j_classcode = d_classcode;}
         j_microscopeAB = d_microscopeAb;
         j_test = d_test;
-        j_controlCenter = d_controlCenter;
+        if (d_controlCenter != ""){j_controlCenter = d_controlCenter;}
         
         expState(d_state);
 
@@ -53,16 +53,16 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
         Serial.println("");
         Serial.println("Info received from webPage:");
         Serial.println("");
-        Serial.println("  - State: " + String(d_state));
-        Serial.println("  - Name: " + String(d_name));
-        Serial.println("  - Classcode: " + String(d_classcode));
-        Serial.println("  - Bacteria: " + String(d_bacteria));
-        Serial.println("  - Antibiotic 1 : " + String(d_ab1));
-        Serial.println("  - Antibiotic 2 : " + String(d_ab2));
-        Serial.println("  - Antibiotic 3 : " + String(d_ab3));
-        Serial.println("  - Control center : " + String(d_controlCenter));
-        Serial.println("  - Test : " + String(d_controlCenter));
-        Serial.println("  - Microscope AB : " + String(d_microscopeAb));
+        Serial.println("  - State: " + String(j_state));
+        Serial.println("  - Name: " + String(j_name));
+        Serial.println("  - Classcode: " + String(j_classcode));
+        Serial.println("  - Bacteria: " + String(j_bacteria));
+        Serial.println("  - Antibiotic 1 : " + String(j_ab1));
+        Serial.println("  - Antibiotic 2 : " + String(j_ab2));
+        Serial.println("  - Antibiotic 3 : " + String(j_ab3));
+        Serial.println("  - Control center : " + String(j_controlCenter));
+        Serial.println("  - Test : " + String(j_controlCenter));
+        Serial.println("  - Microscope AB : " + String(j_microscopeAB));
         Serial.println("");
         Serial.println("----------------------------------");
       }

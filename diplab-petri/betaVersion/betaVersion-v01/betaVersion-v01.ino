@@ -180,7 +180,7 @@ void setup() {
 
   //Here we set what it need to happen after a client open the ESP32 IP address
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/state0.html", "text/html");
+    request->send(SPIFFS, "/index.html", "text/html");
   });
   //Load favicon, css and other files on the SD card
   server.serveStatic("/", SPIFFS, "/");
@@ -278,6 +278,14 @@ void loop() {
         String jsonString = "";
         StaticJsonDocument<200> doc;                      // create a JSON container
         JsonObject object = doc.to<JsonObject>();         // create a JSON Object
+        Serial.print("Bacteria: ");
+        Serial.print(j_bacteria);
+        Serial.print(" -- AB1: ");
+        Serial.print(j_ab1);
+        Serial.print(" -- AB2: ");
+        Serial.print(j_ab2);
+        Serial.print(" -- AB3: ");
+        Serial.print(j_ab3);
         object["bacteriaVal"] = j_bacteria;
         object["ab1Val"] = j_ab1;
         object["ab2Val"] = j_ab2;

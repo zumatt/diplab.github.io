@@ -34,7 +34,7 @@ void expState(int sNum){
 void state0() {
   //Display all the informations for the WiFi connection
   display.clearDisplay();
-  display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
+  //display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
   display.setCursor(xC+100, yC+250);
   display.println("Connect to ");
   display.setCursor(xC+100, yC+300);
