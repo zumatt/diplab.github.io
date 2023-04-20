@@ -1,5 +1,8 @@
 # DiPLab
 *An Interactive Multimodal Experience to Involve Young People in Learning about Antimicrobial Resistance.*
+
+![Cover of the Digital Petri Laboratory Project or DiPLab from Matteo Subet](https://raw.githubusercontent.com/zumatt/diplab/main/assets/DiPLab_Cover.png)
+
 > Master's Thesis Project for the [Master of Arts in Interaction Design](https://github.com/maind-supsi)
 
 ### The Experience
