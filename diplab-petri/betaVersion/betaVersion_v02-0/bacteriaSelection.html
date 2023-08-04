@@ -1,0 +1,577 @@
+<!DOCTYPE HTML><html>
+<!-----------HEAD----------->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" type="text/css" href="assets/style-controlcenter.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <script src="assets/resistanceMap.js"></script>-->
+  <title>DiPLab Beta - Select bacteria</title>
+</head>
+<!-----------BODY----------->
+<body>
+<div id="webpage">
+  <div class="content">
+    <div class="div-menu">
+      <div class="builder-columns div-menu2">
+        <div class="builder-column-menu column-menu">
+          <div class="div-menu3" id="btn_back"><p>&lt;</p></div>
+        </div>
+        <div class="builder-column-menu column-menu2">
+          <div class="div-menu4"><p>DiPLab</p></div>
+        </div>
+        <div class="builder-column-menu column-menu3">
+          <div class="div-menu5" id="btn_info"><p>i</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="div-2"><p>select the bacteria</p></div>
+    <div class="div-3">
+      <p>
+        in order to create a base for your Petri, you need to spread a bacteria <br> select one bacteria you want to use.
+      </p>
+    </div>
+    <div class="scrollable-list">
+      <ul>
+        <li><div class="bacteria-1" style="margin-left:8vw;">
+          <div class="div-4" data-el="div-1">
+            <picture>
+              <img
+                src="/assets/patternCross.png"
+                class="image"
+              />
+            </picture>
+            <div class="builder-image-sizer image-sizer"></div>
+          </div>
+          <div class="info">
+            <div class="div-5">
+              <div class="builder-columns div-6">
+                <div class="builder-column column">
+                  <div class="separation-line"></div>
+                  <div class="div-7"><p>Bacteria</p></div>
+                  <div class="div-8"><p>Escherica Coli</p></div>
+                  <div class="div-9" id="bact_code1"><p>COLI</p></div>
+                  <div class="div-10"><p>PM chromogenic</p></div>
+                  <div class="div-11"><p>Resistance</p></div>
+                  <div class="div-12"><p>65%</p></div>
+                  <div class="div-13"><p>average</p></div>
+                </div>
+                <div class="builder-column column-2">
+                  <div class="button" id="btn_addBact1">
+                    <div class="line-horizontal"></div>
+                    <div class="line-vertical"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div></li>
+        <li><div class="bacteria-1">
+          <div class="div-4" data-el="div-1">
+            <picture>
+              <img
+                src="/assets/patternCross.png"
+                class="image"
+              />
+            </picture>
+            <div class="builder-image-sizer image-sizer"></div>
+          </div>
+          <div class="info">
+            <div class="div-5">
+              <div class="builder-columns div-6">
+                <div class="builder-column column">
+                  <div class="separation-line"></div>
+                  <div class="div-7"><p>Bacteria</p></div>
+                  <div class="div-8"><p>Salmonella t.</p></div>
+                  <div class="div-9" id="bact_code2"><p>SLM</p></div>
+                  <div class="div-10"><p>PM chromoselect</p></div>
+                  <div class="div-11"><p>Resistance</p></div>
+                  <div class="div-12"><p>12%</p></div>
+                  <div class="div-13"><p>average</p></div>
+                </div>
+                <div class="builder-column column-2">
+                  <div class="button" id="btn_addBact2">
+                    <div class="line-horizontal"></div>
+                    <div class="line-vertical"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div></li>
+        <li><div class="bacteria-1">
+          <div class="div-4" data-el="div-1">
+            <picture>
+              <img
+                src="/assets/patternCross.png"
+                class="image"
+              />
+            </picture>
+            <div class="builder-image-sizer image-sizer"></div>
+          </div>
+          <div class="info">
+            <div class="div-5">
+              <div class="builder-columns div-6">
+                <div class="builder-column column">
+                  <div class="separation-line"></div>
+                  <div class="div-7"><p>Bacteria</p></div>
+                  <div class="div-8"><p>Staphilococcus</p></div>
+                  <div class="div-9" id="bact_code3"><p>STAPH</p></div>
+                  <div class="div-10"><p>PM tryptic soy</p></div>
+                  <div class="div-11"><p>Resistance</p></div>
+                  <div class="div-12"><p>28%</p></div>
+                  <div class="div-13"><p>average</p></div>
+                </div>
+                <div class="builder-column column-2">
+                  <div class="button" id="btn_addBact3">
+                    <div class="line-horizontal"></div>
+                    <div class="line-vertical"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div></li>
+        <li><div class="bacteria-1">
+          <div class="div-4" data-el="div-1">
+            <picture>
+              <img
+                src="/assets/patternCross.png"
+                class="image"
+              />
+            </picture>
+            <div class="builder-image-sizer image-sizer"></div>
+          </div>
+          <div class="info">
+            <div class="div-5">
+              <div class="builder-columns div-6">
+                <div class="builder-column column">
+                  <div class="separation-line"></div>
+                  <div class="div-7"><p>Bacteria</p></div>
+                  <div class="div-8"><p>Deinococcus r.</p></div>
+                  <div class="div-9" id="bact_code4"><p>DGAS</p></div>
+                  <div class="div-10"><p>PM tryptone</p></div>
+                  <div class="div-11"><p>Resistance</p></div>
+                  <div class="div-12"><p>81%</p></div>
+                  <div class="div-13"><p>average</p></div>
+                </div>
+                <div class="builder-column column-2">
+                  <div class="button" id="btn_addBact4">
+                    <div class="line-horizontal"></div>
+                    <div class="line-vertical"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div></li>
+      </ul>
+    </div>
+</div>
+</body>
+<!-----------SCRIPT----------->
+<script>
+    var Socket;
+
+document.getElementById('btn_back').addEventListener('click', button_backFunction);
+document.getElementById('btn_info').addEventListener('click', button_infoFunction);
+document.getElementById('btn_addBact1').addEventListener('click',function(){
+    button_bacteriaFunction(1);});
+document.getElementById('btn_addBact2').addEventListener('click', function(){
+    button_bacteriaFunction(2);});
+document.getElementById('btn_addBact3').addEventListener('click', function(){
+    button_bacteriaFunction(3);});
+document.getElementById('btn_addBact4').addEventListener('click', function(){
+    button_bacteriaFunction(4);});
+
+function init() {
+    Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+    }
+
+function button_backFunction() {
+  var msg = {state: 1};
+  var jsonString = JSON.stringify(msg);
+  Socket.send(jsonString);
+  window.location.href='connectionForm.html';
+  console.log("Message sent: " + JSON.stringify(msg));
+}
+
+function button_infoFunction() {
+  alert("In this section you have to select\na bacteria as a base for your Petri!");
+}
+
+function button_bacteriaFunction(a) {
+  if(a == 1){
+    var bacteriaVal = document.getElementById("bact_code1").textContent;
+  } else if(a == 2){
+    var bacteriaVal = document.getElementById("bact_code2").textContent;
+  } else if(a == 3){
+    var bacteriaVal = document.getElementById("bact_code3").textContent;
+  } else if(a == 4){
+    var bacteriaVal = document.getElementById("bact_code4").textContent;
+  } else {
+    var bacteriaVal = "Error!";
+  }
+  var msg = {
+              state: 8, 
+              bacteria: bacteriaVal
+            };
+  var jsonString = JSON.stringify(msg);
+  Socket.send(jsonString);
+  window.location.href='spreadingBacteria.html';
+  console.log("Message sent: " + JSON.stringify(msg));
+  }
+
+window.onload = function(event){
+    init();
+}
+</script>
+<!-----------STYLE----------->
+<style>
+  body{
+    overflow: hidden;
+    background-color: #131313;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  p{
+    margin: unset;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100vh;
+  }
+  .div-menu {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 78vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .div-menu2 {
+    display: flex;
+  }
+  .column-menu {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333333333336% - 13.333333333333334px);
+    margin-left: 0px;
+  }
+  .div-menu3 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 3vh;
+    line-height: normal;
+    height: auto;
+    color: rgba(175, 175, 175, 1);
+    font-family: "Oxygen Mono", monospace;
+  }
+  .column-menu2 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333333333336% - 13.333333333333334px);
+    margin-left: 20px;
+  }
+  .div-menu4 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 3vh;
+    line-height: normal;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(175, 175, 175, 1);
+    font-family: "Oxygen Mono", monospace;
+  }
+  .column-menu3 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333333333336% - 13.333333333333334px);
+    margin-left: 20px;
+  }
+  .div-menu5 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 3vh;
+    line-height: normal;
+    height: auto;
+    margin-left: auto;
+    color: #ADFF00;
+    font-family: "Oxygen Mono", monospace;
+    margin-left: auto;
+  }
+  .div-2 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    margin-left: 20vw;
+    margin-right: 20vw;
+    margin-top:6vh;
+  }
+  @media (max-width: 640px) {
+    .div-2 {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+  .div-3 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    margin-right: 20vw;
+    margin-left: 20vw;
+  }
+  @media (max-width: 640px) {
+    .div-3 {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+  .scrollable-list {
+    overflow-x: scroll; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent line breaks */
+  }
+  
+  .scrollable-list ul {
+    display: inline-block; /* Display list items horizontally */
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+  }
+  
+  .scrollable-list li {
+    display: inline-block; /* Display list items horizontally */
+    margin: 0 10px; /* Add some space between items */
+  }
+  .bacteria-1 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .div-4 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 8vh;
+    width: 30vw;
+    min-height: 30vw;
+    min-width: 20px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: solid;
+    border-width: 4px;
+    border-radius: 50%;
+    border-color: rgba(175, 175, 175, 1);
+  }
+  @media (max-width: 640px) {
+    .div-4 {
+      min-height: 75vw;
+      margin-top: 5vh;
+      width: 75vw;
+    }
+  }
+  .image {
+    object-fit: contain;
+    object-position: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  .image-sizer {
+    width: 100%;
+    padding-top: 28.999999999999996%;
+    pointer-events: none;
+    font-size: 0;
+  }
+  .info {
+    width: 30vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @media (max-width: 640px) {
+    .info {
+      width: 75vw;
+    }
+  }
+  .div-5 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .div-6 {
+    display: flex;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(66.666666% - 10px);
+    margin-left: 0px;
+  }
+  .separation-line {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 2vh;
+    height: 0px;
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: rgba(175, 175, 175, 1);
+  }
+  .div-7 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 0.5vh;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 9px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+  }
+  .div-8 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 0.5vh;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+  }
+  .div-9 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+    font-style: italic;
+    font-weight: 100;
+  }
+  .div-10 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+    font-weight: 100;
+  }
+  .div-11 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 0.5vh;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 9px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+  }
+  .div-12 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 0.5vh;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+  }
+  .div-13 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+    font-weight: 100;
+  }
+  .column-2 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333% - 10px);
+    margin-left: 20px;
+  }
+  .button {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 5vw;
+    border-radius: 50%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ADFF00;
+    width: 50%;
+    margin-top: 2vh;
+    margin-left: auto;
+  }
+  @media (max-width: 640px) {
+    .button {
+      min-height: 11vw;
+    }
+  }
+  .line-horizontal {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 70%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ADFF00;
+    top: 49%;
+    left: 15%;
+  }
+  .line-vertical {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ADFF00;
+    top: 15%;
+    left: 49%;
+    height: 70%;
+  }
+</style>

@@ -1,0 +1,701 @@
+<!DOCTYPE HTML><html>
+<!-----------HEAD----------->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" type="text/css" href="assets/style-controlcenter.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <script src="assets/resistanceMap.js"></script>-->
+  <title>DiPLab Beta - Control Center</title>
+</head>
+<!-----------BODY----------->
+<body>
+<div id="webpage">
+  <div class="content">
+    <div class="div-menu">
+      <div class="builder-columns div-menu2">
+        <div class="builder-column-menu column-menu">
+          <div class="div-menu3" id="btn_back"><p>&lt;</p></div>
+        </div>
+        <div class="builder-column-menu column-menu2">
+          <div class="div-menu4"><p>DiPLab</p></div>
+        </div>
+        <div class="builder-column-menu column-menu3">
+          <div class="div-menu5" id="btn_info"><p></p></div>
+        </div>
+      </div>
+    </div>
+    <div class="div-2" id="pageTitle"><p>customize experience</p></div>
+    <div class="div-3" id="pageDescription">
+      <p>
+        switch between the history mode or microscope mode to access different informations about AMR
+      </p>
+    </div>
+    <div class="div-4">
+      <div class="builder-columns div-5">
+        <div class="builder-column column">
+          <div class="button buttonColumn selected" id="btn_history"><p class="buttonText selected" id="btn_history_txt">history</p></div>
+        </div>
+        <div class="builder-column column-2">
+          <div class="button buttonColumn"  id="btn_microscope"><p class="buttonText"  id="btn_microscope_txt">microscope</p></div>
+        </div>
+      </div>
+    </div>
+    <div id="historyContent">
+    <div class="div-6">
+      <div class="builder-columns div-7">
+        <div class="builder-column column-3">
+          <div class="div-8"><p>time</p></div>
+        </div>
+        <div class="builder-column column-4">
+          <div class="div-9"><p><span id="historyVal">-</span> h</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="div-10">
+      <p>
+        to start the experience you need to insert your name and class code this
+        will allow you to save your experiment.
+      </p>
+    </div>
+  </div>
+  <div id="microscopeContent" class="hided">
+    <div class="div-6">
+      <div class="builder-columns div-5">
+        <div class="builder-column column-5">
+          <div class="button buttonColumn3" style="margin-left:0; margin-right: auto;" id="btn_ab1"><p class="buttonText" id="btn_ab1_txt">Ab1</p></div>
+        </div>
+        <div class="builder-column column-5">
+          <div class="button buttonColumn3" id="btn_ab2"><p class="buttonText" id="btn_ab2_txt">Ab2</p></div>
+        </div>
+        <div class="builder-column column-5">
+          <div class="button buttonColumn3" style="margin-left:auto; margin-right: 0;" id="btn_ab3"><p class="buttonText" id="btn_ab3_txt">Ab3</p></div>
+        </div>
+      </div>
+      <div class="builder-columns div-7">
+        <div class="builder-column column-3">
+          <!--<div class="div-8"><p id="antibioticName">-</p></div>-->
+          <div class="div-8"><p>zoom</p></div>
+        </div>
+        <div class="builder-column column-4">
+          <!--<div class="div-8"><p id="antibioticCode">-</p></div>-->
+          <div class="div-9"><p><span id="microscopeVal">-</span> x</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="div-10">
+      <p>
+        in microscope mode you will have the possibility to see each AB in the DiPLab Petri in 4 different steps: 0x, 4x, 10x and 40x
+      </p>
+    </div>
+  </div>
+  </div>
+  <div class="footer">
+    <div class="buttonPressed" id="btn_next"><p class="buttonTextPressed">end the exp</p></div>
+  </div>
+</div>
+</body>
+<!-----------SCRIPT----------->
+<script src="/assets/disableScroll.js"></script>
+<script>
+    var Socket;
+    var ab1Val;
+    var ab2Val;
+    var ab3Val;
+    var bacteriaVal;
+    var CMX30val;
+    var TE30val;
+    var CIP5val;
+    var SXTval;
+
+document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+document.getElementById('btn_back').addEventListener('click', button_backFunction);
+document.getElementById('btn_history').addEventListener('click', button_historyFunction);
+document.getElementById('btn_microscope').addEventListener('click', button_microscopeFunction);
+document.getElementById('btn_ab1').addEventListener('click', button_ab1Function);
+document.getElementById('btn_ab2').addEventListener('click', button_ab2Function);
+document.getElementById('btn_ab3').addEventListener('click', button_ab3Function);
+
+function init() {
+    Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+    Socket.onmessage = function(event) { processCommand(event); };
+    }
+
+function button_nextFunction() {
+  var r = confirm("Are you shure you want to finish your experience?");
+    if (r == true) {
+      var msg = {state: 12};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='result.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+    } else {
+      alert("Ok! You will continue the experience");
+    }
+  }
+
+function button_backFunction() {
+      var msg = {state: 10};
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      window.location.href='placingAntibiotics.html';
+      console.log("Message sent: " + JSON.stringify(msg));
+  }
+
+function button_historyFunction() {
+    document.getElementById('btn_microscope').classList.remove("selected");
+    document.getElementById('btn_history').classList.add("selected");
+    document.getElementById('btn_microscope_txt').classList.remove("selected");
+    document.getElementById('btn_history_txt').classList.add("selected");
+    document.getElementById('microscopeContent').classList.add("hided");
+    document.getElementById('historyContent').classList.remove("hided");
+    document.getElementById('pageTitle').classList.remove("hided");
+    document.getElementById('pageDescription').classList.remove("hided");
+    if(bacteriaVal == "COLI"){
+      CMX30val = coliMap.get("CMX30");
+      TE30val = coliMap.get("TE30");
+      CIP5val = coliMap.get("CIP5");
+    } else if(bacteriaVal == "STAPH"){
+      CMX30val = staphMap.get("CMX30");
+      TE30val = staphMap.get("TE30");
+      CIP5val = staphMap.get("CIP5");
+    } else if(bacteriaVal == "SLM"){
+      CMX30val = slmMap.get("CMX30");
+      TE30val = slmMap.get("TE30");
+      CIP5val = slmMap.get("CIP5");
+    };
+    var msg = {
+                state: 11,
+                controlCenter: "history",
+                test: 1,
+                CMX30_res: CMX30val,
+                TE30_res: TE30val,
+                CIP5_res: CIP5val
+              };
+    var jsonString = JSON.stringify(msg);
+    Socket.send(jsonString);
+    console.log("Message sent: " + JSON.stringify(msg));
+    }
+
+function button_microscopeFunction() {
+    document.getElementById('btn_history').classList.remove("selected");
+    document.getElementById('btn_microscope').classList.add("selected");
+    document.getElementById('btn_history_txt').classList.remove("selected");
+    document.getElementById('btn_microscope_txt').classList.add("selected");
+    document.getElementById('microscopeContent').classList.remove("hided");
+    document.getElementById('historyContent').classList.add("hided");
+    document.getElementById('pageTitle').classList.add("hided");
+    document.getElementById('pageDescription').classList.add("hided");
+    document.getElementById('btn_ab1').classList.add("selected");
+    document.getElementById('btn_ab2').classList.remove("selected");
+    document.getElementById('btn_ab3').classList.remove("selected");
+    document.getElementById('btn_ab1_txt').classList.add("selected");
+    document.getElementById('btn_ab2_txt').classList.remove("selected");
+    document.getElementById('btn_ab3_txt').classList.remove("selected");
+    /*document.getElementById('antibioticName').innerHTML = ab1Val;
+    if(ab1Val == "Cefuroxime"){document.getElementById('antibioticCode').innerHTML = "CIP5";
+    } else if(ab1Val == "Tetracycline"){document.getElementById('antibioticCode').innerHTML = "TE30";
+    } else if(ab1Val == "Ciprofloxacin"){document.getElementById('antibioticCode').innerHTML = "CIP5";
+    } else if(ab1Val == "Trimethoprim"){document.getElementById('antibioticCode').innerHTML = "SXT";
+    } else{document.getElementById('antibioticCode').innerHTML = "UN"}*/
+    var msg = {
+                state: 11,
+                test:1,
+                controlCenter: "microscope",
+                microscopeAb: 1
+              };
+    var jsonString = JSON.stringify(msg);
+    Socket.send(jsonString);
+    console.log("Message sent: " + JSON.stringify(msg));
+    }
+
+function button_ab1Function(){
+  document.getElementById('btn_ab1').classList.add("selected");
+  document.getElementById('btn_ab2').classList.remove("selected");
+  document.getElementById('btn_ab3').classList.remove("selected");
+  document.getElementById('btn_ab1_txt').classList.add("selected");
+  document.getElementById('btn_ab2_txt').classList.remove("selected");
+  document.getElementById('btn_ab3_txt').classList.remove("selected");
+  /*document.getElementById('antibioticName').innerHTML = ab1Val;
+  if(ab1Val == "Cefuroxime"){document.getElementById('antibioticCode').innerHTML = "CIP5";
+  } else if(ab1Val == "Tetracycline"){document.getElementById('antibioticCode').innerHTML = "TE30";
+  } else if(ab1Val == "Ciprofloxacin"){document.getElementById('antibioticCode').innerHTML = "CIP5";
+  } else if(ab1Val == "Trimethoprim"){document.getElementById('antibioticCode').innerHTML = "SXT";
+  } else{document.getElementById('antibioticCode').innerHTML = "UN"}*/
+  var msg = {
+              state: 11,
+              test:1,
+              controlCenter: "microscope",
+              microscopeAb: 1
+            };
+  var jsonString = JSON.stringify(msg);
+  Socket.send(jsonString);
+  console.log("Message sent: " + JSON.stringify(msg));
+}
+
+function button_ab2Function(){
+  document.getElementById('btn_ab1').classList.remove("selected");
+  document.getElementById('btn_ab2').classList.add("selected");
+  document.getElementById('btn_ab3').classList.remove("selected");
+  document.getElementById('btn_ab1_txt').classList.remove("selected");
+  document.getElementById('btn_ab2_txt').classList.add("selected");
+  document.getElementById('btn_ab3_txt').classList.remove("selected");
+  /*document.getElementById('antibioticName').innerHTML = ab2Val;
+  if(ab2Val == "Cefuroxime"){document.getElementById('antibioticCode').innerHTML = "CIP5";
+  } else if(ab2Val == "Tetracycline"){document.getElementById('antibioticCode').innerHTML = "TE30";
+  } else if(ab2Val == "Ciprofloxacin"){document.getElementById('antibioticCode').innerHTML = "CIP5";
+  } else if(ab2Val == "Trimethoprim"){document.getElementById('antibioticCode').innerHTML = "SXT";
+  } else{document.getElementById('antibioticCode').innerHTML = "UN"}*/
+  var msg = {
+              state: 11,
+              test:1,
+              controlCenter: "microscope",
+              microscopeAb: 2
+            };
+  var jsonString = JSON.stringify(msg);
+  Socket.send(jsonString);
+  console.log("Message sent: " + JSON.stringify(msg));
+}
+
+function button_ab3Function(){
+  document.getElementById('btn_ab1').classList.remove("selected");
+  document.getElementById('btn_ab2').classList.remove("selected");
+  document.getElementById('btn_ab3').classList.add("selected");
+  document.getElementById('btn_ab1_txt').classList.remove("selected");
+  document.getElementById('btn_ab2_txt').classList.remove("selected");
+  document.getElementById('btn_ab3_txt').classList.add("selected");
+  /*document.getElementById('antibioticName').innerHTML = ab3Val;
+  if(ab3Val == "Cefuroxime"){document.getElementById('antibioticCode').innerHTML = "CIP5";
+  } else if(ab3Val == "Tetracycline"){document.getElementById('antibioticCode').innerHTML = "TE30";
+  } else if(ab3Val == "Ciprofloxacin"){document.getElementById('antibioticCode').innerHTML = "CIP5";
+  } else if(ab3Val == "Trimethoprim"){document.getElementById('antibioticCode').innerHTML = "SXT";
+  } else{document.getElementById('antibioticCode').innerHTML = "UN"}*/
+  var msg = {
+              state: 11,
+              test:1,
+              controlCenter: "microscope",
+              microscopeAb: 3
+            };
+  var jsonString = JSON.stringify(msg);
+  Socket.send(jsonString);
+  console.log("Message sent: " + JSON.stringify(msg));
+}
+
+function processCommand(event){
+  var obj = JSON.parse(event.data);
+  document.getElementById('historyVal').innerHTML = obj.historyVal;
+  document.getElementById('microscopeVal').innerHTML = obj.microscopeVal;
+  ab1Val = obj.ab1Val;
+  ab2Val = obj.ab2Val;
+  ab3Val = obj.ab3Val;
+  bacteriaVal = obj.bacteriaVal;
+  resistanceMap(bacteriaVal);
+  console.log("Resistance: \n");
+  console.log("Resistance: \n");
+  console.log(obj.historyVal);console.log(obj.microscopeVal);
+  }
+
+window.onload = function(event){
+    init();
+}
+</script>
+<!-----------STYLE----------->
+<style>
+  body{
+    overflow: hidden;
+    background-color: #131313;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  p{
+    margin: unset;
+  }
+  .hided{
+    display: none !important;
+  }
+  .selected {
+      background-color: #ADFF00;
+      color: #131313 !important;
+  }
+  .div-4 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 8vh;
+    margin-left: 11vw;
+    margin-right: 11vw;
+  }
+  .div-5 {
+    display: flex;
+    margin-right: 4vw;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    margin-left: 0px;
+  }
+  .column-2 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(50% - 10px);
+    margin-left: 20px;
+  }
+  .button-2 {
+    width: 25vw;
+    position: relative;
+    margin-top: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    border-radius: 21px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ADFF00;
+    line-height: normal;
+    margin-right: auto;
+    font-family: "Poppins", sans-serif;
+    color: rgba(184, 233, 134, 1);
+    font-size: 20px;
+  }
+  @media (max-width: 991px) {
+    .button-2 {
+      width: 50vw;
+    }
+  }
+  .div-6 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 4vh;
+    margin-left: 11vw;
+  }
+  .div-7 {
+    display: flex;
+    margin-right: 11vw;
+  }
+  .column-3 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(66.666666% - 10px);
+    margin-left: 0px;
+  }
+  .div-8 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 6vh;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    margin-right: auto;
+  }
+  .column-4 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333% - 10px);
+    margin-left: 20px;
+  }
+  .column-5{
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333% - 10px);
+  }
+  .div-9 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 6vh;
+    line-height: normal;
+    height: auto;
+    color: #ADFF00;
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    margin-left: auto;
+  }
+  .div-10 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    margin-right: 20vw;
+    margin-left: 20vw;
+  }
+  @media (max-width: 640px) {
+    .div-10 {
+      margin-left: 11vw;
+      margin-right: 11vw;
+    }
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 70vh;
+  }
+  .buttonText {
+    margin-left: auto;
+    margin-right: auto;
+    color: #ADFF00;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+  }
+  .divImage {
+    position: relative;
+    width: 100%;
+    min-height: 40vw;
+    margin-top: 15vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .image {
+    object-fit: contain;
+    object-position: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  .div-menu {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 78vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .div-menu2 {
+    display: flex;
+  }
+  .column-menu {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333333333336% - 13.333333333333334px);
+    margin-left: 0px;
+  }
+  .div-menu3 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 3vh;
+    line-height: normal;
+    height: auto;
+    color: rgba(175, 175, 175, 1);
+    font-family: "Oxygen Mono", monospace;
+  }
+  .column-menu2 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333333333336% - 13.333333333333334px);
+    margin-left: 20px;
+  }
+  .div-menu4 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 3vh;
+    line-height: normal;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(175, 175, 175, 1);
+    font-family: "Oxygen Mono", monospace;
+  }
+  .column-menu3 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333333333336% - 13.333333333333334px);
+    margin-left: 20px;
+  }
+  .div-menu5 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 3vh;
+    line-height: normal;
+    height: auto;
+    margin-left: auto;
+    color: #ADFF00;
+    font-family: "Oxygen Mono", monospace;
+    margin-left: auto;
+  }
+  .div-2 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 8vh;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    margin-left: 20vw;
+    margin-right: 20vw;
+  }
+  @media (max-width: 640px) {
+    .div-2 {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+  .div-3 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    margin-right: 20vw;
+    margin-left: 20vw;
+  }
+  @media (max-width: 640px) {
+    .div-3 {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+  .form-form {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 15%;
+  }
+  @media (max-width: 640px) {
+    .form-form {
+      margin-top: 30%;
+    }
+  }
+  .form-input {
+    margin-left: 20vw;
+    margin-right: 20vw;
+    background-color: rgba(0, 0, 0, 0);
+    border-style: solid;
+    border-color: #F1F1F1;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    font-family: "Poppins", sans-serif;
+    color: rgba(241, 241, 241, 1);
+    font-size: 18px;
+  }
+  @media (max-width: 640px) {
+    .form-input {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+  .form-input-2 {
+    margin-left: 20vw;
+    margin-right: 20vw;
+    background-color: rgba(0, 0, 0, 0);
+    border-style: solid;
+    border-color: #F1F1F1;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    font-family: "Poppins", sans-serif;
+    color: rgba(241, 241, 241, 1);
+    font-size: 18px;
+    margin-top: 2vh;
+  }
+  @media (max-width: 640px) {
+    .form-input-2 {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+  .footer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 25vh;
+  }
+  .button {
+    width: 30vw;
+    position: relative;
+    margin-top: auto;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    border-radius: 21px;
+    border-color: #ADFF00;
+    border-width: 1px;
+    border-style: solid;
+    line-height: normal;
+    font-family: "Poppins", sans-serif;
+    color: rgba(241, 241, 241, 1);
+    font-size: 20px;
+  }
+  @media (max-width: 991px) {
+    .button {
+      width: 75vw;
+    }
+  }
+  .buttonPressed {
+    width: 30vw;
+    position: relative;
+    margin: auto;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    border-radius: 21px;
+    background-color: #ADFF00;
+    line-height: normal;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+  }
+  @media (max-width: 991px) {
+    .buttonPressed {
+      width: 75vw;
+    }
+  }
+  .buttonPressedColumn {
+    width: 30vw;
+    position: relative;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    border-radius: 21px;
+    background-color: #ADFF00;
+    line-height: normal;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+  }
+  .buttonTextPressed {
+    margin-left: auto;
+    margin-right: auto;
+    color: #131313;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+  }
+  .buttonColumn{
+    width: 35vw;
+    font-size: 16px;
+  }
+  .buttonColumn3{
+    width: 20vw;
+    font-size: 16px;
+  }
+</style>
