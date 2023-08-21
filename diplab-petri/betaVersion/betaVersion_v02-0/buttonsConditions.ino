@@ -16,7 +16,7 @@ if(j_controlCenter == "history"){
       }
     } else if(j_controlCenter == "microscope"){  
       if(lastState_fwd == LOW && currentState_fwd == HIGH){
-        if (counter < 3){counter ++;}
+        if (counter < 1){counter ++;}
         microscopeCondition();
       }   
       if(lastState_bck == LOW && currentState_bck == HIGH){
