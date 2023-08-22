@@ -1,11 +1,26 @@
 /* MIT License 2023 Matteo Subet <hi@zumat.ch>
    
-   Alpha Version 0.3 - DiPLaB
-   Master Thesis Project from Matteo Subet
-   SUPSI MAInD
+   Beta Version 0.2 - DiPLaB
+   Spearhead Research Project - https://spearhead-amr.github.io/makeaware/
+   
+        Coded by Matteo Subet - Last version of 22 August 2023
+   
+   SUPSI - University of Applied Sciences and Arts of Southern Switzerland
+   DACD - Department of Architecture, Construction and Design
+   IDe - Design Institute
 
-   Based on Inkplate 6PLUS (ESP32)
+   Based on Inkplate 6PLUS (ESP32).
+   You can find the complete repository here: https://github.com/zumatt/diplab
 */
+
+/*
+    -----------------------------------------------------------
+                            BOARD CHECK
+    -----------------------------------------------------------
+*/
+#ifndef ARDUINO_INKPLATE6PLUS
+#error "Wrong board selection for this example, please select Inkplate 6PLUS in the boards menu."
+#endif
 
 /*
     -----------------------------------------------------------
@@ -23,6 +38,7 @@ LIS3DHTR<TwoWire> LIS; //IIC
 #define WIRE Wire
 #include <WebSocketsServer.h>
 #include <ArduinoJson.h>
+#include "Fonts/FreeSansBold9pt7b.h"
 
 /*
     -----------------------------------------------------------
@@ -52,13 +68,12 @@ String j_ab2;            //ab2
 String j_ab3;            //ab3
 String j_name;           //name
 int    j_classcode;      //classcode
-int    j_microscopeAB;   //microscopeAB
+int    j_readingAB;   //readingAB
 int    j_test;           //test (0, 1 or 2)
 String j_controlCenter;  //controlCenter
 
 //Save message for the webPage
 int historyHours;
-int microscopeMagnify;
 
 //Controller for screen ready to spread bacteria
 bool readyToSpread;
@@ -74,6 +89,7 @@ int yC2 = (dispH/2)+(petriD);                               //Y position of bott
 int yPos = dispH/2;                                         //Center y of petri dish
 int xPos = dispW/2;                                         //Center x of petri dish
 int step = petriD/10;                                       //Step of each line of bacteria
+float bactRect = step/2;                                    //General dimension of the rectangle created to spread bacteria
 int arrY[21] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of Y axis for checking if a line was drawn
 int lenArrY = *(&arrY + 1) - arrY;                          //Array of Y axis length
 bool arrYcompleted;
@@ -84,17 +100,17 @@ double accX, accY;                                          //Variables to store
 int ab1_x, ab1_y;                                           //Position of first antibiotic
 int ab2_x, ab2_y;                                           //Position of second antibiotic
 int ab3_x, ab3_y;                                           //Position of third antibiotic
-int abDiameter = 25;                                        //Dimension of the AB circle
+int abDiameter = 35;                                        //Dimension of the AB circle
 double ab1_resistance, ab2_resistance, ab3_resistance;      //Store resistance value for each AB (diamenter multiplier!)
-double ab1_res_8h  = ab1_resistance / 3;                    //Store resistance value for AB 1 in history mode
-double ab1_res_12h = ab1_resistance / 2;
-double ab1_res_24h = ab1_resistance;
-double ab2_res_8h  = ab2_resistance / 3;                    //Store resistance value for AB 2 in history mode
-double ab2_res_12h = ab2_resistance / 2;
-double ab2_res_24h = ab2_resistance;
-double ab3_res_8h  = ab3_resistance / 3;                    //Store resistance value for AB 3 in history mode
-double ab3_res_12h = ab3_resistance / 2;
-double ab3_res_24h = ab3_resistance;
+const GFXfont *textFont = &FreeSansBold9pt7b;               //Font setup for FreeSansBold9pt7b
+int antibioticCreated = 0;                                  //Numbers of antibiotic placed
+int differenceCoordX1 = 0;                                  //Variable to store the difference between the current variable and the old one for X position of AB 1
+int differenceCoordY1 = 0;                                  //Variable to store the difference between the current variable and the old one for Y position of AB 1
+int differenceCoordX2 = 0;                                  //Variable to store the difference between the current variable and the old one for X position of AB 2
+int differenceCoordY2 = 0;                                  //Variable to store the difference between the current variable and the old one for Y position of AB 2
+int tresholdAntibiotic = 150;                               //Threshold between two anbiotics pills
+float bacteriaDotsX[500];                                   //Array that contains all the X values of the dots created for the bacteria growth
+float bacteriaDotsY[500];                                   //Array that contains all the Y values of the dots created for the bacteria growth
 
 //Create a string where to save the Access Point IP address
 IPAddress serverIP;
@@ -167,6 +183,7 @@ void setup() {
   LIS.setOutputDataRate(LIS3DHTR_DATARATE_50HZ);
 
   //Display settings
+  display.setFont(textFont);
   display.setTextSize(3);
   display.setTextColor(BLACK, WHITE);
   display.setTextWrap(true);
@@ -191,6 +208,12 @@ void setup() {
 
   //Call a function when receiving Event from the webpage
   webSocket.onEvent(webSocketEvent);
+
+  // Init touchscreen and power it on after init (send false as argument to put it in deep sleep right after init)
+  if (display.tsInit(true)){
+      Serial.println("Touchscreen init ok");}
+  else {
+      Serial.println("Touchscreen init fail"); while (true);}
 
   //Start with the experience
   state0();
@@ -218,14 +241,13 @@ void loop() {
   } //END IF digitalRead Buttons
 
   //Check if we need to get data from accellerometer
-  if(j_state == 8 || j_state == 10){
-
-    //Update variables for accellerometer
-    accX = LIS.getAccelerationX(); //Get accellerometer X data
-    accY = LIS.getAccelerationY(); //Get accellerometer Y data
-
+  if(j_state == 8){
     //Call drawing function for bacteria
     if(j_state == 8 && readyToSpread == 1){
+      //Update variables for accellerometer
+      accX = LIS.getAccelerationX(); //Get accellerometer X data
+      accY = LIS.getAccelerationY(); //Get accellerometer Y data
+
       drawingLoop();
 
       if (arrXcompleted == true && arrYcompleted == true){
@@ -239,62 +261,64 @@ void loop() {
       } else {
         checkLoopSpreading();
       }
-    }
+    } //END IF data from accellerometer
+  }  
   
-    //Call shake detection for placing ABs
-    if (j_state == 10){
-      abShake();
-      //Serial.println("Ab shake activated!");
+  //Call touchscreen detection for placing ABs
+  if (j_state == 10){
+    display.fillScreen(BLACK);
+    display.display();
+    abPlacing();
+    //Serial.println("Touchscreen activated!");
+  }
+
+  //Wait
+  unsigned long now = millis();
+
+  //Call control center check for data from smartphone
+  if (j_state == 11){
+    if ((unsigned long)(now - previousMillis) > interval) {
+      Serial.println("Checking for web data...");
+
+      String jsonString = "";
+      StaticJsonDocument<200> doc;                      // create a JSON container
+      JsonObject object = doc.to<JsonObject>();         // create a JSON Object
+      object["historyVal"] = historyHours;              // write data into the JSON object -> I used "rand1" and "rand2" here, but you can use anything else
+      object["readingVal"] = readingAbVal;
+      object["ab1Val"] = j_ab1;
+      object["ab2Val"] = j_ab2;
+      object["ab3Val"] = j_ab3;
+      serializeJson(doc, jsonString);                   // convert JSON object to string
+      Serial.println(jsonString);                       // print JSON string to console for debug purposes (you can comment this out)
+      webSocket.broadcastTXT(jsonString);               // send JSON string to clients
+
+      previousMillis = now;
     }
-  } //END IF data from accellerometer
+  }
+  if (j_state == 12){
+    if ((unsigned long)(now - previousMillis) > interval) {
+      Serial.println("Checking for web data...");
 
-    //Wait
-    unsigned long now = millis();
+      String jsonString = "";
+      StaticJsonDocument<200> doc;                      // create a JSON container
+      JsonObject object = doc.to<JsonObject>();         // create a JSON Object
+      Serial.print("Bacteria: ");
+      Serial.print(j_bacteria);
+      Serial.print(" -- AB1: ");
+      Serial.print(j_ab1);
+      Serial.print(" -- AB2: ");
+      Serial.print(j_ab2);
+      Serial.print(" -- AB3: ");
+      Serial.print(j_ab3);
+      object["bacteriaVal"] = j_bacteria;
+      object["ab1Val"] = j_ab1;
+      object["ab2Val"] = j_ab2;
+      object["ab3Val"] = j_ab3;
+      serializeJson(doc, jsonString);                   // convert JSON object to string
+      Serial.println(jsonString);                       // print JSON string to console for debug purposes (you can comment this out)
+      webSocket.broadcastTXT(jsonString);               // send JSON string to clients
 
-    //Call shake detection for placing ABs
-    if (j_state == 11){
-      if ((unsigned long)(now - previousMillis) > interval) {
-        Serial.println("Checking for web data...");
-
-        String jsonString = "";
-        StaticJsonDocument<200> doc;                      // create a JSON container
-        JsonObject object = doc.to<JsonObject>();         // create a JSON Object
-        object["historyVal"] = historyHours;              // write data into the JSON object -> I used "rand1" and "rand2" here, but you can use anything else
-        object["microscopeVal"] = microscopeMagnify;
-        object["ab1Val"] = j_ab1;
-        object["ab2Val"] = j_ab2;
-        object["ab3Val"] = j_ab3;
-        serializeJson(doc, jsonString);                   // convert JSON object to string
-        Serial.println(jsonString);                       // print JSON string to console for debug purposes (you can comment this out)
-        webSocket.broadcastTXT(jsonString);               // send JSON string to clients
-
-        previousMillis = now;
-      }
+      previousMillis = now;
     }
-    if (j_state == 12){
-      if ((unsigned long)(now - previousMillis) > interval) {
-        Serial.println("Checking for web data...");
-
-        String jsonString = "";
-        StaticJsonDocument<200> doc;                      // create a JSON container
-        JsonObject object = doc.to<JsonObject>();         // create a JSON Object
-        Serial.print("Bacteria: ");
-        Serial.print(j_bacteria);
-        Serial.print(" -- AB1: ");
-        Serial.print(j_ab1);
-        Serial.print(" -- AB2: ");
-        Serial.print(j_ab2);
-        Serial.print(" -- AB3: ");
-        Serial.print(j_ab3);
-        object["bacteriaVal"] = j_bacteria;
-        object["ab1Val"] = j_ab1;
-        object["ab2Val"] = j_ab2;
-        object["ab3Val"] = j_ab3;
-        serializeJson(doc, jsonString);                   // convert JSON object to string
-        Serial.println(jsonString);                       // print JSON string to console for debug purposes (you can comment this out)
-        webSocket.broadcastTXT(jsonString);               // send JSON string to clients
-
-        previousMillis = now;
-      }
-    }
+  }
 }

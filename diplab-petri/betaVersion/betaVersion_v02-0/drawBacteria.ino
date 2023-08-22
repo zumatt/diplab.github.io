@@ -31,7 +31,7 @@ void drawingLoop(){
       else if (i==19){a=9;b=0.9;}
       else if (i==20){a=10;b=1.0;}
       else if (i==21){a=11;b=1.1;}
-    drawBacteria_y(i, a, b); //Draw line function
+    drawBacteria_y(i, a, b); //Draw rect function
   }
 
   for(int h=0; h<=lenArrX; h++){
@@ -60,29 +60,30 @@ void drawingLoop(){
       else if (h==19){a=9;b=0.9;}
       else if (h==20){a=10;b=1.0;}
       else if (h==21){a=11;b=1.1;}
-    drawBacteria_x(h, a, b); //Draw line function
+    drawBacteria_x(h, a, b); //Draw rect function
   }
 }
 
 void drawBacteria_y(int j, int k, double w){
   //Statement that check the accellerometer Position and if the line was already drawn or not
   if(::arrY[j] == 0 && accY >= (0.0+w) && accY <= (0.09+w)){
-      //Function to draw the line
-      display.drawLine(::xC, ::yPos+(k*::step), ::xC2, ::yPos+(k*::step), BLACK);
+      //Function to draw the rectangle
+      display.fillRect(::xC, ::yPos-(k*::step)-(bactRect/2 + 10), bactRect, bactRect*2 + 10, BLACK);
+      for (int i=2; i<=40; i+=2){display.fillRect(::xC + (bactRect * i), ::yPos-(k*::step)-(bactRect/2 + 10), bactRect, bactRect*2 + 10, BLACK);}
       //Partial update to the screen (check that this works only with BLACK / WHITE color and not with 0 / 1
       display.partialUpdate();
       ::arrY[j] = 1;
       //Serial.print("!!!!!!!!!! -> Bacteria line drawn on Y axis! Position ");
       //Serial.print(j-10);
       //Serial.println(" y !");
-  }  
+  } 
 }
 
 void drawBacteria_x(int j, int k, double w){
   //Statement that check the accellerometer Position and if the line was already drawn or not
   if(::arrX[j] == 0 && accX >= (0.0+w) && accX <= (0.09+w)){
-      //Function to draw the line
-      display.drawLine(::xPos+(k*::step), ::yC, ::xPos+(k*::step), ::yC2, BLACK);
+      //Function to draw the rectangle
+      display.fillRect(::xPos+(k*::step)+(bactRect/2), 0, bactRect, dispH, BLACK);
       //Partial update to the screen (check that this works only with BLACK / WHITE color and not with 0 / 1
       display.partialUpdate();
       ::arrX[j] = 1;

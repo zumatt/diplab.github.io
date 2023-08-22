@@ -34,7 +34,7 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
         const char* d_ab3 = doc["ab3"];
         const char* d_controlCenter = doc["controlCenter"];
         const int   d_test = doc["test"];
-        const int   d_microscopeAb = doc["microscopeAb"];
+        const int   d_readingAb = doc["readingAb"];
 
         j_state = d_state;
         if (d_name != ""){j_bacteria = d_bacteria;}
@@ -43,7 +43,7 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
         if (d_ab3 != ""){j_ab3 = d_ab3;}
         if (d_name != ""){j_name = d_name;}
         if (d_classcode != 0){j_classcode = d_classcode;}
-        j_microscopeAB = d_microscopeAb;
+        j_readingAB = d_readingAb;
         j_test = d_test;
         if (d_controlCenter != ""){j_controlCenter = d_controlCenter;}
         
@@ -62,7 +62,7 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
         Serial.println("  - Antibiotic 3 : " + String(j_ab3));
         Serial.println("  - Control center : " + String(j_controlCenter));
         Serial.println("  - Test : " + String(j_controlCenter));
-        Serial.println("  - Microscope AB : " + String(j_microscopeAB));
+        Serial.println("  - Reading AB : " + String(j_readingAB));
         Serial.println("");
         Serial.println("----------------------------------");
       }

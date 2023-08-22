@@ -1,9 +1,9 @@
 /* MIT License 2023 Matteo Subet <hi@zumat.ch>
    
-   Beta Version 2.0 - DiPLaB
+   Beta Version 0.2 - DiPLaB
    Spearhead Research Project - https://spearhead-amr.github.io/makeaware/
    
-        Coded by Matteo Subet - Last version of 21 August 2023
+        Coded by Matteo Subet - Last version of 22 August 2023
    
    SUPSI - University of Applied Sciences and Arts of Southern Switzerland
    DACD - Department of Architecture, Construction and Design
@@ -24,7 +24,7 @@ const GFXfont *textFont = &FreeSansBold9pt7b;
 
 Inkplate display(INKPLATE_1BIT);
 
-int circleCreated = 0;                                      //Numbers of antibiotic placed
+int antibioticCreated = 0;                                      //Numbers of antibiotic placed
 int abDiameter = 35;                                        //Dimension of the AB circle
 int prevCoord[4] = {0,0,0,0};                               //Previous coordinates
 int differenceCoordX1 = 0;                                  //Variable to store the difference between the current variable and the old one for X position of AB 1
@@ -67,17 +67,17 @@ void loop()
     // Check if there is any touch detected
     if (display.tsAvailable())
     {
-        if (circleCreated < 3){
+        if (antibioticCreated < 3){
           uint8_t n;
           uint16_t x[2], y[2];
           // See how many fingers are detected (max 2) and copy x and y position of each finger on touchscreen
           n = display.tsGetData(x, y);
           if (n != 0)
           {
-            if (circleCreated == 1){
+            if (antibioticCreated == 1){
               differenceCoordX1 = prevCoord[0] - x[0];
               differenceCoordY1 = prevCoord[1] - y[0];
-            } else if (circleCreated == 2){
+            } else if (antibioticCreated == 2){
               differenceCoordX2 = prevCoord[2] - x[0];
               differenceCoordY2 = prevCoord[3] - y[0];
               differenceCoordX1 = prevCoord[0] - x[0];
@@ -93,17 +93,17 @@ void loop()
                          (differenceCoordX2 == 0 && differenceCoordY2 == 0)) {
                             display.fillCircle(x[0], y[0], abDiameter, WHITE);
                             display.setCursor(x[0] - abDiameter/2, y[0] + abDiameter/3);
-                            if (circleCreated == 0) {display.println("1");} else if (circleCreated == 1){display.println("2");} else if (circleCreated == 2){display.println("3");}
+                            if (antibioticCreated == 0) {display.println("1");} else if (antibioticCreated == 1){display.println("2");} else if (antibioticCreated == 2){display.println("3");}
                             display.partialUpdate();
-                            if (circleCreated == 0){
+                            if (antibioticCreated == 0){
                               prevCoord[0] = x[0];
                               prevCoord[1] = y[0];
-                            } else if (circleCreated == 1){
+                            } else if (antibioticCreated == 1){
                               prevCoord[2] = x[0];
                               prevCoord[3] = y[0];
                             }
-                            circleCreated += 1;
-                            Serial.println(circleCreated);
+                            antibioticCreated += 1;
+                            Serial.println(antibioticCreated);
                         } else {
                           Serial.println("Error generating AB - Code 2");
                           errorCheck(x[0], y[0]);}
@@ -111,12 +111,12 @@ void loop()
                           Serial.println("Error generating AB - Code 1");
                           errorCheck(x[0], y[0]);}
           }
-        } else if (circleCreated == 3){
+        } else if (antibioticCreated == 3){
           Serial.println("Antibiotic placed correctly");
-          Serial.println(circleCreated);
+          Serial.println(antibioticCreated);
           // From here - delete is only for testing
           sleep(4);
-          circleCreated = 0;
+          antibioticCreated = 0;
           differenceCoordX1 = 0;
           differenceCoordY1 = 0;
           differenceCoordX2 = 0;

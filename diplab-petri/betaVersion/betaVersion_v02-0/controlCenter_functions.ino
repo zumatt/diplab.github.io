@@ -4,50 +4,75 @@
     -----------------------------------------------------------
 */
 
-void microscopeMode(){
-    counter = 0;
-    baseLayer();
-
-      display.fillCircle(ab1_x, ab1_y, abDiameter*ab1_resistance, 0);
-      display.fillCircle(ab2_x, ab2_y,  abDiameter*ab2_resistance, 0);
-      display.fillCircle(ab3_x, ab3_y,  abDiameter*ab3_resistance, 0);
-    display.fillCircle(ab1_x, ab1_y, abDiameter, 1);
-    display.fillCircle(ab2_x, ab2_y, abDiameter, 1);
-    display.fillCircle(ab3_x, ab3_y, abDiameter, 1);
+void readingMode(){
+    display.clearDisplay();
+    display.fillScreen(BLACK);
     display.display();
+
+    if (j_readingAB == 1){
+      readingAbVal = j_ab1;
+        for(int i=0; i<500; i++){
+          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 1.5, WHITE);
+        }
+
+          display.fillCircle(dispW/2, dispH/2, ab1_resistance*abDiameter, BLACK);
+        display.fillCircle(dispW/2, dispH/2, abDiameter, 1);
+        display.setCursor(dispW/2 - abDiameter/2, dispH/2 + abDiameter/3);
+        display.println("1");
+        display.display();
+    } else if (j_readingAB == 2){
+      readingAbVal = j_ab2;
+        for(int i=0; i<500; i++){
+          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 1.5, WHITE);
+        }
+
+          display.fillCircle(dispW/2, dispH/2, ab2_resistance*abDiameter, BLACK);
+        display.fillCircle(dispW/2, dispH/2, abDiameter, 1);
+        display.setCursor(dispW/2 - abDiameter/2, dispH/2 + abDiameter/3);
+        display.println("2");
+        display.display();
+    } else if (j_readingAB == 3){
+      readingAbVal = j_ab3;
+        for(int i=0; i<500; i++){
+          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 1.5, WHITE);
+        }
+
+          display.fillCircle(dispW/2, dispH/2, ab3_resistance*abDiameter, BLACK);
+        display.fillCircle(dispW/2, dispH/2, abDiameter, WHITE);
+        display.setCursor(dispW/2 - abDiameter/2, dispH/2 + abDiameter/3);
+        display.println("3");
+        display.display();
+    } else {
+          Serial.println("Reading AB not selected!");
+    }
 }
 
 void historyMode(){
     counter = 0;
-    baseLayer();
-
-    display.fillCircle(ab1_x, ab1_y, abDiameter, 1);
-    display.fillCircle(ab2_x, ab2_y, abDiameter, 1);
-    display.fillCircle(ab3_x, ab3_y, abDiameter, 1);
-    display.display();
 }
 
-void baseLayer(){
+//nDots is the numbers of dots representing bacteria to generate values can be from 0 to 500 max
+void historyBase(int nDots){
     display.clearDisplay();
-      //Draw base layer
-    display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
-    for(int i=0; i<=20; i++){  
-      display.drawLine(xC+(i*petriD/10), yC, xC+(i*petriD/10), yC2, BLACK);}
-    for(int a=0; a<=20; a++){  
-      display.drawLine(xC, yC+(a*petriD/10), xC2, yC+(a*petriD/10), BLACK);}
-    //END of draw base layer
-}
+    display.fillScreen(BLACK);
+    
+    for(int i=0; i<nDots; i++){
+      display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 1.5, WHITE);
+    }
 
-void historyBtn(double j,double k,double l){
-    baseLayer();
-
-      display.fillCircle(ab1_x, ab1_y, abDiameter*j, 0);
-      display.fillCircle(ab2_x, ab2_y, abDiameter*k, 0);
-      display.fillCircle(ab3_x, ab3_y, abDiameter*l, 0);
-    display.fillCircle(ab1_x, ab1_y, abDiameter, 1);
-    display.fillCircle(ab2_x, ab2_y, abDiameter, 1);
-    display.fillCircle(ab3_x, ab3_y, abDiameter, 1);
-    display.partialUpdate();
+      display.fillCircle(ab1_x, ab1_y, abDiameter, BLACK);
+      display.fillCircle(ab2_x, ab2_y, abDiameter, BLACK);
+      display.fillCircle(ab3_x, ab3_y, abDiameter, BLACK);
+    display.fillCircle(ab1_x, ab1_y, abDiameter, WHITE);
+        display.setCursor(ab1_x - abDiameter/2, ab1_y + abDiameter/3);
+        display.println("1");
+    display.fillCircle(ab2_x, ab2_y, abDiameter, WHITE);
+        display.setCursor(ab2_x - abDiameter/2, ab2_y + abDiameter/3);
+        display.println("2");
+    display.fillCircle(ab3_x, ab3_y, abDiameter, WHITE);
+        display.setCursor(ab3_x - abDiameter/2, ab3_y + abDiameter/3);
+        display.println("3");
+    display.display();
 }
 
 void historyCondition(){
@@ -55,71 +80,19 @@ void historyCondition(){
     Serial.println("History mode: 0h !");
     historyHours = 0;
     historyMode();
+    historyBase(0);
   } else if(counter == 1){ //8h
     Serial.println("History mode: 8h !");
     historyHours = 8;
-    Serial.print("AB 1: ");
-    Serial.print(ab1_res_8h);
-    Serial.print(" - AB 2: ");
-    Serial.print(ab2_res_8h);
-    Serial.print(" - AB 3: ");
-    Serial.println(ab3_res_8h);
-    historyBtn(ab1_res_8h,ab2_res_8h,ab3_res_8h);
+    historyBase(100);
   } else if(counter == 2){ //12h
     Serial.println("History mode: 12h !");
     historyHours = 12;
-    Serial.print("AB 1: ");
-    Serial.print(ab1_res_12h);
-    Serial.print(" - AB 2: ");
-    Serial.print(ab2_res_12h);
-    Serial.print(" - AB 3: ");
-    Serial.println(ab3_res_12h);
-    historyBtn(ab1_res_12h,ab2_res_12h,ab3_res_12h);
+    historyBase(250);
   } else if(counter == 3){ //24h
     Serial.println("History mode: 24h !");
     historyHours = 24;
-    historyBtn(ab1_res_24h,ab2_res_24h,ab3_res_24h);
+    historyBase(500);
   }
 }
-
-void microscopeCondition(){
-  if(counter == 0){ //0x
-    Serial.println("Microscope mode: 0x !");
-    microscopeMagnify = 8;
-    microscopeMode();
-  } else if(counter == 1){ //4x
-    Serial.println("Microscope mode: 4x !");
-    microscopeMagnify = 4;
-    baseLayer();
-    if (j_microscopeAB == 1){
-      display.fillCircle(dispW/2, dispH/2, ab1_resistance*abDiameter, 0);
-    display.fillCircle(dispW/2, dispH/2, abDiameter, 1);
-    display.display();
-    } else if (j_microscopeAB == 2){
-      display.fillCircle(dispW/2, dispH/2, ab2_resistance*abDiameter, 0);
-    display.fillCircle(dispW/2, dispH/2, abDiameter, 1);
-    display.display();
-    } else if (j_microscopeAB == 3){
-      display.fillCircle(dispW/2, dispH/2, ab3_resistance*abDiameter, 0);
-    display.fillCircle(dispW/2, dispH/2, abDiameter, 1);
-    display.display();
-    } else {
-      Serial.println("Microscope AB not selected!");
-    }
-  } else {
-      Serial.println("Microscope AB not selected!");
-    }
-  }
 //}
-
-void updateResistanceValue(){
- ab1_res_8h  = ab1_resistance / 3;
- ab1_res_12h = ab1_resistance / 2;
- ab1_res_24h = ab1_resistance;
- ab2_res_8h  = ab2_resistance / 3;
- ab2_res_12h = ab2_resistance / 2;
- ab2_res_24h = ab2_resistance;
- ab3_res_8h  = ab3_resistance / 3;
- ab3_res_12h = ab3_resistance / 2;
- ab3_res_24h = ab3_resistance;
-}
