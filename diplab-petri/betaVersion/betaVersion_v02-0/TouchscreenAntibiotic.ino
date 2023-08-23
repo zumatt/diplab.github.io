@@ -13,6 +13,7 @@ void abPlacing(){
       // See how many fingers are detected (max 2) and copy x and y position of each finger on touchscreen
       n = display.tsGetData(x, y);
       if (n != 0){
+        Serial.println("Touch on screen detected!");
         if (antibioticCreated == 1){
           differenceCoordX1 = ab1_x - x[0];
           differenceCoordY1 = ab1_y - y[0];

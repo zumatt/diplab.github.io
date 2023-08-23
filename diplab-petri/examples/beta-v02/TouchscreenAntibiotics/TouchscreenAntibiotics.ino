@@ -50,6 +50,10 @@ void setup()
     display.setTextColor(BLACK, WHITE);
     display.setTextWrap(true);
     display.display();
+
+    pinMode(36, INPUT_PULLUP);  // Enable internal pull-up resistor
+    pinMode(39, INPUT_PULLUP);  // Enable internal pull-up resistor
+
     // Init touchscreen and power it on after init (send false as argument to put it in deep sleep right after init)
     if (display.tsInit(true))
     {

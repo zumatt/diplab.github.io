@@ -7,34 +7,41 @@
 void readingMode(){
     display.clearDisplay();
     display.fillScreen(BLACK);
-    display.display();
+
+    Serial.print("AB1 Resistance: ");
+    Serial.print(ab1_resistance);
+    Serial.print("   AB2 Resistance: ");
+    Serial.print(ab2_resistance);
+    Serial.print("   AB3 Resistance: ");
+    Serial.println(ab3_resistance);
 
     if (j_readingAB == 1){
       readingAbVal = j_ab1;
-        for(int i=0; i<500; i++){
-          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 1.5, WHITE);
+
+      for(int i=0; i<500; i++){
+          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 2, WHITE);
         }
 
           display.fillCircle(dispW/2, dispH/2, ab1_resistance*abDiameter, BLACK);
-        display.fillCircle(dispW/2, dispH/2, abDiameter, 1);
+        display.fillCircle(dispW/2, dispH/2, abDiameter, WHITE);
         display.setCursor(dispW/2 - abDiameter/2, dispH/2 + abDiameter/3);
         display.println("1");
         display.display();
     } else if (j_readingAB == 2){
       readingAbVal = j_ab2;
         for(int i=0; i<500; i++){
-          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 1.5, WHITE);
+          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 2, WHITE);
         }
 
           display.fillCircle(dispW/2, dispH/2, ab2_resistance*abDiameter, BLACK);
-        display.fillCircle(dispW/2, dispH/2, abDiameter, 1);
+        display.fillCircle(dispW/2, dispH/2, abDiameter, WHITE);
         display.setCursor(dispW/2 - abDiameter/2, dispH/2 + abDiameter/3);
         display.println("2");
         display.display();
     } else if (j_readingAB == 3){
       readingAbVal = j_ab3;
         for(int i=0; i<500; i++){
-          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 1.5, WHITE);
+          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 2, WHITE);
         }
 
           display.fillCircle(dispW/2, dispH/2, ab3_resistance*abDiameter, BLACK);
@@ -57,12 +64,12 @@ void historyBase(int nDots){
     display.fillScreen(BLACK);
     
     for(int i=0; i<nDots; i++){
-      display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 1.5, WHITE);
+      display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 2, WHITE);
     }
 
-      display.fillCircle(ab1_x, ab1_y, abDiameter, BLACK);
-      display.fillCircle(ab2_x, ab2_y, abDiameter, BLACK);
-      display.fillCircle(ab3_x, ab3_y, abDiameter, BLACK);
+      display.fillCircle(ab1_x, ab1_y, ab1_resistance*abDiameter, BLACK);
+      display.fillCircle(ab2_x, ab2_y, ab2_resistance*abDiameter, BLACK);
+      display.fillCircle(ab3_x, ab3_y, ab3_resistance*abDiameter, BLACK);
     display.fillCircle(ab1_x, ab1_y, abDiameter, WHITE);
         display.setCursor(ab1_x - abDiameter/2, ab1_y + abDiameter/3);
         display.println("1");

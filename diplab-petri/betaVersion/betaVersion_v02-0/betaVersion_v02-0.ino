@@ -74,6 +74,7 @@ String j_controlCenter;  //controlCenter
 
 //Save message for the webPage
 int historyHours;
+String readingAbVal;
 
 //Controller for screen ready to spread bacteria
 bool readyToSpread;
@@ -96,6 +97,7 @@ bool arrYcompleted;
 int arrX[21] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of X axis for checking if a line was drawn
 int lenArrX = *(&arrX + 1) - arrX;                          //Array of X axis length
 bool arrXcompleted;
+bool arrayCompletedSpreading;
 double accX, accY;                                          //Variables to store accellerometer data
 int ab1_x, ab1_y;                                           //Position of first antibiotic
 int ab2_x, ab2_y;                                           //Position of second antibiotic
@@ -184,7 +186,7 @@ void setup() {
 
   //Display settings
   display.setFont(textFont);
-  display.setTextSize(3);
+  display.setTextSize(2);
   display.setTextColor(BLACK, WHITE);
   display.setTextWrap(true);
 
@@ -215,6 +217,22 @@ void setup() {
   else {
       Serial.println("Touchscreen init fail"); while (true);}
 
+  //Create all the dots for the display of bacteria growing
+  for(int i=0; i<500; i++){
+    bacteriaDotsX[i] = random(xC, xC2);
+    bacteriaDotsY[i] = random(yC, yC2);
+    Serial.print("Bacteria dot created. Coordinates -> X: ");
+    Serial.print(bacteriaDotsX[i]);
+    Serial.print("    -    Y: ");
+    Serial.println(bacteriaDotsY[i]);
+  }
+  Serial.println("Dots created!");
+
+  //Antibiotic resistance calculation (for now is just a test)
+    ab1_resistance = 2;
+    ab2_resistance = 3.5;
+    ab3_resistance = 8;
+
   //Start with the experience
   state0();
 }
@@ -232,12 +250,17 @@ void loop() {
   if(j_state == 11){
   //Serial.println("We are in the loop!");
 
+  /* ERASE COMMENT from here TO ENABLE PHYSICAL BUTTONS
   //Update variables for Buttons
   currentState_fwd = digitalRead(fwdBtn_PIN);
   currentState_bck = digitalRead(bckBtn_PIN);
 
   //Call function to check buttons condition
   buttonsCondition();
+  ERASE COMMENT to here TO ENABLE PHYSICAL BUTTONS */ 
+
+  // Digital buttons using touchscreen (COMMENT THE FOLLOWING LINE IF YOU WANT TO USE THE PHYSICAL ONES)
+  buttonTouchScreen();
   } //END IF digitalRead Buttons
 
   //Check if we need to get data from accellerometer
@@ -246,11 +269,11 @@ void loop() {
     if(j_state == 8 && readyToSpread == 1){
       //Update variables for accellerometer
       accX = LIS.getAccelerationX(); //Get accellerometer X data
-      accY = LIS.getAccelerationY(); //Get accellerometer Y data
+      accY = -LIS.getAccelerationY(); //Get accellerometer Y data
 
       drawingLoop();
 
-      if (arrXcompleted == true && arrYcompleted == true){
+      if (arrayCompletedSpreading == true){
         String jsonString = "";
         StaticJsonDocument<200> doc;                      // create a JSON container
         JsonObject object = doc.to<JsonObject>();         // create a JSON Object
@@ -266,8 +289,6 @@ void loop() {
   
   //Call touchscreen detection for placing ABs
   if (j_state == 10){
-    display.fillScreen(BLACK);
-    display.display();
     abPlacing();
     //Serial.println("Touchscreen activated!");
   }

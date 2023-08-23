@@ -105,4 +105,11 @@ void checkLoopSpreading(){
   } else {
      arrXcompleted = false;
   }
+
+  if (arrXcompleted == true && arrYcompleted == true){
+    Serial.println("Everything is covered!");
+    display.fillScreen(BLACK);
+    display.display();
+    arrayCompletedSpreading = true;
+  }
 }

@@ -72,9 +72,9 @@ void state6(){
   ab3_y = 0;
 
   //Reset resistance value for later
-  ab1_resistance = 0;
-  ab2_resistance = 0;
-  ab3_resistance = 0;
+  //ab1_resistance = 0;
+  //ab2_resistance = 0;
+  //ab3_resistance = 0;
 
   //Reset value of j_controlCenter & j_readingAB
   j_readingAB = 0;
@@ -108,12 +108,6 @@ void state7(){
   display.setCursor(xC+100, yC+400);
   display.print("in your DiPLab Petri!");
   display.display();
-
-  //Create all the dots for the display of bacteria growing
-    for(int i=0; i<500; i++){
-      bacteriaDotsX[i] = random(xC, xC2);
-      bacteriaDotsX[i] = random(yC, yC2);
-    }
 }
 
 void state8(){
@@ -146,10 +140,6 @@ void state9(){
     display.setCursor(xC+100, yC+450);
     display.println("in your DiPLab Petri!");
     display.display();
-  //Antibiotic resistance calculation (for now is just a test)
-    ab1_resistance = 2;
-    ab2_resistance = 3.5;
-    ab3_resistance = 8;
 }
 
 void state10(){
@@ -157,6 +147,7 @@ void state10(){
   accX = 0;
   accY = 0;
   display.clearDisplay();
+  display.setTextSize(3);
     display.fillScreen(BLACK);
   display.display();
   Serial.println("State 10 activated!");
@@ -168,6 +159,7 @@ void state11(){
     Serial.println("We are in history mode!");
     historyHours = 0;
     historyMode();
+    historyCondition();
   }else if(j_controlCenter == "reading"){
     Serial.println("We are in reading mode!");
     readingMode();
@@ -176,22 +168,7 @@ void state11(){
 
 void state12(){
   //Save the experience
-  display.clearDisplay();
-  display.fillScreen(BLACK);
-
-      display.fillCircle(ab1_x, ab1_y, abDiameter*ab1_resistance, 0);
-      display.fillCircle(ab2_x, ab2_y,  abDiameter*ab2_resistance, 0);
-      display.fillCircle(ab3_x, ab3_y,  abDiameter*ab3_resistance, 0);
-    display.fillCircle(ab1_x, ab1_y, abDiameter, WHITE);
-        display.setCursor(ab1_x - abDiameter/2, ab1_y + abDiameter/3);
-        display.println("1");
-    display.fillCircle(ab2_x, ab2_y, abDiameter, WHITE);
-        display.setCursor(ab2_x - abDiameter/2, ab2_y + abDiameter/3);
-        display.println("2");
-    display.fillCircle(ab3_x, ab3_y, abDiameter, WHITE);
-        display.setCursor(ab3_x - abDiameter/2, ab3_y + abDiameter/3);
-        display.println("3");
-    display.display();
+    historyBase(500);
 
     String jsonString = "";
     StaticJsonDocument<200> doc;                      // create a JSON container
