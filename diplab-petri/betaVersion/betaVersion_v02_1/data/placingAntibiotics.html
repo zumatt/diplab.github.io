@@ -6,7 +6,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
   <script src="assets/resistanceMap.js"></script>-->
-  <title>DiPLab Beta - Bacteria spreading</title>
+  <title>DiPLab Beta - Antibiotics placing</title>
 </head>
 <!-----------BODY----------->
 <body>
@@ -20,16 +20,13 @@
         <div class="builder-column-menu column-menu2">
           <div class="div-menu4"><p>DiPLab</p></div>
         </div>
-        <div class="builder-column-menu column-menu3">
-          <div class="div-menu5" id="btn_info"><p>i</p></div>
-        </div>
       </div>
     </div>
-    <div class="div-2"><p>tilt the petri</p></div>
+    <div class="div-2"><p>touch the petri screen</p></div>
     <div class="div-3">
       <p>
-        you have to fill the digital Petri with the grid tilting your device <br>
-        after you covered the whole screen with the grid <br>click the button here below to continue
+        to place the antibiotics choosen you need to touch the screen where you like to position the AB tablet<br>
+        to confirm the position click on the button here below
       </p>
     </div>
     <div class="divImage">
@@ -39,7 +36,7 @@
   </div>
   </div>
   <div class="footer">
-    <div class="button"  id="btn_next"><p class="buttonText">bacteria spread</p></div>
+    <div class="button" id="btn_next"><p class="buttonText">antibiotics placed</p></div>
   </div>
 </div>
 </body>
@@ -47,43 +44,33 @@
 <script src="/assets/disableScroll.js"></script>
 <script>
     var Socket;
-    var spreadingCheck;
 
-document.getElementById('btn_back').addEventListener('click', button_backFunciton);
-document.getElementById('btn_info').addEventListener('click', button_infoFunciton);
 document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+document.getElementById('btn_back').addEventListener('click', button_backFunction);
 
 function init() {
     Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
     }
 
-function button_backFunciton() {
-    var msg = {
-                state: 6
-              };
-    var jsonString = JSON.stringify(msg);
-    Socket.send(jsonString);
-    console.log("Message sent: " + JSON.stringify(msg));
-        window.location.href='bacteriaSelection.html';
-}
-
 function button_nextFunction() {
-  /*if(spreadingCheck != 1){
-      alert("You need to finish spreading bacteria before!");
-    } else{
-      window.location.href='antibioticSelection.html';
-      };*/
-      var msg = {
-                state: 9
-              };
+    var msg = {state: 11, controlCenter: "history", test: 1};
     var jsonString = JSON.stringify(msg);
     Socket.send(jsonString);
+    window.location.href='controlCenter.html';
     console.log("Message sent: " + JSON.stringify(msg));
-  window.location.href='antibioticSelection.html';
     }
 
-function button_infoFunciton() {
-  alert("Tilt your Petri device to spread the antibiotic\ncontinue until you'll compelte the grid...");
+function button_backFunction() {
+    var msg = {
+                state: 8,
+                ab1: undefined,
+                ab2: undefined,
+                ab3: undefined
+              };
+    var jsonString = JSON.stringify(msg);
+    Socket.send(jsonString);
+    window.location.href='antibioticSelection.html';
+    console.log("Message sent: " + JSON.stringify(msg));
 }
 
 window.onload = function(event){

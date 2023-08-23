@@ -68,18 +68,17 @@ function button_backFunciton() {
 }
 
 function button_nextFunction() {
-  /*if(spreadingCheck != 1){
+  if(spreadingCheck != 1){
       alert("You need to finish spreading bacteria before!");
     } else{
-      window.location.href='antibioticSelection.html';
-      };*/
       var msg = {
                 state: 9
               };
-    var jsonString = JSON.stringify(msg);
-    Socket.send(jsonString);
-    console.log("Message sent: " + JSON.stringify(msg));
-  window.location.href='antibioticSelection.html';
+      var jsonString = JSON.stringify(msg);
+      Socket.send(jsonString);
+      console.log("Message sent: " + JSON.stringify(msg));
+      window.location.href='antibioticSelection.html';
+      };
     }
 
 function button_infoFunciton() {
