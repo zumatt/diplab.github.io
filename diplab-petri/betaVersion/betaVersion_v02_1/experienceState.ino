@@ -58,10 +58,11 @@ void state6(){
   j_controlCenter = "";
 
   graphicNameClasscodeReceived();
+  sleep(2.5);
+  graphicWaitingBact();
 }
 
 void state7(){
-  graphicWaitingBact();
 }
 
 void state8(){

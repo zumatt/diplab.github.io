@@ -217,17 +217,6 @@ void setup() {
   else {
       Serial.println("Touchscreen init fail"); while (true);}
 
-  //Create all the dots for the display of bacteria growing
-  for(int i=0; i<500; i++){
-    bacteriaDotsX[i] = random(xC, xC2);
-    bacteriaDotsY[i] = random(yC, yC2);
-    Serial.print("Bacteria dot created. Coordinates -> X: ");
-    Serial.print(bacteriaDotsX[i]);
-    Serial.print("    -    Y: ");
-    Serial.println(bacteriaDotsY[i]);
-  }
-  Serial.println("Dots created!");
-
   //Antibiotic resistance calculation (for now is just a test)
     ab1_resistance = 2;
     ab2_resistance = 3.5;
@@ -235,6 +224,17 @@ void setup() {
 
   //Start with the experience
   state0();
+
+  //Create all the dots for the display of bacteria growing
+  for(int i=0; i<500; i++){
+    bacteriaDotsX[i] = random(xC, xC2);
+    bacteriaDotsY[i] = random(yC, yC2);
+    //Serial.print("Bacteria dot created. Coordinates -> X: ");
+    //Serial.print(bacteriaDotsX[i]);
+    //Serial.print("    -    Y: ");
+    //Serial.println(bacteriaDotsY[i]);
+  }
+  Serial.println("Dots created!");
 }
 
 /*

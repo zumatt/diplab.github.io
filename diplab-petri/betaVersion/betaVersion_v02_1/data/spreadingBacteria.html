@@ -55,7 +55,14 @@ document.getElementById('btn_next').addEventListener('click', button_nextFunctio
 
 function init() {
     Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+    Socket.onmessage = function(event) { processCommand(event); };
     }
+
+function processCommand(event){
+  var obj = JSON.parse(event.data);
+  spreadingCheck = obj.spreadingBacteria;
+  console.log(spreadingCheck);
+}
 
 function button_backFunciton() {
     var msg = {
