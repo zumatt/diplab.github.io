@@ -6,7 +6,9 @@
 
 void readingMode(){
     display.clearDisplay();
+    display.setTextSize(3);
     display.fillScreen(BLACK);
+    display.setTextColor(BLACK, WHITE);
 
     Serial.print("AB1 Resistance: ");
     Serial.print(ab1_resistance);
@@ -61,7 +63,9 @@ void historyMode(){
 //nDots is the numbers of dots representing bacteria to generate values can be from 0 to 500 max
 void historyBase(int nDots){
     display.clearDisplay();
+    display.setTextSize(3);
     display.fillScreen(BLACK);
+    display.setTextColor(BLACK, WHITE);
     
     for(int i=0; i<nDots; i++){
       display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 2, WHITE);

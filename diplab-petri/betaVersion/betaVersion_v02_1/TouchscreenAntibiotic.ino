@@ -7,6 +7,8 @@
 void abPlacing(){
   // Check if there is any touch detected
   if (display.tsAvailable()){
+    display.setTextColor(BLACK, WHITE);
+    
     if (antibioticCreated < 3){
       uint8_t n;
       uint16_t x[2], y[2];

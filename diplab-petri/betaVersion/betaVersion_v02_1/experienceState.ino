@@ -86,8 +86,9 @@ void state10(){
   accX = 0;
   accY = 0;
   display.clearDisplay();
+  display.fillScreen(BLACK);
+  display.setTextColor(WHITE, BLACK);
   display.setTextSize(3);
-    display.fillScreen(BLACK);
   display.display();
   Serial.println("State 10 activated!");
 }
