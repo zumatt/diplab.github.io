@@ -21,7 +21,7 @@ void readingMode(){
       readingAbVal = j_ab1;
 
       for(int i=0; i<500; i++){
-          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 2, WHITE);
+          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 4, WHITE);
         }
 
           display.fillCircle(dispW/2, dispH/2, ab1_resistance*abDiameter, BLACK);
@@ -32,7 +32,7 @@ void readingMode(){
     } else if (j_readingAB == 2){
       readingAbVal = j_ab2;
         for(int i=0; i<500; i++){
-          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 2, WHITE);
+          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 4, WHITE);
         }
 
           display.fillCircle(dispW/2, dispH/2, ab2_resistance*abDiameter, BLACK);
@@ -43,7 +43,7 @@ void readingMode(){
     } else if (j_readingAB == 3){
       readingAbVal = j_ab3;
         for(int i=0; i<500; i++){
-          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 2, WHITE);
+          display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 4, WHITE);
         }
 
           display.fillCircle(dispW/2, dispH/2, ab3_resistance*abDiameter, BLACK);
@@ -68,7 +68,7 @@ void historyBase(int nDots){
     display.setTextColor(BLACK, WHITE);
     
     for(int i=0; i<nDots; i++){
-      display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 2, WHITE);
+      display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 4, WHITE);
     }
 
       display.fillCircle(ab1_x, ab1_y, ab1_resistance*abDiameter, BLACK);

@@ -25,6 +25,8 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
       }
       else {
         // JSON string was received correctly, so information can be retrieved:
+        String temp_name, temp_bacteria, temp_ab1, temp_ab2, temp_ab3, temp_controlCenter;
+
         const int   d_state = doc["state"];
         const char* d_name = doc["name"];
         const int   d_classcode = doc["classcode"];
@@ -36,16 +38,23 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
         const int   d_test = doc["test"];
         const int   d_readingAb = doc["readingAb"];
 
+        temp_name = d_name;
+        temp_bacteria = d_bacteria;
+        temp_ab1 = d_ab1;
+        temp_ab2 = d_ab2;
+        temp_ab3 = d_ab3;
+        temp_controlCenter = d_controlCenter;
+
         j_state = d_state;
-        if (d_name != ""){j_bacteria = d_bacteria;}
-        if (d_ab1 != ""){j_ab1 = d_ab1;}
-        if (d_ab2 != ""){j_ab2 = d_ab2;}
-        if (d_ab3 != ""){j_ab3 = d_ab3;}
-        if (d_name != ""){j_name = d_name;}
+        if (temp_bacteria.length() != 0){j_bacteria = d_bacteria;}
+        if (temp_ab1.length() != 0){j_ab1 = d_ab1;}
+        if (temp_ab2.length() != 0){j_ab2 = d_ab2;}
+        if (temp_ab3.length() != 0){j_ab3 = d_ab3;}
+        if (temp_name.length() != 0){j_name = d_name;}
         if (d_classcode != 0){j_classcode = d_classcode;}
         j_readingAB = d_readingAb;
         j_test = d_test;
-        if (d_controlCenter != ""){j_controlCenter = d_controlCenter;}
+        if (temp_controlCenter.length() != 0){j_controlCenter = d_controlCenter;}
         
         expState(d_state);
 
@@ -53,16 +62,16 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
         Serial.println("");
         Serial.println("Info received from webPage:");
         Serial.println("");
-        Serial.println("  - State: " + String(j_state));
-        Serial.println("  - Name: " + String(j_name));
-        Serial.println("  - Classcode: " + String(j_classcode));
-        Serial.println("  - Bacteria: " + String(j_bacteria));
-        Serial.println("  - Antibiotic 1 : " + String(j_ab1));
-        Serial.println("  - Antibiotic 2 : " + String(j_ab2));
-        Serial.println("  - Antibiotic 3 : " + String(j_ab3));
-        Serial.println("  - Control center : " + String(j_controlCenter));
-        Serial.println("  - Test : " + String(j_controlCenter));
-        Serial.println("  - Reading AB : " + String(j_readingAB));
+        Serial.print("  - State: "); Serial.println(j_state);
+        Serial.print("  - Name: "); Serial.println(j_name);
+        Serial.print("  - Classcode: "); Serial.println(j_classcode);
+        Serial.print("  - Bacteria: "); Serial.println(j_bacteria);
+        Serial.print("  - Antibiotic 1 : "); Serial.println(j_ab1);
+        Serial.print("  - Antibiotic 2 : "); Serial.println(j_ab2);
+        Serial.print("  - Antibiotic 3 : "); Serial.println(j_ab3);
+        Serial.print("  - Control center : "); Serial.println(j_controlCenter);
+        Serial.print("  - Test : "); Serial.println(j_controlCenter);
+        Serial.print("  - Reading AB : "); Serial.println(j_readingAB);
         Serial.println("");
         Serial.println("----------------------------------");
       }
