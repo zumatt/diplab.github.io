@@ -4,12 +4,12 @@
     -----------------------------------------------------------
 */
 
-int ciprofloxacin[3] = {10, 12, 15};                        //Resistance values for ciprofloxacin
-int doxycycline[3] = {20, 25, 30};                          //Resistance values for doxycycline
-int gatifloxacin[3] = {9, 14, 16};                          //Resistance values for gatifloxacin
-int levofloxacin[3] = {11, 15, 18};                         //Resistance values for levofloxacin
-int minocycine[3] = {21, 15, 28};                           //Resistance values for minocycine
-int tetracycline[3] = {16, 24, 31};                         //Resistance values for tetracycline
+int ciprofloxacin[3] = {17, 21, 15};                        //Resistance values for ciprofloxacin
+int doxycycline[3] = {9, 14, 14};                          //Resistance values for doxycycline
+int gatifloxacin[3] = {14, 16, 18};                          //Resistance values for gatifloxacin
+int levofloxacin[3] = {17, 13, 15};                         //Resistance values for levofloxacin
+int minocycine[3] = {16, 14, 14};                           //Resistance values for minocycine
+int tetracycline[3] = {13, 19, 11};                         //Resistance values for tetracycline
 
 void checkResistance(){
   Serial.println("Data reading:");
