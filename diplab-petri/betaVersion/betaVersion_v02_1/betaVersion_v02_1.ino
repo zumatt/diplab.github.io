@@ -323,23 +323,26 @@ void loop() {
   }
   if (j_state == 12){
     if ((unsigned long)(now - previousMillis) > interval) {
-      Serial.println("Checking for web data...");
+      Serial.println("Data sent to the app:");
 
       String jsonString = "";
       StaticJsonDocument<200> doc;                      // create a JSON container
       JsonObject object = doc.to<JsonObject>();         // create a JSON Object
-      Serial.print("Bacteria: ");
-      Serial.print(j_bacteria);
-      Serial.print(" -- AB1: ");
-      Serial.print(j_ab1);
-      Serial.print(" -- AB2: ");
-      Serial.print(j_ab2);
-      Serial.print(" -- AB3: ");
-      Serial.print(j_ab3);
-      object["bacteriaVal"] = j_bacteria;
-      object["ab1Val"] = j_ab1;
-      object["ab2Val"] = j_ab2;
-      object["ab3Val"] = j_ab3;
+
+      object["ab1_x"] = 100*((ab1_x - xC) / (2 * petriD));  // write data into the JSON object -> I used "rand1" and "rand2" here, but you can use anything else
+      object["ab1_y"] = 100*((ab1_y - yC) / (2 * petriD));
+      object["ab2_x"] = 100*((ab2_x - xC) / (2 * petriD));
+      object["ab2_y"] = 100*((ab2_y - yC) / (2 * petriD));
+      object["ab3_x"] = 100*((ab3_x - xC) / (2 * petriD));
+      object["ab3_y"] = 100*((ab3_y - yC) / (2 * petriD));
+      object["ab1_resistance"] = 40 * ((ab1_resistance * ::ab_resistance_multiplier) / 35);
+      object["ab2_resistance"] = 40 * ((ab2_resistance * ::ab_resistance_multiplier) / 35);
+      object["ab3_resistance"] = 40 * ((ab3_resistance * ::ab_resistance_multiplier) / 35);
+      object["ab1_name"] = j_ab1;
+      object["ab2_name"] = j_ab2;
+      object["ab3_name"] = j_ab3;
+      object["bacteria_name"] = j_bacteria;
+
       serializeJson(doc, jsonString);                   // convert JSON object to string
       Serial.println(jsonString);                       // print JSON string to console for debug purposes (you can comment this out)
       webSocket.broadcastTXT(jsonString);               // send JSON string to clients
