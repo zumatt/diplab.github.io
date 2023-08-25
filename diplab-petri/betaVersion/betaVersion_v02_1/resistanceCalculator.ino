@@ -87,15 +87,25 @@ void checkResistance(){
     if (j_ab3 == "Tetracycline"){ ab3_resistance = ab_resistance_multiplier * tetracycline[2];};
   }
 
+  ab1_resistanceWeb = 3 * 40 * ((ab1_resistance * ab_resistance_multiplier * abDiameter) / 35);
+  ab2_resistanceWeb = 3 * 40 * ((ab2_resistance * ab_resistance_multiplier * abDiameter) / 35);
+  ab3_resistanceWeb = 3 * 40 * ((ab3_resistance * ab_resistance_multiplier * abDiameter) / 35);
+
   Serial.println("");
   Serial.println(" ---------------- ");
   Serial.println("");
   Serial.println("Data produced:");
   Serial.print("  - Resistance value 1: ");
   Serial.println(ab1_resistance);
+  Serial.print("  - Resistance web value 1: ");
+  Serial.println(ab1_resistanceWeb);
   Serial.print("  - Resistance value 2: ");
   Serial.println(ab2_resistance);
+  Serial.print("  - Resistance web value 2: ");
+  Serial.println(ab2_resistanceWeb);
   Serial.print("  - Resistance value 3: ");
   Serial.println(ab3_resistance);
+  Serial.print("  - Resistance web value 3: ");
+  Serial.println(ab3_resistanceWeb);
 
 }

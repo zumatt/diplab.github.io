@@ -114,10 +114,10 @@ int differenceCoordY2 = 0;                                  //Variable to store 
 int tresholdAntibiotic = 150;                               //Threshold between two anbiotics pills
 float bacteriaDotsX[500];                                   //Array that contains all the X values of the dots created for the bacteria growth
 float bacteriaDotsY[500];                                   //Array that contains all the Y values of the dots created for the bacteria growth
-double ab1_xWeb, ab1_yWeb;                                  //Position of the first antibiotic for the web app
-double ab2_xWeb, ab2_yWeb;                                  //Position of the second antibiotic for the web app
-double ab3_xWeb, ab3_yWeb;                                  //Position of the third antibiotic for the web app
-double ab1_resWeb, ab2_resWeb, ab3_resWeb;                  //Store resistance value for the web app
+int ab1_xWeb, ab1_yWeb;                                     //Position of first antibiotic
+int ab2_xWeb, ab2_yWeb;                                     //Position of second antibiotic
+int ab3_xWeb, ab3_yWeb;                                     //Position of third antibiotic
+double ab1_resistanceWeb, ab2_resistanceWeb, ab3_resistanceWeb;      //Store resistance value for each AB (diamenter multiplier!) expressed in mm as reported in the antibiotic sheet
 
 //Create a string where to save the Access Point IP address
 IPAddress serverIP;
@@ -323,31 +323,23 @@ void loop() {
   }
   if (j_state == 12){
     if ((unsigned long)(now - previousMillis) > interval) {
-      Serial.println("Data sent to the app:");
+    
+      Serial.println("Text info continuosly sent to the app:");
 
       String jsonString = "";
       StaticJsonDocument<200> doc;                      // create a JSON container
       JsonObject object = doc.to<JsonObject>();         // create a JSON Object
 
-      object["ab1_x"] = 100*((ab1_x - xC) / (2 * petriD));  // write data into the JSON object -> I used "rand1" and "rand2" here, but you can use anything else
-      object["ab1_y"] = 100*((ab1_y - yC) / (2 * petriD));
-      object["ab2_x"] = 100*((ab2_x - xC) / (2 * petriD));
-      object["ab2_y"] = 100*((ab2_y - yC) / (2 * petriD));
-      object["ab3_x"] = 100*((ab3_x - xC) / (2 * petriD));
-      object["ab3_y"] = 100*((ab3_y - yC) / (2 * petriD));
-      object["ab1_resistance"] = 40 * ((ab1_resistance * ::ab_resistance_multiplier) / 35);
-      object["ab2_resistance"] = 40 * ((ab2_resistance * ::ab_resistance_multiplier) / 35);
-      object["ab3_resistance"] = 40 * ((ab3_resistance * ::ab_resistance_multiplier) / 35);
-      object["ab1_name"] = j_ab1;
-      object["ab2_name"] = j_ab2;
-      object["ab3_name"] = j_ab3;
       object["bacteria_name"] = j_bacteria;
+      object["ab1_name"] = j_ab1;
+      object["ab3_name"] = j_ab3;
+      object["ab2_name"] = j_ab2;
 
       serializeJson(doc, jsonString);                   // convert JSON object to string
       Serial.println(jsonString);                       // print JSON string to console for debug purposes (you can comment this out)
       webSocket.broadcastTXT(jsonString);               // send JSON string to clients
 
       previousMillis = now;
-    }
+  }
   }
 }
