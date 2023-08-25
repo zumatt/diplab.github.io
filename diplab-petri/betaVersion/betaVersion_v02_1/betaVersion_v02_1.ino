@@ -82,7 +82,7 @@ bool readyToSpread;
 //Variables to display stuff on the E-Ink display
 int dispW = 1024;                                           //Display Width
 int dispH = 758;                                            //Display Height
-int petriD = (dispH/2)-10;                                  //Petri dish diameter
+int petriD = (dispH/2)-10;                                  //Petri dish radius
 int xC =  (dispW/2)-(petriD);                               //X position of left side of petri dish
 int yC =  (dispH/2)-(petriD);                               //Y position of top side of petri dish
 int xC2 = (dispW/2)+(petriD);                               //X position of right side of petri dish
@@ -103,7 +103,8 @@ int ab1_x, ab1_y;                                           //Position of first 
 int ab2_x, ab2_y;                                           //Position of second antibiotic
 int ab3_x, ab3_y;                                           //Position of third antibiotic
 int abDiameter = 35;                                        //Dimension of the AB circle
-double ab1_resistance, ab2_resistance, ab3_resistance;      //Store resistance value for each AB (diamenter multiplier!)
+double ab_resistance_multiplier = 0.25;                     //Multiplier from pixels to mm for ab resistance
+double ab1_resistance, ab2_resistance, ab3_resistance;      //Store resistance value for each AB (diamenter multiplier!) expressed in mm as reported in the antibiotic sheet
 const GFXfont *textFont = &FreeSansBold9pt7b;               //Font setup for FreeSansBold9pt7b
 int antibioticCreated = 0;                                  //Numbers of antibiotic placed
 int differenceCoordX1 = 0;                                  //Variable to store the difference between the current variable and the old one for X position of AB 1
@@ -113,6 +114,10 @@ int differenceCoordY2 = 0;                                  //Variable to store 
 int tresholdAntibiotic = 150;                               //Threshold between two anbiotics pills
 float bacteriaDotsX[500];                                   //Array that contains all the X values of the dots created for the bacteria growth
 float bacteriaDotsY[500];                                   //Array that contains all the Y values of the dots created for the bacteria growth
+double ab1_xWeb, ab1_yWeb;                                  //Position of the first antibiotic for the web app
+double ab2_xWeb, ab2_yWeb;                                  //Position of the second antibiotic for the web app
+double ab3_xWeb, ab3_yWeb;                                  //Position of the third antibiotic for the web app
+double ab1_resWeb, ab2_resWeb, ab3_resWeb;                  //Store resistance value for the web app
 
 //Create a string where to save the Access Point IP address
 IPAddress serverIP;
@@ -218,9 +223,9 @@ void setup() {
       Serial.println("Touchscreen init fail"); while (true);}
 
   //Antibiotic resistance calculation (for now is just a test)
-    ab1_resistance = 2;
-    ab2_resistance = 3.5;
-    ab3_resistance = 8;
+    //ab1_resistance = 2;
+    //ab2_resistance = 3.5;
+    //ab3_resistance = 8;
 
   //Start with the experience
   state0();

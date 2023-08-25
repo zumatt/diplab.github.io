@@ -75,11 +75,11 @@
       <div class="builder-columns div-7">
         <div class="builder-column column-3">
           <!--<div class="div-8"><p id="antibioticName">-</p></div>-->
-          <div class="div-8"><p>antibiotic name</p></div>
+          <div class="div-8"><p><span id="readingVal">AB name</span></p></div>
         </div>
         <div class="builder-column column-4">
           <!--<div class="div-8"><p id="antibioticCode">-</p></div>-->
-          <div class="div-9"><p><span id="readingVal">-</span></p></div>
+          <!--<div class="div-9"><p><span id="readingVal">-</span></p></div>-->
         </div>
       </div>
     </div>
@@ -103,10 +103,6 @@
     var ab2Val;
     var ab3Val;
     var bacteriaVal;
-    var CMX30val;
-    var TE30val;
-    var CIP5val;
-    var SXTval;
 
 document.getElementById('btn_next').addEventListener('click', button_nextFunction);
 document.getElementById('btn_back').addEventListener('click', button_backFunction);
@@ -151,26 +147,11 @@ function button_historyFunction() {
     document.getElementById('historyContent').classList.remove("hided");
     document.getElementById('pageTitle').classList.remove("hided");
     document.getElementById('pageDescription').classList.remove("hided");
-    if(bacteriaVal == "COLI"){
-      CMX30val = coliMap.get("CMX30");
-      TE30val = coliMap.get("TE30");
-      CIP5val = coliMap.get("CIP5");
-    } else if(bacteriaVal == "STAPH"){
-      CMX30val = staphMap.get("CMX30");
-      TE30val = staphMap.get("TE30");
-      CIP5val = staphMap.get("CIP5");
-    } else if(bacteriaVal == "SLM"){
-      CMX30val = slmMap.get("CMX30");
-      TE30val = slmMap.get("TE30");
-      CIP5val = slmMap.get("CIP5");
-    };
+
     var msg = {
                 state: 11,
                 controlCenter: "history",
-                test: 1,
-                CMX30_res: CMX30val,
-                TE30_res: TE30val,
-                CIP5_res: CIP5val
+                test: 1
               };
     var jsonString = JSON.stringify(msg);
     Socket.send(jsonString);

@@ -49,12 +49,10 @@
                 <div class="builder-column column">
                   <div class="separation-line"></div>
                   <div class="div-7"><p>Bacteria</p></div>
-                  <div class="div-8"><p>Escherica Coli</p></div>
-                  <div class="div-9" id="bact_code1"><p>COLI</p></div>
-                  <div class="div-10"><p>PM chromogenic</p></div>
-                  <div class="div-11"><p>Resistance</p></div>
-                  <div class="div-12"><p>65%</p></div>
-                  <div class="div-13"><p>average</p></div>
+                  <div class="div-8"><p>Acinetobacter spp.<span id="bact_code1" style="display: none;">Acinetobacter</span></p></div>
+                  <div class="div-9"><p>Gram negative</p></div>
+                  <div class="div-11" style="padding-top: 5px"><p>Class</p></div>
+                  <div class="div-12"><p>	Gammaproteobacteria</p></div>
                 </div>
                 <div class="builder-column column-2">
                   <div class="button" id="btn_addBact1">
@@ -66,7 +64,7 @@
             </div>
           </div>
         </div></li>
-        <li><div class="bacteria-1">
+        <li><div class="bacteria-1" style="margin-left:8vw;">
           <div class="div-4" data-el="div-1">
             <picture>
               <img
@@ -82,12 +80,10 @@
                 <div class="builder-column column">
                   <div class="separation-line"></div>
                   <div class="div-7"><p>Bacteria</p></div>
-                  <div class="div-8"><p>Salmonella t.</p></div>
-                  <div class="div-9" id="bact_code2"><p>SLM</p></div>
-                  <div class="div-10"><p>PM chromoselect</p></div>
-                  <div class="div-11"><p>Resistance</p></div>
-                  <div class="div-12"><p>12%</p></div>
-                  <div class="div-13"><p>average</p></div>
+                  <div class="div-8"><p>Enterococcus spp.<span id="bact_code2" style="display: none;">Enterococcus</span></p></div>
+                  <div class="div-9"><p>Gram positive</p></div>
+                  <div class="div-11" style="padding-top: 5px"><p>Class</p></div>
+                  <div class="div-12"><p>Enterococcaceae</p></div>
                 </div>
                 <div class="builder-column column-2">
                   <div class="button" id="btn_addBact2">
@@ -99,7 +95,7 @@
             </div>
           </div>
         </div></li>
-        <li><div class="bacteria-1">
+        <li><div class="bacteria-1" style="margin-left:8vw;">
           <div class="div-4" data-el="div-1">
             <picture>
               <img
@@ -115,48 +111,13 @@
                 <div class="builder-column column">
                   <div class="separation-line"></div>
                   <div class="div-7"><p>Bacteria</p></div>
-                  <div class="div-8"><p>Staphilococcus</p></div>
-                  <div class="div-9" id="bact_code3"><p>STAPH</p></div>
-                  <div class="div-10"><p>PM tryptic soy</p></div>
-                  <div class="div-11"><p>Resistance</p></div>
-                  <div class="div-12"><p>28%</p></div>
-                  <div class="div-13"><p>average</p></div>
+                  <div class="div-8"><p>Entrobacteriaceae<span id="bact_code3" style="display: none;">Entrobacteriaceae</span></p></div>
+                  <div class="div-9"><p>Gram negative</p></div>
+                  <div class="div-11" style="padding-top: 5px"><p>Class</p></div>
+                  <div class="div-12"><p>	Gammaproteobacteria</p></div>
                 </div>
                 <div class="builder-column column-2">
                   <div class="button" id="btn_addBact3">
-                    <div class="line-horizontal"></div>
-                    <div class="line-vertical"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div></li>
-        <li><div class="bacteria-1">
-          <div class="div-4" data-el="div-1">
-            <picture>
-              <img
-                src="/assets/patternCross.png"
-                class="image"
-              />
-            </picture>
-            <div class="builder-image-sizer image-sizer"></div>
-          </div>
-          <div class="info">
-            <div class="div-5">
-              <div class="builder-columns div-6">
-                <div class="builder-column column">
-                  <div class="separation-line"></div>
-                  <div class="div-7"><p>Bacteria</p></div>
-                  <div class="div-8"><p>Deinococcus r.</p></div>
-                  <div class="div-9" id="bact_code4"><p>DGAS</p></div>
-                  <div class="div-10"><p>PM tryptone</p></div>
-                  <div class="div-11"><p>Resistance</p></div>
-                  <div class="div-12"><p>81%</p></div>
-                  <div class="div-13"><p>average</p></div>
-                </div>
-                <div class="builder-column column-2">
-                  <div class="button" id="btn_addBact4">
                     <div class="line-horizontal"></div>
                     <div class="line-vertical"></div>
                   </div>
@@ -181,8 +142,6 @@ document.getElementById('btn_addBact2').addEventListener('click', function(){
     button_bacteriaFunction(2);});
 document.getElementById('btn_addBact3').addEventListener('click', function(){
     button_bacteriaFunction(3);});
-document.getElementById('btn_addBact4').addEventListener('click', function(){
-    button_bacteriaFunction(4);});
 
 function init() {
     Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
@@ -207,8 +166,6 @@ function button_bacteriaFunction(a) {
     var bacteriaVal = document.getElementById("bact_code2").textContent;
   } else if(a == 3){
     var bacteriaVal = document.getElementById("bact_code3").textContent;
-  } else if(a == 4){
-    var bacteriaVal = document.getElementById("bact_code4").textContent;
   } else {
     var bacteriaVal = "Error!";
   }
