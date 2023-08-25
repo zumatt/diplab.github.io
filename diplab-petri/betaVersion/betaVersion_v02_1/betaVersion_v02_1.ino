@@ -323,17 +323,40 @@ void loop() {
   }
   if (j_state == 12){
     if ((unsigned long)(now - previousMillis) > interval) {
-    
-      Serial.println("Text info continuosly sent to the app:");
+      //Create a string containing all the info related to ab position and resistance
+      String ab1_values, ab2_values, ab3_values, names;
+      String temp_ab1xWeb, temp_ab1yWeb, temp_ab1resistanceWeb, temp_ab2xWeb, temp_ab2yWeb, temp_ab2resistanceWeb, temp_ab3xWeb, temp_ab3yWeb, temp_ab3resistanceWeb, temp_nameBact, temp_nameAb1, temp_nameAb2, temp_nameAb3;
 
+      temp_ab1xWeb = ab1_xWeb;
+      temp_ab1yWeb = ab1_yWeb;
+      temp_ab1resistanceWeb = ab1_resistanceWeb;
+      temp_ab2xWeb = ab2_xWeb;
+      temp_ab2yWeb = ab2_yWeb;
+      temp_ab2resistanceWeb = ab2_resistanceWeb;
+      temp_ab3xWeb = ab3_xWeb;
+      temp_ab3yWeb = ab3_yWeb;
+      temp_ab3resistanceWeb = ab3_resistanceWeb;
+      temp_nameBact = j_bacteria;
+      temp_nameAb1 = j_ab1;
+      temp_nameAb2 = j_ab2;
+      temp_nameAb3 = j_ab3;
+      
+
+      ab1_values = temp_ab1xWeb + "," + temp_ab1yWeb + "," + temp_ab1resistanceWeb;
+      ab2_values = temp_ab2xWeb + "," + temp_ab2yWeb + "," + temp_ab2resistanceWeb;
+      ab3_values = temp_ab3xWeb + "," + temp_ab3yWeb + "," + temp_ab3resistanceWeb;
+      names = temp_nameBact + "," + temp_nameAb1 + "," + temp_nameAb2 + "," + temp_nameAb3;
+    
+      Serial.println("Numeric info continuosly sent to the app:");
+      
       String jsonString = "";
       StaticJsonDocument<200> doc;                      // create a JSON container
       JsonObject object = doc.to<JsonObject>();         // create a JSON Object
 
-      object["bacteria_name"] = j_bacteria;
-      object["ab1_name"] = j_ab1;
-      object["ab3_name"] = j_ab3;
-      object["ab2_name"] = j_ab2;
+      object["ab1_values"] = ab1_values;                // write data into the JSON object -> I used "rand1" and "rand2" here, but you can use anything else
+      object["ab2_values"] = ab2_values;
+      object["ab3_values"] = ab3_values;
+      object["names"] = names;
 
       serializeJson(doc, jsonString);                   // convert JSON object to string
       Serial.println(jsonString);                       // print JSON string to console for debug purposes (you can comment this out)

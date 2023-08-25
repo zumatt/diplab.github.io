@@ -67,16 +67,21 @@ function button_nextFunction() {
     var x = document.getElementById("infoFrm");
     var nameVal = x.elements[0].value;
     var classcodeVal = x.elements[1].value;
-    var msg = {
-                state: 6, 
-                name: nameVal,
-                classcode: classcodeVal
-              };
-    var jsonString = JSON.stringify(msg);
-    Socket.send(jsonString);
-    console.log("Message sent: " + JSON.stringify(msg));
+
     if(nameVal != "" && classcodeVal != ""){
-        window.location.href='bacteriaSelection.html';
+        if(classcodeVal.length == 5){
+          var msg = {
+                      state: 6, 
+                      name: nameVal,
+                      classcode: classcodeVal
+                    };
+          var jsonString = JSON.stringify(msg);
+          Socket.send(jsonString);
+          console.log("Message sent: " + JSON.stringify(msg));
+          window.location.href='bacteriaSelection.html';
+        } else {
+          alert("The classcode value is not correct.\nPlease, insert a valid classcode.");
+        }
         } else {
           alert("To continue you need to compile\nname and classcode!");
           };

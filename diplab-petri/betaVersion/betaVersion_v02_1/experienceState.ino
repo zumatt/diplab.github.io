@@ -96,11 +96,11 @@ void state10(){
 void state11(){
   //Control center (History/Reading mode)
     ab1_xWeb = 100*ab1_x/dispW;
-    ab1_yWeb = 100*ab1_y/dispW;
+    ab1_yWeb = 100*ab1_y/dispH;
     ab2_xWeb = 100*ab2_x/dispW;
-    ab2_yWeb = 100*ab2_y/dispW;
+    ab2_yWeb = 100*ab2_y/dispH;
     ab3_xWeb = 100*ab3_x/dispW;
-    ab3_yWeb = 100*ab3_y/dispW;
+    ab3_yWeb = 100*ab3_y/dispH;
     Serial.print("Ab 1 x web: ");
     Serial.println(ab1_xWeb);
     Serial.print("Ab 1 y web: ");
@@ -129,25 +129,4 @@ void state11(){
 void state12(){
   //Save the experience
     historyBase(500);
-
-    Serial.println("Numeric data sent once to the app:");
-
-    String jsonString = "";
-    StaticJsonDocument<200> doc;                      // create a JSON container
-    JsonObject object = doc.to<JsonObject>();         // create a JSON Object
-
-    object["ab1_x"] = ab1_xWeb;  // write data into the JSON object -> I used "rand1" and "rand2" here, but you can use anything else
-    object["ab1_y"] = ab1_yWeb;
-    object["ab2_x"] = ab2_xWeb;
-    object["ab2_y"] = ab2_yWeb;
-    object["ab3_x"] = ab3_xWeb;
-    object["ab3_y"] = ab3_yWeb;
-    object["ab1_resistance"] = ab1_resistanceWeb;
-    object["ab2_resistance"] = ab2_resistanceWeb;
-    object["ab3_resistance"] = ab3_resistanceWeb;
-
-    serializeJson(doc, jsonString);                   // convert JSON object to string
-    Serial.println(jsonString);                       // print JSON string to console for debug purposes (you can comment this out)
-    webSocket.broadcastTXT(jsonString);               // send JSON string to clients
-    
 }

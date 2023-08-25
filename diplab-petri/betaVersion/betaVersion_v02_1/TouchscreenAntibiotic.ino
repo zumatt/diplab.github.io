@@ -57,6 +57,16 @@ void abPlacing(){
                 errorCheck(x[0], y[0]);}
       }
     } else if (antibioticCreated == 3){
+      String jsonString = "";
+      StaticJsonDocument<200> doc;                      // create a JSON container
+      JsonObject object = doc.to<JsonObject>();         // create a JSON Object
+
+      object["ab_placed"] = 1;                          // write data into the JSON object -> I used "rand1" and "rand2" here, but you can use anything else
+
+      serializeJson(doc, jsonString);                   // convert JSON object to string
+      Serial.println(jsonString);                       // print JSON string to console for debug purposes (you can comment this out)
+      webSocket.broadcastTXT(jsonString);               // send JSON string to clients
+      
       Serial.println("Antibiotic placed correctly");
       Serial.println(antibioticCreated);
     }
