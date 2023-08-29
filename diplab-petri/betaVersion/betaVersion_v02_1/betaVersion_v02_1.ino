@@ -103,7 +103,7 @@ int ab1_x, ab1_y;                                           //Position of first 
 int ab2_x, ab2_y;                                           //Position of second antibiotic
 int ab3_x, ab3_y;                                           //Position of third antibiotic
 int abDiameter = 35;                                        //Dimension of the AB circle
-double ab_resistance_multiplier = 0.25;                     //Multiplier from pixels to mm for ab resistance
+double ab_resistance_multiplier = 0.35;                     //Multiplier from pixels to mm for ab resistance
 double ab1_resistance, ab2_resistance, ab3_resistance;      //Store resistance value for each AB (diamenter multiplier!) expressed in mm as reported in the antibiotic sheet
 const GFXfont *textFont = &FreeSansBold9pt7b;               //Font setup for FreeSansBold9pt7b
 int antibioticCreated = 0;                                  //Numbers of antibiotic placed
