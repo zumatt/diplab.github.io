@@ -1,6 +1,8 @@
-<img src="https://raw.githubusercontent.com/zumatt/diplab/development/assets/DiPLab_TemporaryLogo.png" height="100" align="right" />
+<img src="https://raw.githubusercontent.com/zumatt/diplab/development/assets/DiPLab_TemporaryLogo.png" height="60" align="right" padding-bottom="20px" />
 
 # DiPLab - Digital Petri Laboratory
+
+
 
 DiPLab is a project that is part of [MAKEAWARE!](https://spearhead-amr.github.io/makeaware/) , which aims to raise awareness about the issue of [Antibiotic Resistance](https://www.who.int/news-room/fact-sheets/detail/antibiotic-resistance).
 
@@ -10,6 +12,29 @@ This repository contains the stable version of the DiPLab. In order to create yo
 
 ![](https://raw.githubusercontent.com/zumatt/diplab/development/assets/DiPLab_Digital-Petri-Laboratory_Matteo-Subet_Makeaware_Spearhead-Project.jpg)
 
+## Bugs & Issues
+
+If you want to report an issue, you can submit it to the [issue tracker](https://github.com/zumatt/diplab/issues) of this repository.
+
+## Repository info
+
+Inside the main branch you will find the stable version of DiPLab. However, if you want to create your own digital petri is suggested to download the [latest release](https://github.com/zumatt/diplab/releases) and follow the tutorial that you can find here below.
+The main branch is divided into hardware and software. In the hardware you will find the 3D files used to create the external case of the DiPLab. In the software folder you will find anything connected to the digital development of the digital petri, here inside you can find the Arduino source code and the application source code.
+
+## Installation tutorial
+
+In order to create your own digital petri you need to be aware on how to use a 3D Printer and have basic knowledge of Arduino and coding.
+The tutorial will be developed soon...
+
 ## License
 
-The code contained in this repository and the executable distributions are licensed under the terms of the GNU AGPLv3. The executable distributions contain third-party code licensed under other compatible licenses such as GPLv2, MIT and BSD-3. If you have questions about licensing please contact us at [license@arduino.cc](mailto:license@arduino.cc).
+The code contained in this repository and the executable distributions are licensed under the terms of the [MIT License](https://mit-license.org/). The project is released under the terms of the [CC BY SA](https://creativecommons.org/licenses/by-sa/2.0/) license.
+
+## Acknowledgments
+
+<div>
+<img src="https://spearhead-amr.github.io/makeaware/img/s-logo.svg" width="50%" align="left"/>
+<img src="https://www.innosuisse.ch/inno/en/home/_jcr_content/par/image/image.imagespooler.jpg/1654179627645/Innosuisse_Header_EN.jpg" width="50%" align="right"/>
+</div>
+
+MAKEAWARE! is part of [Spearhead Project](https://spearhead-project.ch/). [Innosuisse Flagship 2022-24](https://www.innosuisse.ch/inno/en/home/promotion-of-national-projects/flagship-initiative.html).
