@@ -1,14 +1,53 @@
-# DiPLab
-*An Interactive Multimodal Experience to Involve Young People in Learning about Antimicrobial Resistance.*
+<img src="https://content.arduino.cc/website/Arduino_logo_teal.svg" height="100" align="right" />
 
-![Cover of the Digital Petri Laboratory Project or DiPLab from Matteo Subet](https://raw.githubusercontent.com/zumatt/diplab/main/assets/DiPLab_Cover.png)
+# Arduino IDE 2.x
 
-> Master's Thesis Project for the [Master of Arts in Interaction Design](https://github.com/maind-supsi)
+[![Arduino IDE](https://github.com/arduino/arduino-ide/workflows/Arduino%20IDE/badge.svg)](https://github.com/arduino/arduino-ide/actions?query=workflow%3A%22Arduino+IDE%22)
 
-### The Experience
-Thanks to the digitization of the antibiogram test, it is now possible to experience it outside of microbiology laboratories. This workshop offers participants an exciting opportunity to deepen their understanding of antibiotics and antibiotic resistance. In addition, participants will have the chance to engage in a range of practical activities and learn about the test in a hands-on setting. This comprehensive workshop aims to help participants gain a deeper appreciation of the significance of antibiotics and the impact they have on our daily lives. By participating in this workshop, attendees will be able to broaden their knowledge of antibiotics and antibiotic resistance, and explore the role of these life-saving drugs in modern medicine.
+This repository contains the source code of the Arduino IDE 2.x. If you're looking for the old IDE, go to the repository of the 1.x version at https://github.com/arduino/Arduino.
 
-### Technicalities
-The DiPLab Petri is based on the InkPlate 6 PLUS.
+The Arduino IDE 2.x is a major rewrite, sharing no code with the IDE 1.x. It is based on the [Theia IDE](https://theia-ide.org/) framework and built with [Electron](https://www.electronjs.org/). The backend operations such as compilation and uploading are offloaded to an [arduino-cli](https://github.com/arduino/arduino-cli) instance running in daemon mode. This new IDE was developed with the goal of preserving the same interface and user experience of the previous major version in order to provide a frictionless upgrade.
 
-[Here](https://inkplate.readthedocs.io/en/latest/arduino.html) you can find the documentation.
+![](static/screenshot.png)
+
+## Download
+
+You can download the latest release version and nightly builds from the [software download page on the Arduino website](https://www.arduino.cc/en/software).
+
+## Support
+
+If you need assistance, see the [Help Center](https://support.arduino.cc/hc/en-us/categories/360002212660-Software-and-Downloads) and browse the [forum](https://forum.arduino.cc/index.php?board=150.0).
+
+## Bugs & Issues
+
+If you want to report an issue, you can submit it to the [issue tracker](https://github.com/arduino/arduino-ide/issues) of this repository.
+
+See [**the issue report guide**](docs/contributor-guide/issues.md#issue-report-guide) for instructions.
+
+### Security
+
+If you think you found a vulnerability or other security-related bug in this project, please read our
+[security policy](https://github.com/arduino/arduino-ide/security/policy) and report the bug to our Security Team 🛡️
+Thank you!
+
+e-mail contact: security@arduino.cc
+
+## Contributions and development
+
+Contributions are very welcome! There are several ways to participate in this project, including:
+
+- Fixing bugs
+- Beta testing
+- Translation
+
+See [**the contributor guide**](docs/CONTRIBUTING.md#contributor-guide) for more information.
+
+See the [**development guide**](docs/development.md) for a technical overview of the application and instructions for building the code.
+
+## Donations
+
+This open source code was written by the Arduino team and is maintained on a daily basis with the help of the community. We invest a considerable amount of time in development, testing and optimization. Please consider [donating](https://www.arduino.cc/en/donate/) or [sponsoring](https://github.com/sponsors/arduino) to support our work, as well as [buying original Arduino boards](https://store.arduino.cc/) which is the best way to make sure our effort can continue in the long term.
+
+## License
+
+The code contained in this repository and the executable distributions are licensed under the terms of the GNU AGPLv3. The executable distributions contain third-party code licensed under other compatible licenses such as GPLv2, MIT and BSD-3. If you have questions about licensing please contact us at [license@arduino.cc](mailto:license@arduino.cc).
