@@ -1,10 +1,8 @@
-<img src="https://content.arduino.cc/website/Arduino_logo_teal.svg" height="100" align="right" />
+<img src="https://raw.githubusercontent.com/zumatt/diplab/development/assets/DiPLab_TemporaryLogo.png" height="100" align="right" />
 
-# Arduino IDE 2.x
+# DiPLab - Digital Petri Leboratory
 
-[![Arduino IDE](https://github.com/arduino/arduino-ide/workflows/Arduino%20IDE/badge.svg)](https://github.com/arduino/arduino-ide/actions?query=workflow%3A%22Arduino+IDE%22)
-
-This repository contains the source code of the Arduino IDE 2.x. If you're looking for the old IDE, go to the repository of the 1.x version at https://github.com/arduino/Arduino.
+This repository contains the stable version of the DiPLab. In order to create your own digital petri you can download the source code and the 3D files from the releases.
 
 The Arduino IDE 2.x is a major rewrite, sharing no code with the IDE 1.x. It is based on the [Theia IDE](https://theia-ide.org/) framework and built with [Electron](https://www.electronjs.org/). The backend operations such as compilation and uploading are offloaded to an [arduino-cli](https://github.com/arduino/arduino-cli) instance running in daemon mode. This new IDE was developed with the goal of preserving the same interface and user experience of the previous major version in order to provide a frictionless upgrade.
 
