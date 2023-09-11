@@ -1,50 +1,14 @@
 <img src="https://raw.githubusercontent.com/zumatt/diplab/development/assets/DiPLab_TemporaryLogo.png" height="100" align="right" />
 
-# DiPLab - Digital Petri Leboratory
+# DiPLab - Digital Petri Laboratory
+
+DiPLab is a project that is part of [MAKEAWARE!](https://spearhead-amr.github.io/makeaware/) , which aims to raise awareness about the issue of [Antibiotic Resistance](https://www.who.int/news-room/fact-sheets/detail/antibiotic-resistance).
+
+By digitizing the [antibiogram test](https://en.wikipedia.org/wiki/Antibiotic_sensitivity_testing), it is now possible to experience it outside of microbiology laboratories. This workshop provides an exciting opportunity for participants to deepen their understanding of antibiotics and antibiotic resistance. Additionally, participants will have the chance to engage in practical activities and learn about the test in a hands-on setting. This comprehensive workshop aims to help participants gain a deeper appreciation for the significance of antibiotics and their impact on daily life. By attending this workshop, participants will be able to broaden their knowledge of antibiotics and antibiotic resistance and explore the role of these life-saving drugs in modern medicine.
 
 This repository contains the stable version of the DiPLab. In order to create your own digital petri you can download the source code and the 3D files from the releases.
 
-The Arduino IDE 2.x is a major rewrite, sharing no code with the IDE 1.x. It is based on the [Theia IDE](https://theia-ide.org/) framework and built with [Electron](https://www.electronjs.org/). The backend operations such as compilation and uploading are offloaded to an [arduino-cli](https://github.com/arduino/arduino-cli) instance running in daemon mode. This new IDE was developed with the goal of preserving the same interface and user experience of the previous major version in order to provide a frictionless upgrade.
-
-![](static/screenshot.png)
-
-## Download
-
-You can download the latest release version and nightly builds from the [software download page on the Arduino website](https://www.arduino.cc/en/software).
-
-## Support
-
-If you need assistance, see the [Help Center](https://support.arduino.cc/hc/en-us/categories/360002212660-Software-and-Downloads) and browse the [forum](https://forum.arduino.cc/index.php?board=150.0).
-
-## Bugs & Issues
-
-If you want to report an issue, you can submit it to the [issue tracker](https://github.com/arduino/arduino-ide/issues) of this repository.
-
-See [**the issue report guide**](docs/contributor-guide/issues.md#issue-report-guide) for instructions.
-
-### Security
-
-If you think you found a vulnerability or other security-related bug in this project, please read our
-[security policy](https://github.com/arduino/arduino-ide/security/policy) and report the bug to our Security Team 🛡️
-Thank you!
-
-e-mail contact: security@arduino.cc
-
-## Contributions and development
-
-Contributions are very welcome! There are several ways to participate in this project, including:
-
-- Fixing bugs
-- Beta testing
-- Translation
-
-See [**the contributor guide**](docs/CONTRIBUTING.md#contributor-guide) for more information.
-
-See the [**development guide**](docs/development.md) for a technical overview of the application and instructions for building the code.
-
-## Donations
-
-This open source code was written by the Arduino team and is maintained on a daily basis with the help of the community. We invest a considerable amount of time in development, testing and optimization. Please consider [donating](https://www.arduino.cc/en/donate/) or [sponsoring](https://github.com/sponsors/arduino) to support our work, as well as [buying original Arduino boards](https://store.arduino.cc/) which is the best way to make sure our effort can continue in the long term.
+![](https://raw.githubusercontent.com/zumatt/diplab/development/assets/DiPLab_Digital-Petri-Laboratory_Matteo-Subet_Makeaware_Spearhead-Project.jpg)
 
 ## License
 
