@@ -32,9 +32,11 @@ The code contained in this repository and the executable distributions are licen
 
 ## Acknowledgments
 
-<div>
-<img src="https://spearhead-amr.github.io/makeaware/img/s-logo.svg" width="50%" align="left"/>
-<img src="https://www.innosuisse.ch/inno/en/home/_jcr_content/par/image/image.imagespooler.jpg/1654179627645/Innosuisse_Header_EN.jpg" width="50%" align="right"/>
-</div>
+
+<img src="https://spearhead-amr.github.io/makeaware/img/s-logo.svg" width="60%" />
+<img src="https://www.innosuisse.ch/inno/en/home/_jcr_content/par/image/image.imagespooler.jpg/1654179627645/Innosuisse_Header_EN.jpg" width="60%" />
+
+
+
 
 MAKEAWARE! is part of [Spearhead Project](https://spearhead-project.ch/). [Innosuisse Flagship 2022-24](https://www.innosuisse.ch/inno/en/home/promotion-of-national-projects/flagship-initiative.html).
