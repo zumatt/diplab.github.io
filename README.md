@@ -32,6 +32,13 @@ The tutorial will be developed soon...
 
 The code contained in this repository and the executable distributions are licensed under the terms of the [MIT License](https://mit-license.org/). The project is released under the terms of the [CC BY SA](https://creativecommons.org/licenses/by-sa/2.0/) license.
 
+[![CC BY 4.0][cc-by-sa-image]][cc-by-sa]
+
+[cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
+[cc-by-sa-image]: https://i.creativecommons.org/l/by-sa/4.0/88x31.png
+[cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY%20SA%204.0-lightgrey.svg
+
+
 ## Acknowledgments
 
 
