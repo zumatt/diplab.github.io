@@ -13,7 +13,7 @@ LIS3DHTR<TwoWire> LIS; //IIC
 void setup()
 {
   Serial.begin(115200);
-  LIS.begin(WIRE,0x19); //IIC init
+  LIS.begin(0x18); //IIC init
   
   delay(100);
   
