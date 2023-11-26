@@ -47,7 +47,6 @@ LIS3DHTR<TwoWire> LIS; //IIC
 #include <WebSocketsServer.h>
 #include <ArduinoJson.h>
 #include "Fonts/FreeSansBold9pt7b.h"
-#include "Fonts/FreeSansBold12pt7b.h"
     //Font setup for FreeSansBold9pt7b
     const GFXfont *textFont = &FreeSansBold9pt7b;
 
@@ -69,14 +68,14 @@ LIS3DHTR<TwoWire> LIS; //IIC
     int screenHeight = E_INK_HEIGHT;                                            //Height of the display from the library
 
 //Variables to store the petri position and dimension
-    int petriDiameter = (dispH/2)-10;                                           //Diameter of the petri dish
+    int petriDiameter = (screenHeight/2)-10;                                           //Diameter of the petri dish
     
-    int yCenter = dispH/2;                                                      //Center y of petri dish
-    int xCenter = dispW/2;                                                      //Center x of petri dish
-    int xLeftPetri =  (xCenter)-(petriD);                                       //X position of left side of petri dish
-    int yTopPetri =  (yCenter)-(petriD);                                        //Y position of top side of petri dish
-    int xRightPetri = (xCenter)+(petriD);                                       //X position of right side of petri dish
-    int yBottomPetri = (yCenter)+(petriD);                                      //Y position of bottom side of petri dish
+    int yCenter = screenHeight/2;                                                      //Center y of petri dish
+    int xCenter = screenWidth/2;                                                       //Center x of petri dish
+    int xLeftPetri =  (xCenter)-(petriDiameter);                                       //X position of left side of petri dish
+    int yTopPetri =  (yCenter)-(petriDiameter);                                        //Y position of top side of petri dish
+    int xRightPetri = (xCenter)+(petriDiameter);                                       //X position of right side of petri dish
+    int yBottomPetri = (yCenter)+(petriDiameter);                                      //Y position of bottom side of petri dish
 
 //Variables to store information from the web application
     int    webState;                    //State value from the web page
@@ -95,16 +94,16 @@ LIS3DHTR<TwoWire> LIS; //IIC
     bool readyToSpread;
 
 //Variables to store information about bacteria spreading
-    int    bacteriaLinesStep = petriD/10;                                       //Step of each line of bacteria
+    int    bacteriaLinesStep = petriDiameter/10;                                //Step of each line of bacteria
     float  bacteriaDotsX[500];                                                  //Array that contains all the X values of the dots created for the bacteria growth
     float  bacteriaDotsY[500];                                                  //Array that contains all the Y values of the dots created for the bacteria growth
 
-    float  bacteriaZone = step/2;                                               //General dimension of the rectangle created to spread bacteria
+    float  bacteriaZone = bacteriaLinesStep/2;                                  //General dimension of the rectangle created to spread bacteria
     int    bacteriaSpreadY[21] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};   //Array of Y axis for checking if a line was drawn
-    int    lenBactSpreadY = *(&arrY + 1) - arrY;                                //Array of Y axis length
+    int    lenBactSpreadY = *(&bacteriaSpreadY + 1) - bacteriaSpreadY;          //Array of Y axis length
     bool   completeBactSpreadY;                                                 //Bool to check if the bacteria spread is completed on X axis
     int    bacteriaSpreadX[21] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};   //Array of X axis for checking if a line was drawn
-    int    lenBactSpreadX = *(&arrX + 1) - arrX;                                //Array of X axis length
+    int    lenBactSpreadX = *(&bacteriaSpreadX + 1) - bacteriaSpreadX;          //Array of X axis length
     bool   completeBactSpreadX;                                                 //Bool to check if the bacteria spread is completed on Y axis
     bool   arrayCompletedSpreading;                                             //Bool to check if the bacteria spread is completed on both axis
     double accelValueX;                                                         //Variable to store accellerometer data on X axis
@@ -247,7 +246,7 @@ void setup() {
 
     //Create all the dots for the display of bacteria growing
         for(int i=0; i<500; i++){
-            bacteriaDotsX[i] = random(xLeftPteri, xRightPetri);
+            bacteriaDotsX[i] = random(xLeftPetri, xRightPetri);
             bacteriaDotsY[i] = random(yTopPetri, yBottomPetri);
         }
 }
@@ -270,8 +269,8 @@ void loop() {
         //Call drawing function for bacteria
             if(webState == 8 && readyToSpread == 1){
             //Update variables for accellerometer
-            accX = LIS.getAccelerationX(); //Get accellerometer X data
-            accY = -LIS.getAccelerationY(); //Get accellerometer Y data
+            accelValueX = LIS.getAccelerationX(); //Get accellerometer X data
+            accelValueY = -LIS.getAccelerationY(); //Get accellerometer Y data
 
             drawingLoop();
 
@@ -295,7 +294,7 @@ void loop() {
             abPlacing();   
         } else {
             state4();
-            resetAbPosCalled = false;
+            webResetPosAb = "";
         }
     }
 }
@@ -324,7 +323,7 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
         else {
             // JSON string was received correctly, so information can be retrieved:
                 //Create temporary variables to store the information received from the web page
-                String tempOperatorName, tempBacteria, tempAb1, tempAb2, tempAb3, tempControlCenter;
+                String tempOperatorName, tempBacteria, tempAb1, tempAb2, tempAb3, tempControlCenter, tempResetPosAb;
 
             //Store the information received from the web page        
                 const int   receivedState         = doc["state"];
@@ -332,7 +331,7 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
                 const char* receivedAb1           = doc["ab1"];
                 const char* receivedAb2           = doc["ab2"];
                 const char* receivedAb3           = doc["ab3"];
-                const char* receivedResetPosAb    = doc["controlCenter"];
+                const char* receivedResetPosAb    = doc["resetAbPos"];
                 const char* receivedOperatorName  = doc["name"];
                 const int   receivedPatientCode   = doc["classcode"];
                 const int   receivedReadingAb     = doc["readingAb"];
@@ -351,7 +350,7 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
             //Store the information received from the web page in the global variables
                                                             webState            = receivedState;
                 if (tempOperatorName.length() != 0){        webOperatorName     = receivedOperatorName; }
-                if (tempBacteria.length() != 0){            webBacteria         = d_bacteria;           }
+                if (tempBacteria.length() != 0){            webBacteria         = receivedBacteria;     }
                 if (tempAb1.length() != 0){                 webAb1              = receivedAb1;          }
                 if (tempAb2.length() != 0){                 webAb2              = receivedAb2;          }
                 if (tempAb3.length() != 0){                 webAb3              = receivedAb3;          }
@@ -440,61 +439,61 @@ void expState(int stateVariable){
 void state0() {
   //Display all the informations for the WiFi connection
     display.clearDisplay();
-    display.setCursor(xC+90, yC+200);
+    display.setCursor(xCenter+90, yCenter+200);
     display.setTextSize(2);
     display.println("Welcome to DiPLab");
-    display.setCursor(xC+90, yC+260);
+    display.setCursor(xCenter+90, yCenter+260);
     display.setTextSize(1);
     display.println("the only digital laboratory experience that");
-    display.setCursor(xC+90, yC+290);
+    display.setCursor(xCenter+90, yCenter+290);
     display.println("disseminates the issue of Antimicrobial");
-    display.setCursor(xC+90, yC+320);
+    display.setCursor(xCenter+90, yCenter+320);
     display.println("Resistance using an interactive tool.");
-    display.setCursor(xC+90, yC+390);
+    display.setCursor(xCenter+90, yCenter+390);
     display.print("connect to ");
     display.print(::ssid);
     display.println(" WiFi with the password: ");
-    display.setCursor(xC+90, yC+420);
+    display.setCursor(xCenter+90, yCenter+420);
     display.println(::password);
-    display.setCursor(xC+90, yC+450);
+    display.setCursor(xCenter+90, yCenter+450);
     display.println("open the web browser and go to");
-    display.setCursor(xC+90, yC+480);
+    display.setCursor(xCenter+90, yCenter+480);
     display.print("http://");
     display.print(::serverIP);
     display.println('/');
     
     for (int i=0; i<5; i++){
-      display.fillCircle(xC+640+(i*30), yC + 420, 10, BLACK);   
+      display.fillCircle(xCenter+640+(i*30), yCenter + 420, 10, BLACK);   
     }
     for (int i=0; i<8; i++){
-      display.fillCircle(xC+610+(i*30), yC + 450, 10, BLACK);   
+      display.fillCircle(xCenter+610+(i*30), yCenter + 450, 10, BLACK);   
     }
     for (int i=0; i<10; i++){
-      display.fillCircle(xC+550+(i*30), yC + 480, 10, BLACK);   
+      display.fillCircle(xCenter+550+(i*30), yCenter + 480, 10, BLACK);   
     }
     for (int i=0; i<12; i++){
-      display.fillCircle(xC+490+(i*30), yC + 510, 10, BLACK);   
+      display.fillCircle(xCenter+490+(i*30), yCenter + 510, 10, BLACK);   
     }
     for (int i=0; i<15; i++){
-      display.fillCircle(xC+340+(i*30), yC + 540, 10, BLACK);   
+      display.fillCircle(xCenter+340+(i*30), yCenter + 540, 10, BLACK);   
     }
     for (int i=0; i<18; i++){
-      display.fillCircle(xC+280+(i*30), yC + 570, 10, BLACK);   
+      display.fillCircle(xCenter+280+(i*30), yCenter + 570, 10, BLACK);   
     }
     for (int i=0; i<21; i++){
-      display.fillCircle(xC+220+(i*30), yC + 600, 10, BLACK);   
+      display.fillCircle(xCenter+220+(i*30), yCenter + 600, 10, BLACK);   
     }
     for (int i=0; i<19; i++){
-      display.fillCircle(xC+100+(i*30), yC + 630, 10, BLACK);   
+      display.fillCircle(xCenter+100+(i*30), yCenter + 630, 10, BLACK);   
     }
     for (int i=0; i<18; i++){
-      display.fillCircle(xC+130+(i*30), yC + 660, 10, BLACK);   
+      display.fillCircle(xCenter+130+(i*30), yCenter + 660, 10, BLACK);   
     }
     for (int i=0; i<17; i++){
-      display.fillCircle(xC+160+(i*30), yC + 690, 10, BLACK);   
+      display.fillCircle(xCenter+160+(i*30), yCenter + 690, 10, BLACK);   
     }
     for (int i=0; i<11; i++){
-      display.fillCircle(xC+190+(i*30), yC + 720, 10, BLACK);   
+      display.fillCircle(xCenter+190+(i*30), yCenter + 720, 10, BLACK);   
     }
     display.setTextSize(2);
     display.display();
@@ -502,53 +501,53 @@ void state0() {
 
 void state1() {
     display.clearDisplay();
-    display.setCursor(xC+90, yC+200);
+    display.setCursor(xCenter+90, yCenter+200);
     display.setTextSize(2);
     display.println("Your DiPLab is");
-    display.setCursor(xC+90, yC+230);
+    display.setCursor(xCenter+90, yCenter+230);
     display.println("connected!");
-    display.setCursor(xC+90, yC+310);
+    display.setCursor(xCenter+90, yCenter+310);
     display.setTextSize(1);
     display.print("You logged in as Lab ");
     display.print(::webOperatorName);
     display.println("!");
-    display.setCursor(xC+90, yC+360);
+    display.setCursor(xCenter+90, yCenter+360);
     display.print("the patient code inserted is #");
     display.print(::webPatientCode);
     display.partialUpdate();
     
     for (int i=0; i<5; i++){
-      display.fillCircle(xC+640+(i*30), yC + 420, 10, BLACK);   
+      display.fillCircle(xCenter+640+(i*30), yCenter + 420, 10, BLACK);   
     }
     for (int i=0; i<8; i++){
-      display.fillCircle(xC+610+(i*30), yC + 450, 10, BLACK);   
+      display.fillCircle(xCenter+610+(i*30), yCenter + 450, 10, BLACK);   
     }
     for (int i=0; i<10; i++){
-      display.fillCircle(xC+550+(i*30), yC + 480, 10, BLACK);   
+      display.fillCircle(xCenter+550+(i*30), yCenter + 480, 10, BLACK);   
     }
     for (int i=0; i<12; i++){
-      display.fillCircle(xC+490+(i*30), yC + 510, 10, BLACK);   
+      display.fillCircle(xCenter+490+(i*30), yCenter + 510, 10, BLACK);   
     }
     for (int i=0; i<15; i++){
-      display.fillCircle(xC+340+(i*30), yC + 540, 10, BLACK);   
+      display.fillCircle(xCenter+340+(i*30), yCenter + 540, 10, BLACK);   
     }
     for (int i=0; i<18; i++){
-      display.fillCircle(xC+280+(i*30), yC + 570, 10, BLACK);   
+      display.fillCircle(xCenter+280+(i*30), yCenter + 570, 10, BLACK);   
     }
     for (int i=0; i<21; i++){
-      display.fillCircle(xC+220+(i*30), yC + 600, 10, BLACK);   
+      display.fillCircle(xCenter+220+(i*30), yCenter + 600, 10, BLACK);   
     }
     for (int i=0; i<19; i++){
-      display.fillCircle(xC+100+(i*30), yC + 630, 10, BLACK);   
+      display.fillCircle(xCenter+100+(i*30), yCenter + 630, 10, BLACK);   
     }
     for (int i=0; i<18; i++){
-      display.fillCircle(xC+130+(i*30), yC + 660, 10, BLACK);   
+      display.fillCircle(xCenter+130+(i*30), yCenter + 660, 10, BLACK);   
     }
     for (int i=0; i<17; i++){
-      display.fillCircle(xC+160+(i*30), yC + 690, 10, BLACK);   
+      display.fillCircle(xCenter+160+(i*30), yCenter + 690, 10, BLACK);   
     }
     for (int i=0; i<11; i++){
-      display.fillCircle(xC+190+(i*30), yC + 720, 10, BLACK);   
+      display.fillCircle(xCenter+190+(i*30), yCenter + 720, 10, BLACK);   
     }
     display.setTextSize(2);
     display.display();
@@ -588,8 +587,8 @@ void state2(){
     webControlCenter = "";
 
   //Bacteria spreading (everything is in the loop)
-    accX = 0;
-    accY = 0;
+    accelValueX = 0;
+    accelValueY = 0;
     display.clearDisplay();
     display.display();
     readyToSpread = 1;
@@ -598,8 +597,11 @@ void state2(){
 void state3(){
     //Reset controller
         readyToSpread = 0;
-        bacteriaSpreadY[21] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-        bacteriaSpreadX[21] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        for(int i=0; i<lenBactSpreadY; i++){bacteriaSpreadY[i] = 0;};
+        for(int i=0; i<lenBactSpreadX; i++){bacteriaSpreadX[i] = 0;};
+        Serial.print("Bacteria Array");
+          for(int i=0; i<lenBactSpreadY; i++){Serial.print(" - ");Serial.print(bacteriaSpreadY[i]);};
+        Serial.println(" - END");
         completeBactSpreadY = false;
         completeBactSpreadX = false;
         arrayCompletedSpreading = false;
@@ -608,45 +610,45 @@ void state3(){
         display.clearDisplay();
         display.fillScreen(BLACK);
         display.setTextColor(WHITE, BLACK);
-        display.setCursor(xC+90, yC+200);
+        display.setCursor(xCenter+90, yCenter+200);
         display.setTextSize(2);
         display.println("Waiting for antibiotic");
         display.setTextSize(1);
-        display.setCursor(xC+90, yC+360);
+        display.setCursor(xCenter+90, yCenter+360);
         display.println("select three antibiotics with your phone");
         
         for (int i=0; i<5; i++){
-        display.fillCircle(xC+640+(i*30), yC + 420, 10, WHITE);   
+        display.fillCircle(xCenter+640+(i*30), yCenter + 420, 10, WHITE);   
         }
         for (int i=0; i<8; i++){
-        display.fillCircle(xC+610+(i*30), yC + 450, 10, WHITE);   
+        display.fillCircle(xCenter+610+(i*30), yCenter + 450, 10, WHITE);   
         }
         for (int i=0; i<10; i++){
-        display.fillCircle(xC+550+(i*30), yC + 480, 10, WHITE);   
+        display.fillCircle(xCenter+550+(i*30), yCenter + 480, 10, WHITE);   
         }
         for (int i=0; i<12; i++){
-        display.fillCircle(xC+490+(i*30), yC + 510, 10, WHITE);   
+        display.fillCircle(xCenter+490+(i*30), yCenter + 510, 10, WHITE);   
         }
         for (int i=0; i<15; i++){
-        display.fillCircle(xC+340+(i*30), yC + 540, 10, WHITE);   
+        display.fillCircle(xCenter+340+(i*30), yCenter + 540, 10, WHITE);   
         }
         for (int i=0; i<18; i++){
-        display.fillCircle(xC+280+(i*30), yC + 570, 10, WHITE);   
+        display.fillCircle(xCenter+280+(i*30), yCenter + 570, 10, WHITE);   
         }
         for (int i=0; i<21; i++){
-        display.fillCircle(xC+220+(i*30), yC + 600, 10, WHITE);   
+        display.fillCircle(xCenter+220+(i*30), yCenter + 600, 10, WHITE);   
         }
         for (int i=0; i<19; i++){
-        display.fillCircle(xC+100+(i*30), yC + 630, 10, WHITE);   
+        display.fillCircle(xCenter+100+(i*30), yCenter + 630, 10, WHITE);   
         }
         for (int i=0; i<18; i++){
-        display.fillCircle(xC+130+(i*30), yC + 660, 10, WHITE);   
+        display.fillCircle(xCenter+130+(i*30), yCenter + 660, 10, WHITE);   
         }
         for (int i=0; i<17; i++){
-        display.fillCircle(xC+160+(i*30), yC + 690, 10, WHITE);   
+        display.fillCircle(xCenter+160+(i*30), yCenter + 690, 10, WHITE);   
         }
         for (int i=0; i<11; i++){
-        display.fillCircle(xC+190+(i*30), yC + 720, 10, WHITE);   
+        display.fillCircle(xCenter+190+(i*30), yCenter + 720, 10, WHITE);   
         }
         display.setTextSize(2);
         display.display();
@@ -663,12 +665,12 @@ void state4(){
 
 void state5(){
   //Control center (History/Reading mode)
-    ab1WebX = 100*ab1XPos/dispW;
-    ab1WebY = 100*ab1YPos/dispH;
-    ab2WebX = 100*ab2XPos/dispW;
-    ab2WebY = 100*ab2YPos/dispH;
-    ab3WebX = 100*ab3XPos/dispW;
-    ab3WebY = 100*ab3YPos/dispH;
+    ab1WebX = 100*ab1XPos/screenWidth;
+    ab1WebY = 100*ab1YPos/screenHeight;
+    ab2WebX = 100*ab2XPos/screenWidth;
+    ab2WebY = 100*ab2YPos/screenHeight;
+    ab3WebX = 100*ab3XPos/screenWidth;
+    ab3WebY = 100*ab3YPos/screenHeight;
     Serial.print("Ab 1 x web: ");
     Serial.println(ab1WebX);
     Serial.print("Ab 1 y web: ");
@@ -706,7 +708,7 @@ void state6(){
 */
 
 void drawingLoop(){
-  for(int i=0; i<=lenArrY; i++){
+  for(int i=0; i<=lenBactSpreadY; i++){
     int a;
     double b;
     //This If statement is required to convert the for loop value into the two other values that I need
@@ -926,7 +928,6 @@ void readingMode(){
     Serial.println(ab3Resistance);
 
     if (webReadingAB == 1){
-        readingAbVal = webAb1;
 
         for(int i=0; i<500; i++){
             display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 4, WHITE);
@@ -939,7 +940,6 @@ void readingMode(){
         display.display();
 
     } else if (webReadingAB == 2){
-        readingAbVal = webAb2;
 
         for(int i=0; i<500; i++){
           display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 4, WHITE);
@@ -952,7 +952,6 @@ void readingMode(){
         display.display();
 
     } else if (webReadingAB == 3){
-        readingAbVal = webAb3;
         
         for(int i=0; i<500; i++){
           display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 4, WHITE);
@@ -1037,7 +1036,7 @@ void checkResistance(){
   Serial.println(webAb2);
   Serial.print("  - Antibiotic 3: ");
   Serial.println(webAb3);
-
+/*
   if(j_bacteria == "Acinetobacter"){
     if (j_ab1 == "Ciprofloxacin"){ ab1_resistance = ab_resistance_multiplier * ciprofloxacin[0];};
     if (j_ab1 == "Doxycycline"){ ab1_resistance = ab_resistance_multiplier * doxycycline[0];};
@@ -1123,5 +1122,5 @@ void checkResistance(){
   Serial.println(ab3_resistance);
   Serial.print("  - Resistance web value 3: ");
   Serial.println(ab3_resistanceWeb);
-
+*/
 }
