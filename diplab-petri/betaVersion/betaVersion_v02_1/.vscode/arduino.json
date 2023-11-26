@@ -1,0 +1,4 @@
+{
+    "configuration": "PartitionScheme=huge_app,FlashMode=qio,FlashFreq=80,UploadSpeed=921600,DebugLevel=none,EraseFlash=none",
+    "board": "Inkplate_Boards:esp32:Inkplate6plus"
+}
