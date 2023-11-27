@@ -15,19 +15,10 @@
 
 /*
     -----------------------------------------------------------
-                            BOARD CHECK
-    -----------------------------------------------------------
-*/
-#ifndef ARDUINO_INKPLATE6PLUS
-#error "Wrong board selection for this example, please select Inkplate 6PLUS in the boards menu."
-#endif
-
-/*
-    -----------------------------------------------------------
                             LIBRARIES
     -----------------------------------------------------------
 */
-#include "Inkplate-mod.h"
+#include "Inkplate.h"
 #include "Fonts/FreeSansBold9pt7b.h"
 
 /*
@@ -36,15 +27,15 @@
     -----------------------------------------------------------
 */
 //Variables to display stuff on the E-Ink display
-int dispW = 1024;                                           //Display Width
-int dispH = 758;                                            //Display Height
+int dispW = E_INK_WIDTH;                                           //Display Width
+int dispH = E_INK_HEIGHT;                                            //Display Height
 int petriD = (dispH/2)-10;                                  //Petri dish diameter
-int xC =  (dispW/2)-(petriD);                               //X position of left side of petri dish
-int yC =  (dispH/2)-(petriD);                               //Y position of top side of petri dish
-int xC2 = (dispW/2)+(petriD);                               //X position of right side of petri dish
-int yC2 = (dispH/2)+(petriD);                               //Y position of bottom side of petri dish
 int yPos = dispH/2;                                         //Center y of petri dish
-int xPos = dispW/2;                                         //Center x of petri dish
+int xPos = dispW/2 - 150;                                         //Center x of petri dish
+int xC =  (xPos)-(petriD);                         //X position of left side of petri dish
+int yC =  (yPos)-(petriD);                               //Y position of top side of petri dish
+int xC2 = (xPos)+(petriD);                               //X position of right side of petri dish
+int yC2 = (yPos)+(petriD);                               //Y position of bottom side of petri dish
 const GFXfont *textFont = &FreeSansBold9pt7b;               //Font setup for FreeSansBold9pt7b
 
 /*
@@ -86,7 +77,7 @@ void loop() {}
 void graphicLanding(){
   //Display all the informations for the WiFi connection
     display.clearDisplay();
-  //display.drawCircle(dispW/2, dispH/2, petriD, BLACK);
+    //display.drawCircle(xPos, yPos, petriD, BLACK);
     display.setCursor(xC+90, yC+200);
     display.setTextSize(2);
     display.println("Welcome to DiPLab");

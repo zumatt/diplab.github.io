@@ -35,7 +35,7 @@
                             LIBRARIES
     -----------------------------------------------------------
 */
-#include "Inkplate-mod.h"
+#include "Inkplate.h"
 #include <WiFi.h>
 #include <AsyncTCP.h>
 #include "ESPAsyncWebSrv.h"
@@ -70,7 +70,7 @@ LIS3DHTR<TwoWire> LIS; //IIC
 //Variables to store the petri position and dimension
     int petriDiameter = (screenHeight/2)-10;                                           //Diameter of the petri dish
     
-    int yCenter = screenHeight/2;                                                      //Center y of petri dish
+    int yCenter = screenHeight/2 - 150;                                                //Center y of petri dish
     int xCenter = screenWidth/2;                                                       //Center x of petri dish
     int xLeftPetri =  (xCenter)-(petriDiameter);                                       //X position of left side of petri dish
     int yTopPetri =  (yCenter)-(petriDiameter);                                        //Y position of top side of petri dish
