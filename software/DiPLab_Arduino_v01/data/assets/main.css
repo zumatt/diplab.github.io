@@ -1,0 +1,145 @@
+/* -------------------> COLORs <------------------- */
+
+:root{
+    --baseColor: #131313;
+    --secondaryColor: #F1F1F1;
+    --thirdColor: #AFAFAF;
+    --accentColor: #ADFF00;
+}
+
+/* -------------------> FONT <------------------- */
+@font-face {
+    font-family: PPRadioGrotesk;
+    src: url("../font/PPRadioGrotesk-Regular.otf") format("opentype");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: PPNeueMachina;
+    src: url("../font/PPNeueMachina-InktrapRegular.otf") format("opentype");
+    font-display: swap;
+}
+
+/* -------------------> STYLE <------------------- */
+
+body{
+    overflow: hidden;
+    background-color: var(--baseColor);
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 70vh;
+}
+.projectTitle {
+    margin: auto;
+}
+.buttonText {
+margin-left: auto;
+margin-right: auto;
+}
+.div {
+display: flex;
+flex-direction: column;
+position: relative;
+margin-top: auto;
+width: 100%;
+min-height: 30vw;
+min-width: 20px;
+overflow: hidden;
+line-height: normal;
+height: auto;
+margin-left: auto;
+margin-right: auto;
+background-color: #131313;
+padding-left: 10px;
+padding-right: 10px;
+color: rgba(241, 241, 241, 1);
+font-size: 35px;
+font-family: "Oxygen Mono", monospace;
+}
+.image {
+object-fit: contain;
+object-position: center;
+position: absolute;
+height: 100%;
+width: 100%;
+top: 0;
+left: 0;
+}
+.image-contents {
+display: flex;
+flex-direction: column;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+}
+.div-2 {
+display: flex;
+flex-direction: column;
+position: relative;
+margin-top: 2vh;
+line-height: normal;
+height: auto;
+margin-left: 35vw;
+margin-right: 35vw;
+font-size: 13px;
+font-family: "Poppins", sans-serif;
+color: rgba(241, 241, 241, 1);
+}
+.footer {
+display: flex;
+flex-direction: column;
+position: relative;
+height: 25vh;
+}
+.button {
+display: flex;
+flex-direction: column;
+position: relative;
+margin-top: auto;
+height: auto;
+margin-bottom: auto;
+margin-left: auto;
+margin-right: auto;
+width: 30vw;
+border-width: 1px;
+border-style: solid;
+border-color: rgba(241, 241, 241, 1);
+border-radius: 21px;
+line-height: normal;
+font-family: "Poppins", sans-serif;
+color: rgba(241, 241, 241, 1);
+font-size: 20px;
+}
+@media (max-width: 991px) {
+.button {
+    width: 75vw;
+}
+.div-2 {
+    margin-left: 22vw;
+    margin-right: 22vw;
+}
+}
+@media (max-width: 360px) {
+.div{
+    font-size: 30px;
+}
+}
+@media (max-width: 640px) {
+.div {
+    min-height: 75vw;
+    margin-top: 10vh;
+}
+.div-2 {
+    margin-left: 12.5vw;
+    margin-right: 12.5vw;
+}
+}
