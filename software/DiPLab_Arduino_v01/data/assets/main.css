@@ -10,17 +10,25 @@
 /* -------------------> FONT <------------------- */
 @font-face {
     font-family: PPRadioGrotesk;
-    src: url("../font/PPRadioGrotesk-Regular.otf") format("opentype");
+    src: url("../assets/font/PPRadioGrotesk-Regular.otf") format("opentype");
     font-display: swap;
 }
 
 @font-face {
     font-family: PPNeueMachina;
-    src: url("../font/PPNeueMachina-InktrapRegular.otf") format("opentype");
+    src: url("../assets/font/PPNeueMachina-InktrapRegular.otf") format("opentype");
     font-display: swap;
 }
 
 /* -------------------> STYLE <------------------- */
+
+a{
+    text-decoration: none;
+}
+
+p {
+    margin: unset;
+}
 
 body{
     overflow: hidden;
@@ -40,106 +48,171 @@ body{
     margin: auto;
 }
 .buttonText {
-margin-left: auto;
-margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
-.div {
-display: flex;
-flex-direction: column;
-position: relative;
-margin-top: auto;
-width: 100%;
-min-height: 30vw;
-min-width: 20px;
-overflow: hidden;
-line-height: normal;
-height: auto;
-margin-left: auto;
-margin-right: auto;
-background-color: #131313;
-padding-left: 10px;
-padding-right: 10px;
-color: rgba(241, 241, 241, 1);
-font-size: 35px;
-font-family: "Oxygen Mono", monospace;
+.title {
+    position: relative;
+    width: 100%;
+    min-height: 30vw;
+    min-width: 20px;
+    overflow: hidden;
+    line-height: normal;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--secondaryColor);
+    font-size: 35px;
+    font-family: "PPNeueMachina", sans-serif;
 }
 .image {
-object-fit: contain;
-object-position: center;
-position: absolute;
-height: 100%;
-width: 100%;
-top: 0;
-left: 0;
+    transform:rotate(180deg);
+    position: absolute;
+    top: 0;
+    left: 0;
 }
-.image-contents {
-display: flex;
-flex-direction: column;
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
+.titleBox {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
-.div-2 {
-display: flex;
-flex-direction: column;
-position: relative;
-margin-top: 2vh;
-line-height: normal;
-height: auto;
-margin-left: 35vw;
-margin-right: 35vw;
-font-size: 13px;
-font-family: "Poppins", sans-serif;
-color: rgba(241, 241, 241, 1);
+.text {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 2vh;
+    line-height: normal;
+    height: auto;
+    margin-left: 35vw;
+    margin-right: 35vw;
+    font-family: "PPRadioGrotesk", sans-serif;
+    color: var(--secondaryColor);
 }
 .footer {
-display: flex;
-flex-direction: column;
-position: relative;
-height: 25vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 25vh;
+}
+.button p{
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
 .button {
-display: flex;
-flex-direction: column;
-position: relative;
-margin-top: auto;
-height: auto;
-margin-bottom: auto;
-margin-left: auto;
-margin-right: auto;
-width: 30vw;
-border-width: 1px;
-border-style: solid;
-border-color: rgba(241, 241, 241, 1);
-border-radius: 21px;
-line-height: normal;
-font-family: "Poppins", sans-serif;
-color: rgba(241, 241, 241, 1);
-font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: auto;
+    height: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30vw;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--accentColor);
+    border-radius: 50px;
+    line-height: normal;
+    font-family: "PPRadioGrotesk", sans-serif;
+    color: var(--secondaryColor);
+    font-size: 20px;
 }
 @media (max-width: 991px) {
-.button {
-    width: 75vw;
-}
-.div-2 {
-    margin-left: 22vw;
-    margin-right: 22vw;
-}
+    .button {
+        width: 75vw;
+    }
+    .text {
+        margin-left: 22vw;
+        margin-right: 22vw;
+    }
 }
 @media (max-width: 360px) {
-.div{
-    font-size: 30px;
-}
+    .title{
+        font-size: 30px;
+    }
 }
 @media (max-width: 640px) {
-.div {
-    min-height: 75vw;
-    margin-top: 10vh;
+    .title {
+        min-height: 75vw;
+        margin-top: 20vh;
+    }
+    .text {
+        margin-left: 12.5vw;
+        margin-right: 12.5vw;
+    }
 }
-.div-2 {
-    margin-left: 12.5vw;
-    margin-right: 12.5vw;
+
+.pageTitle {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 27vh;
+    line-height: normal;
+    height: auto;
+    color: var(--secondaryColor);
+    font-family: "PPNeueMachina", sans-serif;
+    font-size: 25px;
+    margin-left: 20vw;
+    margin-right: 20vw;
 }
+@media (max-width: 640px) {
+    .pageTitle {
+        margin-left: 10vw;
+        margin-right: 10vw;
+    }
+}
+.pageDescription {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    color: var(--secondaryColor);
+    font-family: "PPRadioGrotesk", sans-serif;
+    font-size: 13px;
+    margin-right: 20vw;
+    margin-left: 20vw;
+}
+@media (max-width: 640px) {
+    .pageDescription {
+        margin-left: 10vw;
+        margin-right: 10vw;
+    }
+}
+.form-form {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 25%;
+}
+@media (max-width: 640px) {
+    .form-form {
+        margin-top: 40%;
+    }
+}
+.form-input {
+    margin-left: 20vw;
+    margin-right: 20vw;
+    background-color: var(--baseColor);
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: solid 1px var(--secondaryColor);
+    padding-bottom: 3px;
+    font-family: "PPRadioGrotesk", sans-serif;
+    color: var(--secondaryColor);
+    font-size: 18px;
+}
+@media (max-width: 640px) {
+    .form-input {
+        margin-left: 10vw;
+        margin-right: 10vw;
+    }
+}
+.form-input-2 {
+    margin-top: 2vh;
 }

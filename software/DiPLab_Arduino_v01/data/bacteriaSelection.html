@@ -1,0 +1,265 @@
+<!DOCTYPE HTML><html>
+<!-----------HEAD----------->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="assets/main.css">
+  <title>DiPLab - Select bacteria</title>
+</head>
+<!-----------BODY----------->
+<body>
+  <img src="assets/images/diplab_logo.png" class="image"/>
+<div id="webpage">
+  <div class="content">
+    <div class="pageTitle"><p>select the bacteria</p></div>
+    <div class="pageDescription">
+      <p>
+        in order to create a base for your Petri, you need to spread a bacteria <br> select one bacteria you want to use.
+      </p>
+    </div>
+    <div class="bacteria-1">
+          <div class="petriImage">
+            <picture>
+              <img
+                src="assets/images/eschericaColi_sem_STEVE GSCHMEISSNER_SCIENCE PHOTO LIBRARY.png"
+                class="Pimage"
+              />
+            </picture>
+            <div class="builder-image-sizer image-sizer"></div>
+          </div>
+          <div class="info">
+            <div class="petriInfo">
+              <div class="builder-columns div-6">
+                <div class="builder-column column">
+                  <div class="separation-line"></div>
+                  <div class="petriTitle"><p>Bacteria</p></div>
+                  <div class="petriName" id="bact_code"><p>Escherica Coli</p></div>
+                  <div class="petriGram"><p>Gram negative</p></div>
+                  <div class="petriDisease" style="padding-top: 5px"><p>Disease</p></div>
+                  <div class="petriDiseaseName"><p>Urinary Tract Infection</p></div>
+                </div>
+                <div class="builder-column buttonPetri">
+                  <div class="button" id="btn_addBact">
+                    <div class="line-horizontal"></div>
+                    <div class="line-vertical"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+</div>
+</body>
+<!-----------SCRIPT----------->
+<script>
+    var Socket;
+
+document.getElementById('btn_addBact').addEventListener('click',function(){
+    button_bacteriaFunction();});
+
+function init() {
+    Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+    }
+
+function button_bacteriaFunction(a) {
+    var bacteriaVal = document.getElementById("bact_code").textContent;
+
+  var msg = {
+              state: 8, 
+              bacteria: bacteriaVal
+            };
+  var jsonString = JSON.stringify(msg);
+  console.log("Message sent: " + JSON.stringify(msg));
+  window.location.href='spreadingBacteria.html';
+  Socket.send(jsonString);
+  }
+</script>
+<!-----------STYLE----------->
+<style>
+  .bacteria-1 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .petriImage {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 8vh;
+    width: 30vw;
+    min-height: 30vw;
+    min-width: 20px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: solid;
+    border-width: 4px;
+    border-radius: 50%;
+    border-color: rgba(175, 175, 175, 1);
+  }
+  @media (max-width: 640px) {
+    .petriImage {
+      min-height: 75vw;
+      margin-top: 5vh;
+      width: 75vw;
+    }
+  }
+  .Pimage {
+    object-fit: contain;
+    object-position: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  .image-sizer {
+    width: 100%;
+    pointer-events: none;
+    font-size: 0;
+  }
+  .info {
+    width: 30vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @media (max-width: 640px) {
+    .info {
+      width: 75vw;
+    }
+  }
+  .petriInfo {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .div-6 {
+    display: flex;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(66.666666% - 10px);
+    margin-left: 0px;
+  }
+  .separation-line {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 2vh;
+    height: 0px;
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: rgba(175, 175, 175, 1);
+  }
+  .petriTitle {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 0.5vh;
+    line-height: normal;
+    height: auto;
+    font-family: "PPRadioGrotesk", sans-serif;
+    font-size: 9px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+  }
+  .petriName {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 0.5vh;
+    line-height: normal;
+    height: auto;
+    font-family: "PPRadioGrotesk", sans-serif;
+    font-size: 14px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+  }
+  .petriGram {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    font-family: "PPRadioGrotesk", sans-serif;
+    font-size: 12px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+    font-style: italic;
+    font-weight: 100;
+  }
+  .petriDisease {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 0.5vh;
+    line-height: normal;
+    height: auto;
+    font-family: "PPRadioGrotesk", sans-serif;
+    font-size: 9px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+  }
+  .petriDiseaseName {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 0.5vh;
+    line-height: normal;
+    height: auto;
+    font-family: "PPRadioGrotesk", sans-serif;
+    font-size: 14px;
+    color: rgba(241, 241, 241, 1);
+    width: 75%;
+  }
+  .buttonPetri {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333% - 10px);
+    margin-left: 20px;
+  }
+  .button {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 5vw;
+    border-radius: 50%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ADFF00;
+    width: 50%;
+    margin-top: 2vh;
+    margin-left: auto;
+  }
+  @media (max-width: 640px) {
+    .button {
+      min-height: 11vw;
+    }
+  }
+  .line-horizontal {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 70%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ADFF00;
+    top: 49%;
+    left: 15%;
+  }
+  .line-vertical {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ADFF00;
+    top: 15%;
+    left: 49%;
+    height: 70%;
+  }
+</style>

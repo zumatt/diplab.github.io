@@ -2,48 +2,26 @@
 <!-----------HEAD----------->
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="assets/resistanceMap.js"></script>
   <link rel="stylesheet" type="text/css" href="assets/main.css">
   <title>DiPLab - Home</title>
 </head>
 <!-----------BODY----------->
 <body>
-    <div id="webpage">
-        <div class="content">
-            <div class="div">
-                <div class="image-contents"><p class="projectTitle">DiPLab</p></div>
-            </div>
-            <div class="div-2">
-                <p>
-                the only digital laboratory experience that disseminates the issue of
-                antimicrobial resistance using an interactive tool
-                </p>
-            </div>
-        </div>
-        <div class="footer">
-            <div class="button" id="btn_next"><p class="buttonText">next</p></div>
-        </div>
-    </div>
+      <img src="assets/images/diplab_logo.png" class="image"/>
+      <div class="content">
+          <div class="title">
+              <div class="titleBox"><p class="projectTitle">DiPLab</p></div>
+          </div>
+          <div class="text">
+              <p>
+              the only digital laboratory experience that disseminates the issue of
+              antimicrobial resistance using an interactive tool
+              </p>
+          </div>
+      </div>
+      <div class="footer">
+        <a href="/connectionForm.html">
+          <div class="button" style="margin-top: 10vh;"><p class="buttonText">next</p></div>
+        </a>
+      </div>
 </body>
-<!-----------SCRIPT----------->
-<script src="/assets/disableScroll.js"></script>
-<script>
-  var Socket;
-  document.getElementById('btn_next').addEventListener('click', button_function);
-  
-  function init() {
-      Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
-      }
-  
-  function button_function() {
-      var msg = {state: 1};
-      var jsonString = JSON.stringify(msg);
-      Socket.send(jsonString);
-      window.location.href='connectionForm.html';
-      console.log("Message sent: " + JSON.stringify(msg));
-      }
-  
-  window.onload = function(event){
-      init();
-  }
-  </script>

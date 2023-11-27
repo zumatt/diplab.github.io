@@ -333,7 +333,7 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
                 const char* receivedAb3           = doc["ab3"];
                 const char* receivedResetPosAb    = doc["resetAbPos"];
                 const char* receivedOperatorName  = doc["name"];
-                const int   receivedPatientCode   = doc["classcode"];
+                const int   receivedPatientCode   = doc["patientcode"];
                 const int   receivedReadingAb     = doc["readingAb"];
                 const int   receivedReadingTime   = doc["readingTime"];
                 const char* receivedControlCenter = doc["controlCenter"];
