@@ -335,6 +335,7 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
                 const char* receivedOperatorName  = doc["name"];
                 const int   receivedPatientCode   = doc["patientcode"];
                 const int   receivedReadingAb     = doc["readingAb"];
+                const int   receivedReadingBact   = doc["readingBacteria"];
                 const int   receivedReadingTime   = doc["readingTime"];
                 const char* receivedControlCenter = doc["controlCenter"];
 
@@ -356,6 +357,7 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
                 if (tempAb3.length() != 0){                 webAb3              = receivedAb3;          }
                 if (receivedPatientCode != 0){              webPatientCode      = receivedPatientCode;  }
                                                             webReadingAB        = receivedReadingAb;
+                                                            webReadingBact      = receivedReadingBact;
                                                             webReadingTime      = receivedReadingTime;
                 if (tempControlCenter.length() != 0){       webControlCenter    = receivedControlCenter;}
                 if (tempResetPosAb.length() != 0){          webResetPosAb       = receivedResetPosAb;   }
@@ -388,6 +390,8 @@ void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
                     Serial.println(webControlCenter);
                 Serial.print("    - Reading AB : ");
                     Serial.println(webReadingAB);
+                Serial.print("    - Reading Bact : ");
+                    Serial.println(webReadingBact);
                 Serial.print("    - Reading time : ");
                     Serial.println(webReadingTime);
                 Serial.println("");

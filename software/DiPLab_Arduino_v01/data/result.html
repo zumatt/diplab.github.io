@@ -10,61 +10,45 @@
   <img src="assets/images/diplab_logo.png" class="image"/>
 <div id="webpage">
   <div class="content">
-    <div class="pageTitle"><p>touch the petri screen</p></div>
+    <div class="pageTitle"><p>what do you want to do next?</p></div>
     <div class="pageDescription">
       <p>
-        to place the antibiotics choosen you need to touch the screen where you like to position the AB tablet<br>
-        to confirm the position click on the button here below
+        if you think you already found the best solution for your patient you can end the experience
       </p>
-    </div>
-    <div class="divImage">
-      <picture>
-        <img src="assets/images/diplab_drawing.png" class="Pimage"/>
-      </picture>
     </div>
   </div>
   <div class="footer">
-      <div class="button" style="margin-top: 3vh;" id="btn_next"><p class="buttonText">confirm position</p></div>
-      <div class="button" style="margin-top: 1vh; border-color: #AFAFAF;" id="btn_reset"><p class="buttonText">reset</p></div>
+      <div class="button" style="margin-top: 3vh;" id="btn_next"><p class="buttonText">continue</p></div>
+      <div class="button" style="margin-top: 1vh; border-color: #AFAFAF;" id="btn_reset"><p class="buttonText">end</p></div>
   </div>
 </div>
 </body>
 <!-----------SCRIPT----------->
 <script>
     var Socket;
-    var abPlacedCheck;
 
 document.getElementById('btn_next').addEventListener('click', button_nextFunction);
 document.getElementById('btn_reset').addEventListener('click', button_resetFunction);
 
 function init() {
     Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
-    Socket.onmessage = function(event) { processCommand(event); };
     }
 
-function processCommand(event){
-  var obj = JSON.parse(event.data);
-  abPlacedCheck = obj.ab_placed;
-  console.log(abPlacedCheck);
-}
-
 function button_nextFunction() {
-      if (abPlacedCheck != 1 ) {
-        alert("You need to finish placing antibiotics before!");
-      } else {
-        var msg = {state: 5, controlCenter: "history"};
+        var msg = {state: 2};
         var jsonString = JSON.stringify(msg);
         Socket.send(jsonString);
-        window.location.href='controlCenter.html';
+        window.location.href='spreadingBacteria.html';
         console.log("Message sent: " + JSON.stringify(msg));
-      }
     }
 
 function button_resetFunction() {
-  var msg = {resetAbPos: "Reset"};
-  var jsonString = JSON.stringify(msg);
-  Socket.send(jsonString);
-  console.log("Message sent: " + JSON.stringify(msg));
+    var r = confirm("Are you shure you want to finish your experience?");
+    if (r == true) {
+        window.location.href='final.html';
+    } else {
+        alert("Ok! You will continue the experience");
+    }
 }
 
 window.onload = function(event){

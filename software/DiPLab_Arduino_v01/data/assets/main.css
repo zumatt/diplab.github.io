@@ -216,3 +216,47 @@ body{
 .form-input-2 {
     margin-top: 2vh;
 }
+
+.slider-container {
+    margin-top: 5vh;
+    margin-left: 14vw;
+    margin-bottom: 3vh;
+}
+.slider{
+    color: var(--secondaryColor);
+}
+.rs-pointer{
+    background-color: var(--accentColor) !important;
+    border-radius: 50% !important;
+    width: 30px !important;
+    height: 30px !important;
+    top: -5px !important;
+    border: 0px !important;
+}
+.rs-container .rs-pointer::before {
+    width: 0px;
+    height: 0%;
+}
+.rs-container .rs-pointer::after {
+    width: 0px;
+    height: 0%;
+}
+.rs-container .rs-bg, .rs-container .rs-selected {
+    background-color: var(--secondaryColor);
+    border: 0px;
+    height: 2px !important;
+    top: 10px;
+}
+.rs-selected {
+    background-color: var(--accentColor) !important;
+    border: 0px !important;
+}
+
+.rs-container .rs-scale span::before {
+    height: 0px !important;
+    width: 0px !important;
+}
+.rs-container .rs-scale span ins {
+    color: var(--secondaryColor) !important;
+    font-family: "PPRadioGrotesk", sans-serif;
+}
