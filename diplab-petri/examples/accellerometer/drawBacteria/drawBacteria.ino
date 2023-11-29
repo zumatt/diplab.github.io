@@ -12,7 +12,7 @@
    28th December 2022 by Matteo Subet
 */
 
-#include "Inkplate-mod.h"
+#include "Inkplate.h"
 #include "LIS3DHTR.h"
 #include <Wire.h>
 LIS3DHTR<TwoWire> LIS; //IIC
@@ -23,26 +23,26 @@ Inkplate display(INKPLATE_1BIT);
 int dispW = 1024;                                         //Display Width
 int dispH = 758;                                          //Display Height
 int petriD = (dispH/2)-10;                                //Petri dish diameter
-int xC =  (dispW/2)-(petriD);                             //X position of left side of petri dish
-int yC =  (dispH/2)-(petriD);                             //Y position of top side of petri dish
-int xC2 = (dispW/2)+(petriD);                             //X position of right side of petri dish
-int yC2 = (dispH/2)+(petriD);                             //Y position of bottom side of petri dish
+int yPos = dispH/2;                                       //Center y of petri dish
+int xPos = dispW/2 - 150;                                       //Center x of petri dish
+int xC =  (xPos)-(petriD);                             //X position of left side of petri dish
+int yC =  (yPos)-(petriD);                             //Y position of top side of petri dish
+int xC2 = (xPos)+(petriD);                             //X position of right side of petri dish
+int yC2 = (yPos)+(petriD);                             //Y position of bottom side of petri dish
 int arrY[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of Y axis for checking if a line was drawn
 int lenArrY = *(&arrY + 1) - arrY;                        //Array of Y axis length
 int arrX[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //Array of X axis for checking if a line was drawn
 int lenArrX = *(&arrX + 1) - arrX;                        //Array of X axis length
 double accX, accY;                                        //Variables to store accellerometer data
-int yPos = dispH/2;                                       //Center y of petri dish
-int xPos = dispW/2;                                       //Center x of petri dish
 int step = petriD/10;                                     //Step of each line of bacteria
 
 void setup() {
   Serial.begin(115200);
   display.begin();                                     //Start the display
-  display.drawCircle(dispW/2, dispH/2, petriD, BLACK);     //Draw petri circle
+  display.clearDisplay();     //Draw petri circle
   display.display();                                   //Display what was drawn
 
-  LIS.begin(WIRE,0x19); //IIC init
+  LIS.begin(WIRE,0x18); //IIC init
   delay(100);
   LIS.setFullScaleRange(LIS3DHTR_RANGE_2G);
   LIS.setOutputDataRate(LIS3DHTR_DATARATE_50HZ);
@@ -51,9 +51,8 @@ void setup() {
 
 void loop() {
   accX = LIS.getAccelerationX(); //Get accellerometer X data
-  accY = LIS.getAccelerationY(); //Get accellerometer Y data
-  //Serial.print("Accellerometer X: "); Serial.print(accX); Serial.print("      ---      Accellerometer Y: "); Serial.println(accY);
-  
+  accY = -LIS.getAccelerationY(); //Get accellerometer Y data
+  Serial.print("Accellerometer X: "); Serial.print(accX); Serial.print("      ---      Accellerometer Y: "); Serial.println(accY);
   for(int i=0; i<=lenArrY; i++){
     int a;
     double b;
@@ -103,9 +102,9 @@ void drawBacteria_y(int j, int k, double w){
       //Partial update to the screen (check that this works only with BLACK / WHITE color and not with 0 / 1
       display.partialUpdate();
       ::arrY[j] = 1;
-      //Serial.print("!!!!!!!!!! -> Bacteria line drawn on Y axis! Position ");
-      //Serial.print(j-10);
-      //Serial.println(" y !");
+      Serial.print("!!!!!!!!!! -> Bacteria line drawn on Y axis! Position ");
+      Serial.print(j-10);
+      Serial.println(" y !");
   }  
 }
 void drawBacteria_x(int j, int k, double w){
@@ -116,8 +115,8 @@ void drawBacteria_x(int j, int k, double w){
       //Partial update to the screen (check that this works only with BLACK / WHITE color and not with 0 / 1
       display.partialUpdate();
       ::arrX[j] = 1;
-      //Serial.print("!!!!!!!!!! -> Bacteria line drawn on X axis! Position ");
-      //Serial.print(j-10);
-      //Serial.println(" x !");
+      Serial.print("!!!!!!!!!! -> Bacteria line drawn on X axis! Position ");
+      Serial.print(j-10);
+      Serial.println(" x !");
   }  
 }

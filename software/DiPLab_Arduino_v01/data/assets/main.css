@@ -10,13 +10,13 @@
 /* -------------------> FONT <------------------- */
 @font-face {
     font-family: PPRadioGrotesk;
-    src: url("../assets/font/PPRadioGrotesk-Regular.otf") format("opentype");
+    src: url("../assets/font/PPRadioGrotesk-Regular.woff") format("opentype");
     font-display: swap;
 }
 
 @font-face {
     font-family: PPNeueMachina;
-    src: url("../assets/font/PPNeueMachina-InktrapRegular.otf") format("opentype");
+    src: url("../assets/font/PPNeueMachina-InktrapRegular.woff") format("opentype");
     font-display: swap;
 }
 
@@ -96,7 +96,7 @@ body{
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 25vh;
+    height: 18vh;
 }
 .button p{
     padding-top: 25px;
@@ -187,11 +187,11 @@ body{
     display: flex;
     flex-direction: column;
     position: relative;
-    margin-top: 25%;
+    margin-top: 20%;
 }
 @media (max-width: 640px) {
     .form-form {
-        margin-top: 40%;
+        margin-top: 20%;
     }
 }
 .form-input {

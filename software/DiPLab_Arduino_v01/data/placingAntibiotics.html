@@ -61,7 +61,7 @@ function button_nextFunction() {
     }
 
 function button_resetFunction() {
-  var msg = {resetAbPos: "Reset"};
+  var msg = {state: 4};
   var jsonString = JSON.stringify(msg);
   Socket.send(jsonString);
   console.log("Message sent: " + JSON.stringify(msg));

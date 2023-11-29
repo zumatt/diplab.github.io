@@ -133,15 +133,6 @@ function button_historyFunction() {
     document.getElementById('btn_history_txt').classList.add("selected");
     document.getElementById('readingContent').classList.add("hided");
     document.getElementById('historyContent').classList.remove("hided");
-
-    var msg = {
-                state: 5,
-                controlCenter: "history",
-                readingBact: 0
-              };
-    var jsonString = JSON.stringify(msg);
-    Socket.send(jsonString);
-    console.log("Message sent: " + JSON.stringify(msg));
     }
 
 function button_readingFunction() {
@@ -174,15 +165,6 @@ function button_readingFunction() {
     document.getElementById('btn_reading_txt').classList.add("selected");
     document.getElementById('readingContent').classList.remove("hided");
     document.getElementById('historyContent').classList.add("hided");
-    
-    var msg = {
-                state: 5,
-                controlCenter: "reading",
-                readingAb: 1
-              };
-    var jsonString = JSON.stringify(msg);
-    Socket.send(jsonString);
-    console.log("Message sent: " + JSON.stringify(msg));
     }
 
 window.onload = function(event){
