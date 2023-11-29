@@ -23,7 +23,7 @@
     -----------------------------------------------------------
 */
 #ifndef ARDUINO_INKPLATE6PLUS
-#error "Wrong board selection for this example, please select Inkplate 6PLUS in the boards menu."
+  #error "Wrong board selection for this example, please select Inkplate 6PLUS in the boards menu."
 #endif
 
 
@@ -267,7 +267,7 @@ void loop() {
     //Check if we are in the state for bacteria spreading
     if(webState == 2){
         //Call drawing function for bacteria
-            if(webState == 8 && readyToSpread == 1){
+            if(webState == 2 && readyToSpread == 1){
             //Update variables for accellerometer
             accelValueX = LIS.getAccelerationX(); //Get accellerometer X data
             accelValueY = -LIS.getAccelerationY(); //Get accellerometer Y data
