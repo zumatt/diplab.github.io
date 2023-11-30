@@ -10,13 +10,13 @@
 /* -------------------> FONT <------------------- */
 @font-face {
     font-family: PPRadioGrotesk;
-    src: url("../assets/font/PPRadioGrotesk-Regular.woff") format("opentype");
+    src: url("../assets/font/PPRadioGroteskRegular.woff") format("opentype");
     font-display: swap;
 }
 
 @font-face {
     font-family: PPNeueMachina;
-    src: url("../assets/font/PPNeueMachina-InktrapRegular.woff") format("opentype");
+    src: url("../assets/font/PPNeueMachinaInktrapRegular.woff") format("opentype");
     font-display: swap;
 }
 
