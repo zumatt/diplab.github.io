@@ -112,7 +112,7 @@ LIS3DHTR<TwoWire> LIS; //IIC
 //Variables to store information about antibiotics position and dimension
     int    abDiameter = 35;                                                     //Dimension of the AB tablet
     int    tresholdAntibioticPosition = 150;                                    //Threshold between two anbiotics pills
-    double abMmToPxMultiplier = 0.35;                                           //Multiplier from pixels to mm for ab resistance
+    double abMmToPxMultiplier = 0.36;                                           //Multiplier from pixels to mm for ab resistance
 
     int    ab1XPos, ab1YPos;                                                    //X and Y position of AB 1
     int    ab2XPos, ab2YPos;                                                    //X and Y position of AB 2
@@ -974,7 +974,7 @@ void readingMode(){
           display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 4, WHITE);
         }
 
-        display.fillCircle(xCenter, yCenter, ab1Resistance*abDiameter, BLACK);
+        display.fillCircle(xCenter, yCenter, ab2Resistance*abDiameter, BLACK);
         display.fillCircle(xCenter, yCenter, abDiameter, WHITE);
         display.setCursor(xCenter - abDiameter/2, yCenter + abDiameter/3);
         display.println("2");
@@ -986,7 +986,7 @@ void readingMode(){
           display.fillCircle(bacteriaDotsX[i], bacteriaDotsY[i], 4, WHITE);
         }
 
-        display.fillCircle(xCenter, yCenter, ab1Resistance*abDiameter, BLACK);
+        display.fillCircle(xCenter, yCenter, ab3Resistance*abDiameter, BLACK);
         display.fillCircle(xCenter, yCenter, abDiameter, WHITE);
         display.setCursor(xCenter - abDiameter/2, yCenter + abDiameter/3);
         display.println("3");
