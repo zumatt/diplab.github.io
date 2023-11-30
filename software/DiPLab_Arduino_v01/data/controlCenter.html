@@ -94,11 +94,16 @@ function init() {
     }
 
 function button_nextFunction() {
-      var msg = {state: 6};
-      var jsonString = JSON.stringify(msg);
-      Socket.send(jsonString);
-      window.location.href='result.html';
-      console.log("Message sent: " + JSON.stringify(msg));
+    var r = confirm("Did you annotate the results?");
+      if (r == true) {
+        var msg = {state: 6};
+        var jsonString = JSON.stringify(msg);
+        Socket.send(jsonString);
+        window.location.href='result.html';
+        console.log("Message sent: " + JSON.stringify(msg));
+      } else {
+          alert("Please note every result in the patient dossier.");
+      }
   }
 
 function button_historyFunction() {

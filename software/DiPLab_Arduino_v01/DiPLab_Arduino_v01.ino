@@ -1048,12 +1048,21 @@ void historyCondition(){
     -----------------------------------------------------------
 */
 
-int ciprofloxacin[3] = {13, 21, 13};                        //Resistance values for ciprofloxacin
-int doxycycline[3] = {15, 10, 13};                          //Resistance values for doxycycline
-int gatifloxacin[3] = {17, 21, 21};                          //Resistance values for gatifloxacin
-int levofloxacin[3] = {20, 20, 20};                         //Resistance values for levofloxacin
-int minocycine[3] = {10, 18, 10};                           //Resistance values for minocycine
-int tetracycline[3] = {9, 12, 14};                         //Resistance values for tetracycline
+int Ampicillin = 8;
+int Piperacillin = 15;
+int Mecillinam = 20;
+int Cefadroxil = 6;
+int Cefalexin = 10;
+int Cefixime = 15;
+int Cefotaxime = 10;
+int Cefoxitin = 15;
+int Cefpodoxime = 13;
+int Ceftazidime = 17;
+int Cefuroxime = 15;
+int Imipenem = 17;
+int Amikacin = 15;
+int Gentamicin = 19;
+int Tobramycin = 18;
 
 void checkResistance(){
   Serial.println("Data reading:");
