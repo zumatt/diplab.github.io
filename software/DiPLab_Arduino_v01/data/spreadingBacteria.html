@@ -28,6 +28,7 @@
 <script>
     var Socket;
     var spreadingCheck;
+    var pageChanged = false;
 
 function init() {
     Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
@@ -39,7 +40,7 @@ function processCommand(event){
   spreadingCheck = obj.spreadingBacteria;
   console.log(spreadingCheck);
 
-  if(spreadingCheck == 1){
+  if(spreadingCheck == 1 && !pageChanged){
       var msg = {
                 state: 3
               };
@@ -47,6 +48,7 @@ function processCommand(event){
       Socket.send(jsonString);
       console.log("Message sent: " + JSON.stringify(msg));
       window.location.href='antibioticSelection.html';
+      pageChanged = true;
       };
 }
 
