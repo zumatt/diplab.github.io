@@ -1,0 +1,89 @@
+<!DOCTYPE HTML><html>
+<!-----------HEAD----------->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="assets/main.css">
+  <title>DiPLab - Connection</title>
+</head>
+<!-----------BODY----------->
+<body>
+  <img src="assets/images/diplab_logo.png" class="image"/>
+<div id="webpage">
+  <div class="content">
+    <div class="pageTitle"><p>start the experience</p></div>
+    <div class="pageDescription">
+      <p>
+        insert your fictional laboratory name
+        and insert the patient code number
+      </p>
+    </div>
+    <form
+      id="infoFrm"
+      class="form-form"
+    >
+      <input
+        name="name"
+        placeholder="laboratory name"
+        type="text"
+        maxlength="20"
+        class="form-input">
+      </input>
+      <input
+        name="classcode"
+        placeholder="patient code"
+        type="text"
+        maxlength="5"
+        class="form-input form-input-2"
+      ></input>
+  </div>
+  <div class="footer">
+    <div class="button">
+    <input
+          class="button"
+          id="btn_next"
+          value="start"
+          style="margin-left: auto;margin-right: auto;background-color: rgba(0, 0, 0, 0);border: 0;margin-top: 3vh;margin-bottom: 3vh;padding: 0;text-align: center;"
+          readonly
+          ></input></div>
+  </div>
+</form>
+</div>
+</body>
+<!-----------SCRIPT----------->
+<script>
+    var Socket;
+
+document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+
+function init() {
+    Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+    }
+
+function button_nextFunction() {
+    var x = document.getElementById("infoFrm");
+    var nameVal = x.elements[0].value;
+    var patientcodeVal = x.elements[1].value;
+
+    if(nameVal != "" && patientcodeVal != ""){
+        if(patientcodeVal.length == 5){
+          var msg = {
+                      state: 1, 
+                      name: nameVal,
+                      patientcode: patientcodeVal
+                    };
+          var jsonString = JSON.stringify(msg);
+          Socket.send(jsonString);
+          console.log("Message sent: " + JSON.stringify(msg));
+          window.location.href='bacteriaSelection.html';
+        } else {
+          alert("The patientcode value is not correct.\nPlease, insert a valid patientcode.");
+        }
+        } else {
+          alert("To continue you need to compile\nlaboratory name and patientcode!");
+          };
+    }
+
+window.onload = function(event){
+    init();
+}
+</script>

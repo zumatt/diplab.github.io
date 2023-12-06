@@ -1,0 +1,429 @@
+<!DOCTYPE HTML><html>
+<!-----------HEAD----------->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="assets/main.css">
+  <link rel="stylesheet" href="assets/rSlider.min.css">
+  <title>DiPLab - Control Center</title>
+</head>
+<!-----------BODY----------->
+<body>
+  <img src="assets/images/diplab_logo.png" class="image"/> 
+<div id="webpage">
+  <div class="content">
+    <div class="pageTitle"><p>customize experience</p></div>
+    <div class="pageDescription">
+      <p>
+        access to different informations about your digital petri
+      </p>
+    </div>
+    <div class="div-4">
+      <div class="builder-columns div-5">
+        <div class="builder-column column">
+          <div class="button buttonColumn selected" style="margin-top: -5vh;" id="btn_history"><p class="buttonText selected" id="btn_history_txt">history</p></div>
+        </div>
+        <div class="builder-column column-2">
+          <div class="button buttonColumn"  style="margin-top: -5vh;" id="btn_reading"><p class="buttonText"  id="btn_reading_txt">reading</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="slider-container">
+          <input type="text" id="slider2" class="slider" />
+      </div>
+    </div>
+    <div id="historyContent">
+    <div class="div-10">
+      <p>
+        in history mode you can see the evolution of the petri between 0 to 24h
+      </p>
+    </div>
+  </div>
+  <div id="readingContent" class="hided">
+    <div class="container">
+    </div>
+    <div class="div-10">
+      <p>
+        in reading mode you can see set visible only one antibiotic per time in order to read the resistance value       </p>
+    </div>
+  </div>
+  </div>
+  <div class="footer">
+      <div class="button" id="btn_next" style="margin-top: 0vh;"><p class="buttonText">next</p></div>
+  </div>
+</div>
+</body>
+<!-----------SCRIPT----------->
+<script src="assets/rSlider.min.js"></script>
+<script>
+    var Socket;
+    var abVal;
+    var bacteriaVal;
+    var counter = 0;
+    var slider2;
+
+document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+document.getElementById('btn_history').addEventListener('click', button_historyFunction);
+document.getElementById('btn_reading').addEventListener('click', button_readingFunction);
+
+function init() {
+    Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+
+    slider2 = new rSlider({
+                      target: '#slider2',
+                      values: ['0h', '8h', '12h', '24h'],
+                      range: false,
+                      set: [4],
+                      tooltip: false,
+                      width: '250',
+                      onChange: function (vals) {
+                        if(counter >= 1){
+                          bacteriaVal = vals.slice(0, -1);
+                          var msg = {
+                            state: 5,
+                            controlCenter: "history",
+                            readingBact: bacteriaVal
+                          };
+                          var jsonString = JSON.stringify(msg);
+                          Socket.send(jsonString);
+                          console.log("Message sent: " + JSON.stringify(msg));
+                        }
+                        counter ++;
+                      }
+                  });
+    }
+
+function button_nextFunction() {
+    //var r = confirm("Did you annotate the results?");
+    //  if (r == true) {
+        var msg = {state: 6};
+        var jsonString = JSON.stringify(msg);
+        Socket.send(jsonString);
+        window.location.href='result.html';
+        console.log("Message sent: " + JSON.stringify(msg));
+    //  } else {
+    //      alert("Please note every result in the patient dossier.");
+    //  }
+  }
+
+function button_historyFunction() {
+    slider2.destroy();
+    slider2 = new rSlider({
+                      target: '#slider2',
+                      values: ['0h', '8h', '12h', '24h'],
+                      range: false,
+                      set: [4],
+                      tooltip: false,
+                      width: '250',
+                      onChange: function (vals) {
+                        if(counter >= 1){
+                          bacteriaVal = vals.slice(0, -1);
+                          var msg = {
+                            state: 5,
+                            controlCenter: "history",
+                            readingBact: bacteriaVal
+                          };
+                          var jsonString = JSON.stringify(msg);
+                          Socket.send(jsonString);
+                          console.log("Message sent: " + JSON.stringify(msg));
+                        }
+                        counter ++;
+                      }
+                  });
+    document.getElementById('btn_reading').classList.remove("selected");
+    document.getElementById('btn_history').classList.add("selected");
+    document.getElementById('btn_reading_txt').classList.remove("selected");
+    document.getElementById('btn_history_txt').classList.add("selected");
+    document.getElementById('readingContent').classList.add("hided");
+    document.getElementById('historyContent').classList.remove("hided");
+    }
+
+function button_readingFunction() {
+    slider2.destroy();
+    slider2 = new rSlider({
+                      target: '#slider2',
+                      values: ['AB 1', 'AB 2', 'AB 3'],
+                      range: false,
+                      set: [3],
+                      tooltip: false,
+                      width: '280',
+                      onChange: function (vals) {
+                        if(counter >= 1){
+                          abVal = vals.slice(-1);
+                          var msg = {
+                            state: 5,
+                            controlCenter: "reading",
+                            readingAb: abVal
+                          };
+                          var jsonString = JSON.stringify(msg);
+                          Socket.send(jsonString);
+                          console.log("Message sent: " + JSON.stringify(msg));
+                        }
+                        counter ++;
+                      }
+                  });
+    document.getElementById('btn_history').classList.remove("selected");
+    document.getElementById('btn_reading').classList.add("selected");
+    document.getElementById('btn_history_txt').classList.remove("selected");
+    document.getElementById('btn_reading_txt').classList.add("selected");
+    document.getElementById('readingContent').classList.remove("hided");
+    document.getElementById('historyContent').classList.add("hided");
+    }
+
+window.onload = function(event){
+    init();
+}
+</script>
+<!-----------STYLE----------->
+<style>
+  .hided{
+    display: none !important;
+  }
+  .selected {
+      background-color: #ADFF00;
+      color: #131313 !important;
+  }
+  .div-4 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 8vh;
+    margin-left: 11vw;
+    margin-right: 11vw;
+  }
+  .div-5 {
+    display: flex;
+    margin-right: 4vw;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    margin-left: 0px;
+  }
+  .column-2 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(50% - 10px);
+    margin-left: 20px;
+  }
+  .div-6 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 4vh;
+    margin-left: 11vw;
+  }
+  .div-7 {
+    display: flex;
+    margin-right: 11vw;
+  }
+  .column-3 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(66.666666% - 10px);
+    margin-left: 0px;
+  }
+  .div-8 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 6vh;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    margin-right: auto;
+  }
+  .column-4 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333% - 10px);
+    margin-left: 20px;
+  }
+  .column-5{
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333% - 10px);
+  }
+  .div-9 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 6vh;
+    line-height: normal;
+    height: auto;
+    color: #ADFF00;
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    margin-left: auto;
+  }
+  .div-10 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    margin-right: 20vw;
+    margin-left: 20vw;
+  }
+  @media (max-width: 640px) {
+    .div-10 {
+      margin-left: 11vw;
+      margin-right: 11vw;
+    }
+  }
+  .buttonText {
+    color: #ADFF00;
+  }
+  .div-menu {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 78vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .div-menu2 {
+    display: flex;
+  }
+  .column-menu {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333333333336% - 13.333333333333334px);
+    margin-left: 0px;
+  }
+  .div-menu3 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 3vh;
+    line-height: normal;
+    height: auto;
+    color: rgba(175, 175, 175, 1);
+    font-family: "Oxygen Mono", monospace;
+  }
+  .column-menu2 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333333333336% - 13.333333333333334px);
+    margin-left: 20px;
+  }
+  .div-menu4 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 3vh;
+    line-height: normal;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(175, 175, 175, 1);
+    font-family: "Oxygen Mono", monospace;
+  }
+  .column-menu3 {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: calc(33.333333333333336% - 13.333333333333334px);
+    margin-left: 20px;
+  }
+  .div-menu5 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 3vh;
+    line-height: normal;
+    height: auto;
+    margin-left: auto;
+    color: #ADFF00;
+    font-family: "Oxygen Mono", monospace;
+    margin-left: auto;
+  }
+  .div-2 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 8vh;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    margin-left: 20vw;
+    margin-right: 20vw;
+  }
+  @media (max-width: 640px) {
+    .div-2 {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+  .div-3 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    margin-right: 20vw;
+    margin-left: 20vw;
+  }
+  @media (max-width: 640px) {
+    .div-3 {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+  .buttonPressed {
+    width: 30vw;
+    position: relative;
+    margin: auto;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    border-radius: 21px;
+    background-color: #ADFF00;
+    line-height: normal;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+  }
+  @media (max-width: 991px) {
+    .buttonPressed {
+      width: 75vw;
+    }
+  }
+  .buttonPressedColumn {
+    width: 30vw;
+    position: relative;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    border-radius: 21px;
+    background-color: #ADFF00;
+    line-height: normal;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+  }
+  .buttonTextPressed {
+    color: #131313;
+  }
+  .buttonColumn{
+    width: 35vw;
+  }
+  .buttonColumn3{
+    width: 20vw;
+  }
+</style>

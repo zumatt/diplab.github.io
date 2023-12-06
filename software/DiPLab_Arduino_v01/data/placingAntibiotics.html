@@ -1,0 +1,129 @@
+<!DOCTYPE HTML><html>
+<!-----------HEAD----------->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="assets/main.css">
+  <title>DiPLab - Antibiotics placing</title>
+</head>
+<!-----------BODY----------->
+<body>
+  <img src="assets/images/diplab_logo.png" class="image"/>
+<div id="webpage">
+  <div class="content">
+    <div class="pageTitle"><p>touch the petri screen</p></div>
+    <div class="pageDescription">
+      <p>
+        to place the antibiotics touch the preferred position on the device. Each antibiotic should be far away from the others.
+      </p>
+    </div>
+    <!--<div class="divImage">
+      <picture>
+        <img src="assets/images/diplab_drawing.png" class="Pimage"/>
+      </picture>
+    </div>-->
+  </div>
+  <div class="footer">
+      <div class="button" style="margin-top: -5vh;" id="btn_next"><p class="buttonText">confirm position</p></div>
+      <div class="button" style="margin-top: 1vh; border-color: #AFAFAF;" id="btn_reset"><p class="buttonText">reset</p></div>
+  </div>
+</div>
+</body>
+<!-----------SCRIPT----------->
+<script>
+    var Socket;
+    var abPlacedCheck;
+
+document.getElementById('btn_next').addEventListener('click', button_nextFunction);
+document.getElementById('btn_reset').addEventListener('click', button_resetFunction);
+
+function init() {
+    Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+    Socket.onmessage = function(event) { processCommand(event); };
+    }
+
+function processCommand(event){
+  var obj = JSON.parse(event.data);
+  abPlacedCheck = obj.ab_placed;
+  console.log(abPlacedCheck);
+}
+
+function button_nextFunction() {
+      if (abPlacedCheck != 1 ) {
+        alert("You need to finish placing antibiotics before!");
+      } else {
+        var msg = {state: 5, controlCenter: "history"};
+        var jsonString = JSON.stringify(msg);
+        Socket.send(jsonString);
+        window.location.href='controlCenter.html';
+        console.log("Message sent: " + JSON.stringify(msg));
+      }
+    }
+
+function button_resetFunction() {
+  var msg = {state: 4};
+  var jsonString = JSON.stringify(msg);
+  Socket.send(jsonString);
+  console.log("Message sent: " + JSON.stringify(msg));
+}
+
+window.onload = function(event){
+    init();
+}
+</script>
+<!-----------STYLE----------->
+<style>
+  .divImage {
+    position: relative;
+    width: 100%;
+    min-height: 50vw;
+    margin-top: 5vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .Pimage {
+    object-fit: contain;
+    object-position: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  .div-2 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 8vh;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    margin-left: 20vw;
+    margin-right: 20vw;
+  }
+  @media (max-width: 640px) {
+    .div-2 {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+  .div-3 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: normal;
+    height: auto;
+    color: rgba(241, 241, 241, 1);
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    margin-right: 20vw;
+    margin-left: 20vw;
+  }
+  @media (max-width: 640px) {
+    .div-3 {
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+  }
+</style>
