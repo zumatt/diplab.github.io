@@ -11,6 +11,7 @@ By digitizing the [antibiogram test](https://en.wikipedia.org/wiki/Antibiotic_se
 This repository contains the stable version of the DiPLab. In order to create your own digital petri you can download the source code and the 3D files from the releases.
 
 The project has started as a personal thesis project developed during the [SUPSI Master of Arts in Interaction Design](https://maind.supsi.ch).
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10727626.svg)](https://doi.org/10.5281/zenodo.10727626)
 
 ![](https://raw.githubusercontent.com/zumatt/diplab/development/assets/DiPLab_Digital-Petri-Laboratory_Matteo-Subet_Makeaware_Spearhead-Project.jpg)
 
