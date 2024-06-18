@@ -23,6 +23,11 @@ If you want to report an issue, you can submit it to the [issue tracker](https:/
 Inside the main branch you will find the stable version of DiPLab. However, if you want to create your own digital petri is suggested to download the [latest release](https://github.com/zumatt/diplab/releases) and follow the tutorial that you can find here below.
 The main branch is divided into hardware and software. In the hardware you will find the 3D files used to create the external case of the DiPLab. In the software folder you will find anything connected to the digital development of the digital petri, here inside you can find the Arduino source code and the application source code.
 
+## Hardware
+
+The project is based on the board [Soldered Inkplate 6PLUS](https://soldered.com/product/soldered-inkplate-6plus-with-enclosure-e-paper-display-with-touchscreen-usb-only/) with an additional custom board to add the accellerometer sensor into the project.
+If you want to replicate the experience, you can buy the mother board [here](https://soldered.com/product/soldered-inkplate-6plus-with-enclosure-e-paper-display-with-touchscreen-usb-only/) and print the custom PCB with the files contained into the folder hardware>accellerometer PCB
+
 ## Installation tutorial
 
 In order to create your own digital petri you need to be aware on how to use a 3D Printer and have basic knowledge of Arduino and coding.
